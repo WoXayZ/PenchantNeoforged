@@ -1,0 +1,15 @@
+{
+  "required": true,
+  "package": "archives.tater.penchant.mixin.client",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "leveling.BitmapProviderMixin",
+    "leveling.EnchantmentScreenMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  },
+  "mixins": [
+    "leveling.ItemEnchantmentsMixin"
+  ]
+}

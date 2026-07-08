@@ -1,0 +1,117 @@
+package archives.tater.penchant.util;
+
+import archives.tater.penchant.PenchantmentDefinition;
+import archives.tater.penchant.api.CanEnchantCallback;
+import archives.tater.penchant.registry.PenchantFlag;
+
+import net.minecraft.ChatFormatting;
+import net.minecraft.core.BlockPos;
+import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponents;
+import net.minecraft.network.chat.Component;
+import net.minecraft.network.chat.ComponentUtils;
+import net.minecraft.network.chat.Style;
+import net.minecraft.tags.EnchantmentTags;
+import net.minecraft.util.TriState;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.Items;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentHelper;
+import net.minecraft.world.item.enchantment.ItemEnchantments;
+import net.minecraft.world.level.block.ChiseledBookShelfBlock;
+import net.minecraft.world.level.block.EnchantingTableBlock;
+import net.minecraft.world.level.block.LecternBlock;
+import net.minecraft.world.level.block.state.BlockState;
+
+import net.neoforged.fml.ModList;
+
+import java.util.List;
+import java.util.function.Consumer;
+
+import static java.lang.Math.abs;
+
+public class PenchantmentHelper {
+    public static final boolean ITEM_DESCRIPTIONS_INSTALLED = ModList.get().isLoaded("item_descriptions");
+
+    private PenchantmentHelper() {}
+
+    public static List<BlockPos> LENIENT_BOOKSHELF_OFFSETS = BlockPos.betweenClosedStream(-3, -2, -3, 3, 2, 3)
+            .filter(blockPos -> abs(blockPos.getX()) >= 2 || abs(blockPos.getZ()) >= 2 || blockPos.getY() >= 2 || blockPos.getY() <= -1)
+            .map(BlockPos::immutable)
+            .toList();
+
+    public static Component getName(Holder<Enchantment> enchantment) {
+        return ComponentUtils.mergeStyles(
+                enchantment.value().description().copy(),
+                Style.EMPTY.withColor(enchantment.is(EnchantmentTags.CURSE)
+                        ? ChatFormatting.RED
+                        : ChatFormatting.GRAY
+                )
+        );
+    }
+
+    public static int getProgressCostFactor(Holder<Enchantment> enchantment, int targetLevel) {
+        return PenchantmentDefinition.getDefinition(enchantment).getProgressCostFactor(targetLevel);
+    }
+
+    public static int getBookRequirement(Holder<Enchantment> enchantment) {
+        return PenchantmentDefinition.getDefinition(enchantment).bookRequirement();
+    }
+
+    public static int getXpLevelCost(Holder<Enchantment> enchantment) {
+        return PenchantmentDefinition.getDefinition(enchantment).experienceCost();
+    }
+
+    public static boolean canEnchantItem(ItemStack stack, Holder<Enchantment> enchantment) {
+        var result = CanEnchantCallback.ITEM.invoke(stack, enchantment);
+        if (result != TriState.DEFAULT) return result.toBoolean(false);
+        return stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK) || stack.supportsEnchantment(enchantment);
+    }
+
+    public static ItemEnchantments getEnchantments(ItemStack stack) {
+        return EnchantmentHelper.getEnchantmentsForCrafting(stack);
+    }
+
+    public static boolean hasEnchantment(ItemStack stack, Holder<Enchantment> enchantment) {
+        return getEnchantments(stack).getLevel(enchantment) > 0;
+    }
+
+    public static boolean canEnchant(ItemStack stack, Holder<Enchantment> enchantment) {
+        var result = CanEnchantCallback.STACK.invoke(stack, enchantment);
+        if (result != TriState.DEFAULT) return result.toBoolean(false);
+        return canEnchantItem(stack, enchantment) && !hasEnchantment(stack, enchantment) && EnchantmentHelper.isEnchantmentCompatible(getEnchantments(stack).keySet(), enchantment);
+    }
+
+    public static ItemStack updateEnchantments(ItemStack stack, Consumer<ItemEnchantments.Mutable> updater) {
+        var type = stack.is(Items.BOOK) ? DataComponents.STORED_ENCHANTMENTS : EnchantmentHelper.getComponentType(stack);
+        var enchantments = stack.getOrDefault(type, ItemEnchantments.EMPTY);
+        var mutable = new ItemEnchantments.Mutable(enchantments);
+        updater.accept(mutable);
+        var newEnchantments = mutable.toImmutable();
+        stack.set(type, newEnchantments);
+        if (newEnchantments.isEmpty()) {
+            if (stack.is(Items.ENCHANTED_BOOK))
+                return stack.transmuteCopy(Items.BOOK);
+        } else {
+            if (stack.is(Items.BOOK))
+                return stack.transmuteCopy(Items.ENCHANTED_BOOK);
+        }
+        return stack;
+    }
+
+    public static List<BlockPos> getBookshelfOffsets(List<BlockPos> original) {
+        return PenchantFlag.LENIENT_BOOKSHELF_PLACEMENT.isEnabled() ? LENIENT_BOOKSHELF_OFFSETS : original;
+    }
+
+    public static List<BlockPos> getBookshelfOffsets() {
+        return getBookshelfOffsets(EnchantingTableBlock.BOOKSHELF_OFFSETS);
+    }
+
+    public static int getBookCount(BlockState state) {
+        if (state.hasProperty(ChiseledBookShelfBlock.SLOT_0_OCCUPIED))
+            return (int) ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES.stream().filter(state::getValue).count();
+        if (state.hasProperty(LecternBlock.HAS_BOOK))
+            return state.getValue(LecternBlock.HAS_BOOK) ? 1 : 0;
+        return 3;
+    }
+}

@@ -1,0 +1,173 @@
+plugins {
+    id 'java-library'
+    id 'maven-publish'
+    id 'net.neoforged.moddev' version '2.0.141'
+    id 'idea'
+}
+
+tasks.named('wrapper', Wrapper).configure {
+    distributionType = Wrapper.DistributionType.BIN
+}
+
+version = mod_version
+group = mod_group_id
+
+repositories {
+    mavenCentral()
+    maven { url = 'https://jitpack.io' }
+    maven {
+        name = "cassian's maven"
+        url = "https://maven.cassian.cc"
+    }
+    maven {
+        name = "Terraformers"
+        url = "https://maven.terraformersmc.com/"
+    }
+    maven { url = 'https://repo.sleeping.town/' }
+    maven {
+        name = "Xander Maven"
+        url = "https://maven.isxander.dev/releases"
+    }
+    maven {
+        name = "CurseMaven"
+        url = "https://cursemaven.com"
+    }
+    maven {
+        name = "ModMaven"
+        url = "https://modmaven.dev"
+    }
+    maven {
+        name = "Modrinth"
+        url = "https://api.modrinth.com/maven"
+        content { includeGroup "maven.modrinth" }
+    }
+    maven {
+        name = "Shedaniel"
+        url = "https://maven.shedaniel.me/"
+        content { includeGroupByRegex "me\\.shedaniel.*" }
+    }
+}
+
+base {
+    archivesName = "penchant-neoforge"
+}
+
+// Mojang ships Java 25 to end users in 26.1.2, so mods should target Java 25.
+java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+
+sourceSets.main.resources {
+    srcDir('src/generated/resources')
+    exclude("**/.cache")
+}
+
+neoForge {
+    version = project.neo_version
+
+    parchment {
+        // Optional mappings; left unset for a clean vanilla-named build.
+    }
+
+    runs {
+        client {
+            client()
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        server {
+            server()
+            programArgument '--nogui'
+            systemProperty 'neoforge.enabledGameTestNamespaces', project.mod_id
+        }
+
+        data {
+            clientData()
+            programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
+        }
+
+        configureEach {
+            systemProperty 'forge.logging.markers', 'REGISTRIES'
+            logLevel = org.slf4j.event.Level.DEBUG
+        }
+    }
+
+    mods {
+        "${mod_id}" {
+            sourceSet(sourceSets.main)
+        }
+    }
+}
+
+configurations {
+    runtimeClasspath.extendsFrom localRuntime
+}
+
+dependencies {
+    // MixinExtras is bundled with NeoForge; declare the annotation processor for @Mixin/@Expression support.
+    // (NeoForge already provides mixin + mixinextras at runtime.)
+
+    // Optional integration: Item Descriptions (NeoForge build). Present at compile & dev runtime only.
+    // transitive = false: its Maven metadata drags in unrelated mods (RRV, cloth-config, fast-item-frames,
+    // puzzles-lib) even though its neoforge.mods.toml only requires neoforge + minecraft. We want zero RRV in the
+    // dev runtime, and Item Descriptions bundles kaleido-config via jar-in-jar, so nothing else is needed.
+    compileOnly("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}") {
+        transitive = false
+    }
+    localRuntime("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}") {
+        transitive = false
+    }
+
+    // Item Descriptions exposes kaleido-config types on its public API; needed at compile time only.
+    // (Item Descriptions bundles kaleido at runtime via jar-in-jar.)
+    compileOnly "folk.sisby:kaleido-config:${project.kaleido_version}"
+}
+
+var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
+    var replaceProperties = [
+            minecraft_version      : minecraft_version,
+            minecraft_version_range: minecraft_version_range,
+            neo_version            : neo_version,
+            neo_version_range      : neo_version_range,
+            loader_version_range   : loader_version_range,
+            mod_id                 : mod_id,
+            mod_name               : mod_name,
+            mod_license            : mod_license,
+            mod_version            : mod_version,
+            mod_authors            : mod_authors,
+            mod_description        : mod_description,
+    ]
+    inputs.properties replaceProperties
+    expand replaceProperties
+    from "src/main/templates"
+    into "build/generated/sources/modMetadata"
+}
+sourceSets.main.resources.srcDir generateModMetadata
+neoForge.ideSyncTask generateModMetadata
+
+publishing {
+    publications {
+        register('mavenJava', MavenPublication) {
+            from components.java
+        }
+    }
+    repositories {
+        maven {
+            url "file://${project.projectDir}/repo"
+        }
+    }
+}
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+    options.release = 25
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+}
+
+tasks.withType(ProcessResources).configureEach {
+    duplicatesStrategy = DuplicatesStrategy.EXCLUDE
+}

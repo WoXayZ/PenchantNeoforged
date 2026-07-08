@@ -1,0 +1,30 @@
+{
+  "parent": "minecraft:story/enchant_item",
+  "criteria": {
+    "has_books": {
+      "conditions": {
+        "book_count": {
+          "min": 45
+        }
+      },
+      "trigger": "penchant:open_table"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.penchant.full_library.description"
+    },
+    "frame": "goal",
+    "icon": {
+      "id": "minecraft:bookshelf"
+    },
+    "title": {
+      "translate": "advancements.penchant.full_library.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_books"
+    ]
+  ]
+}

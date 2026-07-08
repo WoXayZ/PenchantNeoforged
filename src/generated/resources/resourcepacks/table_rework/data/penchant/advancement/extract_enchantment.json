@@ -1,0 +1,24 @@
+{
+  "parent": "minecraft:story/enchant_item",
+  "criteria": {
+    "extract": {
+      "trigger": "penchant:extract_enchantment"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.penchant.extract_enchantment.description"
+    },
+    "icon": {
+      "id": "minecraft:grindstone"
+    },
+    "title": {
+      "translate": "advancements.penchant.extract_enchantment.title"
+    }
+  },
+  "requirements": [
+    [
+      "extract"
+    ]
+  ]
+}

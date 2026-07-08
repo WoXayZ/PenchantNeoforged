@@ -1,0 +1,27 @@
+{
+  "parent": "minecraft:story/enchant_item",
+  "criteria": {
+    "has_enchantment": {
+      "conditions": {
+        "require_enchantment": true
+      },
+      "trigger": "penchant:open_table"
+    }
+  },
+  "display": {
+    "description": {
+      "translate": "advancements.penchant.enchanted_bookshelf.description"
+    },
+    "icon": {
+      "id": "minecraft:chiseled_bookshelf"
+    },
+    "title": {
+      "translate": "advancements.penchant.enchanted_bookshelf.title"
+    }
+  },
+  "requirements": [
+    [
+      "has_enchantment"
+    ]
+  ]
+}

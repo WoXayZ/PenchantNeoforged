@@ -1,0 +1,44 @@
+{
+	"schemaVersion": 1,
+	"id": "penchant",
+	"version": "${version}",
+	"name": "Penchant",
+	"description": "A rework of enchanting, centered around leveling up enchantments through usage",
+	"authors": [
+		"ThePotatoArchivist"
+	],
+	"contact": {
+		"homepage": "https://modrinth.com/mod/penchant",
+		"sources": "https://github.com/ThePotatoArchivist/Penchant"
+	},
+	"license": "LGPL-3.0-or-later",
+	"icon": "assets/penchant/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"archives.tater.penchant.Penchant"
+		],
+		"client": [
+			"archives.tater.penchant.PenchantClient"
+		],
+		"fabric-datagen": [
+			"archives.tater.penchant.PenchantDataGenerator"
+		]
+	},
+	"mixins": [
+		"penchant.mixins.json",
+		{
+			"config": "penchant.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.2",
+		"minecraft": "~26.1",
+		"java": ">=25",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
