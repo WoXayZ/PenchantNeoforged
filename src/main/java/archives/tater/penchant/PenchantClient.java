@@ -12,9 +12,7 @@ import com.mojang.blaze3d.platform.InputConstants.Type;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.Holder;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 
@@ -28,11 +26,14 @@ import net.neoforged.neoforge.client.event.RegisterKeyMappingsEvent;
 import net.neoforged.neoforge.client.event.RegisterMenuScreensEvent;
 import net.neoforged.neoforge.common.NeoForge;
 
-import static net.minecraft.util.Util.makeDescriptionId;
+import org.jetbrains.annotations.ApiStatus;
+import org.jetbrains.annotations.Nullable;
+
+import static net.minecraft.Util.makeDescriptionId;
 
 @Mod(value = Penchant.MOD_ID, dist = Dist.CLIENT)
 public class PenchantClient {
-    public static final KeyMapping.Category PENCHANT_CATEGORY = new KeyMapping.Category(Penchant.id(Penchant.MOD_ID));
+    public static final String PENCHANT_CATEGORY = Penchant.MOD_ID;
 
     public static final KeyMappingExt SHOW_PROGRESS_KEYBIND = new KeyMappingExt(
             makeDescriptionId("key", Penchant.id("show_progress")),
@@ -41,7 +42,8 @@ public class PenchantClient {
             PENCHANT_CATEGORY
     );
 
-    public static final ScopedValue<ItemStack> TOOLTIP_ITEM = ScopedValue.newInstance();
+    @ApiStatus.Internal
+    public static final ThreadLocal<@Nullable ItemStack> tooltipItem = new ThreadLocal<>();
 
     public PenchantClient(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, PenchantClientConfig.SPEC);
@@ -57,7 +59,6 @@ public class PenchantClient {
     }
 
     private void onRegisterKeyMappings(RegisterKeyMappingsEvent event) {
-        event.registerCategory(PENCHANT_CATEGORY);
         event.register(SHOW_PROGRESS_KEYBIND);
     }
 
@@ -82,7 +83,7 @@ public class PenchantClient {
                 .withStyle(ChatFormatting.DARK_GRAY);
     }
 
-    public static Component getProgressTooltip(EnchantmentProgress progress, Holder<Enchantment> enchantment, int level, DataComponentGetter components) {
+    public static Component getProgressTooltip(EnchantmentProgress progress, Holder<Enchantment> enchantment, int level, ItemStack stack) {
         if (level >= enchantment.value().getMaxLevel())
             return Component.literal("  ")
                     .append(FontUtils.getBar(getBarWidth(), getBarWidth()))
@@ -90,7 +91,7 @@ public class PenchantClient {
                     .append(Component.translatable("penchant.tooltip.progress.max"))
                     .withStyle(ChatFormatting.LIGHT_PURPLE);
 
-        var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, components);
+        var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, stack.getMaxDamage());
 
         return Component.literal("  ")
                 .append(FontUtils.getBar(getBarWidth(), getBarWidth() * progress.getProgress(enchantment) / maxProgress))

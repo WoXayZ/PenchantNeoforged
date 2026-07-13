@@ -8,12 +8,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.world.level.block.Blocks;
 
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 public class BlockTagGenerator extends BlockTagsProvider {
-    public BlockTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, registriesFuture, Penchant.MOD_ID);
+    public BlockTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
+        super(output, registriesFuture, Penchant.MOD_ID, existingFileHelper);
     }
 
     @Override

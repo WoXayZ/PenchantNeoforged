@@ -1,4 +1,5 @@
-@NullMarked
+@ParametersAreNonnullByDefault
 package archives.tater.penchant;
 
-import org.jspecify.annotations.NullMarked;
+import javax.annotation.ParametersAreNonnullByDefault;
+

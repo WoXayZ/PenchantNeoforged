@@ -1,6 +1,5 @@
 {
   "values": [
-    "#minecraft:harnesses",
     {
       "id": "#c:armors/horse",
       "required": false

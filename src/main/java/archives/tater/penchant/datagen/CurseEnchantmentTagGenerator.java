@@ -6,11 +6,13 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
 import java.util.concurrent.CompletableFuture;
 
 public class CurseEnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
-    public CurseEnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, Registries.ENCHANTMENT, lookupProvider);
+    public CurseEnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(output, Registries.ENCHANTMENT, lookupProvider, existingFileHelper);
     }
 
     @Override

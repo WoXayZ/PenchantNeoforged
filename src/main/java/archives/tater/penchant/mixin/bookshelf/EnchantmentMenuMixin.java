@@ -21,7 +21,7 @@ import net.minecraft.world.level.Level;
 @Mixin(EnchantmentMenu.class)
 public class EnchantmentMenuMixin {
     @WrapOperation(
-            method = "lambda$slotsChanged$0",
+            method = "slotsChanged",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/EnchantingTableBlock;isValidBookShelf(Lnet/minecraft/world/level/Level;Lnet/minecraft/core/BlockPos;Lnet/minecraft/core/BlockPos;)Z")
     )
     private boolean getBookCount(Level level, BlockPos enchantingTablePos, BlockPos bookshelfPos, Operation<Boolean> original, @Share("chiseledBookCount") LocalIntRef chiseledBookCount, @Share("isChiseledBookshelf") LocalBooleanRef isChiseledBookshelf) {
@@ -38,7 +38,7 @@ public class EnchantmentMenuMixin {
     @Definition(id = "i", local = @Local(type = int.class, ordinal = 0))
     @Expression("i = i + @(1)")
     @ModifyExpressionValue(
-            method = "lambda$slotsChanged$0",
+            method = "slotsChanged",
             at = @At("MIXINEXTRAS:EXPRESSION")
     )
     private int modifyCount(int original, @Share("chiseledBookCount") LocalIntRef chiseledBookCount, @Share("isChiseledBookshelf") LocalBooleanRef isChiseledBookshelf) {

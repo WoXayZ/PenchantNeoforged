@@ -1,14 +1,13 @@
 package archives.tater.penchant.datagen;
 
-import archives.tater.penchant.Penchant;
-
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.data.PackOutput;
-import net.minecraft.data.tags.TagAppender;
 import net.minecraft.data.tags.TagsProvider;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
+
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
@@ -17,11 +16,12 @@ import java.util.concurrent.CompletableFuture;
  * so the ported generators read almost identically to the originals.
  */
 public abstract class PenchantTagsProvider<T> extends TagsProvider<T> {
-    protected PenchantTagsProvider(PackOutput output, ResourceKey<? extends Registry<T>> registryKey, CompletableFuture<HolderLookup.Provider> lookupProvider) {
-        super(output, registryKey, lookupProvider, Penchant.MOD_ID);
+    protected PenchantTagsProvider(PackOutput output, ResourceKey<? extends Registry<T>> registryKey, CompletableFuture<HolderLookup.Provider> lookupProvider, ExistingFileHelper existingFileHelper) {
+        super(output, registryKey, lookupProvider, "penchant", existingFileHelper);
     }
 
-    protected TagAppender<ResourceKey<T>, T> builder(TagKey<T> tag) {
-        return TagAppender.forBuilder(this.getOrCreateRawBuilder(tag));
+    protected TagAppender<T> builder(TagKey<T> tag) {
+        return this.tag(tag);
     }
 }
+

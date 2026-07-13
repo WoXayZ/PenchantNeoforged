@@ -5,21 +5,24 @@ import archives.tater.penchant.registry.PenchantEnchantmentTags;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
+
 import java.util.concurrent.CompletableFuture;
+
 public class EnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
 
     private static final TagKey<Enchantment> HIDDEN_FROM_RECIPE_VIEWERS = TagKey.create(
             Registries.ENCHANTMENT,
-            Identifier.fromNamespaceAndPath("c", "hidden_from_recipe_viewers")
+            ResourceLocation.fromNamespaceAndPath("c", "hidden_from_recipe_viewers")
     );
 
-    public EnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, Registries.ENCHANTMENT, registriesFuture);
+    public EnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
+        super(output, Registries.ENCHANTMENT, registriesFuture, existingFileHelper);
     }
 
     @Override

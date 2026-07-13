@@ -2,8 +2,12 @@
     "type": "minecraft:crafting_shapeless",
     "category": "misc",
     "ingredients": [
-        "minecraft:book",
-        "minecraft:enchanting_table"
+        {
+            "item": "minecraft:book"
+        },
+        {
+            "item": "minecraft:enchanting_table"
+        }
     ],
     "result": {
         "id": "penchant:tome_of_penchant",

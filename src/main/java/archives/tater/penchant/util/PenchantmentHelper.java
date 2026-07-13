@@ -8,21 +8,20 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.util.TriState;
 import net.minecraft.util.Unit;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
-import net.minecraft.world.level.block.ChiseledBookShelfBlock;
+import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EnchantingTableBlock;
 import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 import net.neoforged.fml.ModList;
-
-import org.jspecify.annotations.Nullable;
+import net.neoforged.neoforge.common.util.TriState;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -39,12 +38,16 @@ public class PenchantmentHelper {
             .map(BlockPos::immutable)
             .toList();
 
-    public static ScopedValue<@Nullable Unit> NO_LEVEL_NAME_CONTEXT = ScopedValue.newInstance();
+    public static ScopedValue<Unit> NO_LEVEL_NAME_CONTEXT = ScopedValue.newInstance();
 
     public static Component getName(Holder<Enchantment> enchantment) {
-        return ScopedValue.where(NO_LEVEL_NAME_CONTEXT, Unit.INSTANCE).call(() ->
-                Enchantment.getFullname(enchantment, 1)
-        );
+        try {
+            return ScopedValue.where(NO_LEVEL_NAME_CONTEXT, Unit.INSTANCE).call(() ->
+                    Enchantment.getFullname(enchantment, 1)
+            );
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static int getProgressCostFactor(Holder<Enchantment> enchantment, int targetLevel) {
@@ -61,7 +64,7 @@ public class PenchantmentHelper {
 
     public static boolean canEnchantItem(ItemStack stack, Holder<Enchantment> enchantment) {
         var result = CanEnchantCallback.ITEM.invoke(stack, enchantment);
-        if (result != TriState.DEFAULT) return result.toBoolean(false);
+        if (!result.isDefault()) return result.isTrue();
         return stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK) || stack.supportsEnchantment(enchantment);
     }
 
@@ -76,7 +79,7 @@ public class PenchantmentHelper {
     public static boolean canEnchant(ItemStack stack, Holder<Enchantment> enchantment) {
         if (hasEnchantment(stack, enchantment)) return false;
         var result = CanEnchantCallback.STACK.invoke(stack, enchantment);
-        if (result != TriState.DEFAULT) return result.toBoolean(false);
+        if (!result.isDefault()) return result.isTrue();
         return canEnchantItem(stack, enchantment) && EnchantmentHelper.isEnchantmentCompatible(getEnchantments(stack).keySet(), enchantment);
     }
 
@@ -117,8 +120,17 @@ public class PenchantmentHelper {
     }
 
     public static int getBookCount(BlockState state) {
-        if (state.hasProperty(ChiseledBookShelfBlock.SLOT_0_OCCUPIED))
-            return (int) ChiseledBookShelfBlock.SLOT_OCCUPIED_PROPERTIES.stream().filter(state::getValue).count();
+        if (state.is(Blocks.CHISELED_BOOKSHELF)) {
+            var count = 0;
+            for (var property : state.getProperties()) {
+                if (property instanceof BooleanProperty booleanProperty
+                        && property.getName().endsWith("_occupied")
+                        && state.getValue(booleanProperty)) {
+                    count++;
+                }
+            }
+            return count;
+        }
         if (state.hasProperty(LecternBlock.HAS_BOOK))
             return state.getValue(LecternBlock.HAS_BOOK) ? 1 : 0;
         return 3;

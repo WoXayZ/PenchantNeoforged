@@ -56,8 +56,8 @@ base {
     archivesName = "penchant-neoforge"
 }
 
-// Mojang ships Java 25 to end users in 26.1.2, so mods should target Java 25.
-java.toolchain.languageVersion = JavaLanguageVersion.of(25)
+// Mojang ships Java 21 to end users in 1.21.1, so mods should target Java 21.
+java.toolchain.languageVersion = JavaLanguageVersion.of(21)
 
 sourceSets.main.resources {
     srcDir('src/generated/resources')
@@ -84,13 +84,14 @@ neoForge {
         }
 
         data {
-            clientData()
+            data()
             programArguments.addAll '--mod', project.mod_id, '--all', '--output', file('src/generated/resources/').getAbsolutePath(), '--existing', file('src/main/resources/').getAbsolutePath()
         }
 
         configureEach {
             systemProperty 'forge.logging.markers', 'REGISTRIES'
             logLevel = org.slf4j.event.Level.DEBUG
+            jvmArgument '--enable-preview'
         }
     }
 
@@ -113,10 +114,10 @@ dependencies {
     // transitive = false: its Maven metadata drags in unrelated mods (RRV, cloth-config, fast-item-frames,
     // puzzles-lib) even though its neoforge.mods.toml only requires neoforge + minecraft. We want zero RRV in the
     // dev runtime, and Item Descriptions bundles kaleido-config via jar-in-jar, so nothing else is needed.
-    compileOnly("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}") {
+    compileOnly("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}+${project.minecraft_version}") {
         transitive = false
     }
-    localRuntime("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}") {
+    localRuntime("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}+${project.minecraft_version}") {
         transitive = false
     }
 
@@ -126,10 +127,10 @@ dependencies {
 
     // Patchouli powers the in-game guidebook ("Tome of Penchant"). compileOnly for TomeOfPenchantItem; localRuntime
     // for dev testing. Required for end users (neoforge.mods.toml). transitive = false keeps its deps out of dev.
-    compileOnly("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
+    compileOnly("vazkii.patchouli:Patchouli:${project.patchouli_version}:api") {
         transitive = false
     }
-    localRuntime("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
+    localRuntime("vazkii.patchouli:Patchouli:${project.patchouli_version}") {
         transitive = false
     }
 }
@@ -171,7 +172,8 @@ publishing {
 
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
-    options.release = 25
+    options.release = 21
+    options.compilerArgs.add('--enable-preview')
 }
 
 idea {

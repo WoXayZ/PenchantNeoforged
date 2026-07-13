@@ -7,28 +7,21 @@ import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.minecraft.core.RegistryAccess;
+import net.minecraft.core.Holder;
 import net.minecraft.world.inventory.EnchantmentMenu;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.enchantment.EnchantmentInstance;
-
-import java.util.List;
+import net.minecraft.world.item.enchantment.Enchantment;
 
 @Mixin(EnchantmentMenu.class)
 public class EnchantmentMenuMixin {
-    // Vanilla/Fabric called ItemStack.enchant(Holder, int) directly in the click lambda; NeoForge routes enchanting
-    // through Item.applyEnchantments(stack, list) instead. We therefore rewrite the enchantment list that feeds it,
-    // forcing every enchantment to level 1 (Penchant's core "level up through usage" mechanic) unless tagged NO_LEVELING.
     @WrapOperation(
-            method = "lambda$clickMenuButton$0",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/inventory/EnchantmentMenu;getEnchantmentList(Lnet/minecraft/core/RegistryAccess;Lnet/minecraft/world/item/ItemStack;II)Ljava/util/List;")
+            method = "clickMenuButton",
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/ItemStack;enchant(Lnet/minecraft/core/Holder;I)V")
     )
-    private List<EnchantmentInstance> levelOne(EnchantmentMenu instance, RegistryAccess access, ItemStack itemStack, int slot, int cost, Operation<List<EnchantmentInstance>> original) {
-        List<EnchantmentInstance> list = original.call(instance, access, itemStack, slot, cost);
-        return list.stream()
-                .map(entry -> entry.enchantment().is(PenchantEnchantmentTags.NO_LEVELING)
-                        ? entry
-                        : new EnchantmentInstance(entry.enchantment(), 1))
-                .toList();
+    private void levelOne(ItemStack instance, Holder<Enchantment> enchantment, int level, Operation<Void> original) {
+        if (enchantment.is(PenchantEnchantmentTags.NO_LEVELING))
+            original.call(instance, enchantment, level);
+        else
+            original.call(instance, enchantment, 1);
     }
 }

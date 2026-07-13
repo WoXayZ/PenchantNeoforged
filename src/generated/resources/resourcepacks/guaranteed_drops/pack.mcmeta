@@ -1,15 +1,11 @@
 {
+  "features": {
+    "enabled": []
+  },
   "pack": {
     "description": {
       "translate": "dataPack.penchant.guaranteed_drops.description"
     },
-    "max_format": [
-      101,
-      1
-    ],
-    "min_format": [
-      101,
-      1
-    ]
+    "pack_format": 48
   }
 }

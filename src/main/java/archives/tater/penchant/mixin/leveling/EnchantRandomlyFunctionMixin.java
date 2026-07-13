@@ -3,7 +3,6 @@ package archives.tater.penchant.mixin.leveling;
 import archives.tater.penchant.component.EnchantmentProgress;
 
 import com.llamalad7.mixinextras.injector.ModifyReturnValue;
-import com.llamalad7.mixinextras.sugar.Local;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -16,10 +15,10 @@ import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 @Mixin(EnchantRandomlyFunction.class)
 public class EnchantRandomlyFunctionMixin {
     @ModifyReturnValue(
-            method = "enchantItem",
+            method = "run",
             at = @At("RETURN")
     )
-    private static ItemStack addProgress(ItemStack original, @Local(argsOnly = true) LootContext context) {
+    private ItemStack addProgress(ItemStack original, ItemStack stack, LootContext context) {
         if (EnchantmentHelper.getComponentType(original) == DataComponents.STORED_ENCHANTMENTS) return original;
 
         EnchantmentProgress.addRandomProgress(original, context.getRandom());

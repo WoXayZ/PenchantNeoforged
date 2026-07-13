@@ -1,6 +1,7 @@
 package archives.tater.penchant.component;
 
 import archives.tater.penchant.registry.PenchantComponents;
+import archives.tater.penchant.registry.PenchantLootFunctions;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.MapCodec;
@@ -8,7 +9,6 @@ import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.ChatFormatting;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.RegistryCodecs;
-import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.network.RegistryFriendlyByteBuf;
 import net.minecraft.network.chat.Component;
@@ -24,6 +24,7 @@ import net.minecraft.world.level.storage.loot.LootContext;
 import net.minecraft.world.level.storage.loot.LootParams;
 import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemConditionalFunction;
+import net.minecraft.world.level.storage.loot.functions.LootItemFunctionType;
 import net.minecraft.world.level.storage.loot.parameters.LootContextParamSets;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
@@ -49,15 +50,15 @@ public record RandomEnchantment(Optional<HolderSet<Enchantment>> options, boolea
     public static ItemStack resolve(ItemStack stack, ServerLevel level) {
         var randomEnchantment = stack.remove(PenchantComponents.RANDOM_ENCHANTMENT);
         if (randomEnchantment == null) return stack;
-        var builder = EnchantRandomlyFunction.randomEnchantment()
-                .withOptions(randomEnchantment.options);
+        var builder = EnchantRandomlyFunction.randomEnchantment();
+        randomEnchantment.options.ifPresent(builder::withOneOf);
         if (!randomEnchantment.onlyCompatible) builder.allowingIncompatibleEnchantments();
         var context = new LootContext.Builder(new LootParams.Builder(level).create(LootContextParamSets.EMPTY)).create(Optional.empty());
         return builder.build().apply(stack, context);
     }
 
     @Override
-    public void addToTooltip(Item.TooltipContext context, Consumer<Component> consumer, TooltipFlag flag, DataComponentGetter components) {
+    public void addToTooltip(Item.TooltipContext context, Consumer<Component> consumer, TooltipFlag flag) {
         consumer.accept(Component.translatable("penchant.tooltip.random_enchantment").withStyle(ChatFormatting.GRAY));
     }
 
@@ -79,8 +80,8 @@ public record RandomEnchantment(Optional<HolderSet<Enchantment>> options, boolea
         }
 
         @Override
-        public MapCodec<? extends LootFunction> codec() {
-            return CODEC;
+        public LootItemFunctionType<LootFunction> getType() {
+            return PenchantLootFunctions.RANDOM_ENCHANTMENT;
         }
 
         @Override

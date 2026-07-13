@@ -20,8 +20,8 @@ public abstract class ItemStackMixin implements DataComponentHolder {
             method = "onCraftedBy",
             at = @At("TAIL")
     )
-    private void resolveEnchantment(Player player, int craftCount, CallbackInfo ci) {
-        if (player.level() instanceof ServerLevel serverLevel && has(PenchantComponents.RANDOM_ENCHANTMENT))
+    private void resolveEnchantment(Level level, Player player, int craftCount, CallbackInfo ci) {
+        if (level instanceof ServerLevel serverLevel && has(PenchantComponents.RANDOM_ENCHANTMENT))
             RandomEnchantment.resolve((ItemStack) (Object) this, serverLevel);
     }
 

@@ -4,15 +4,16 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (**0.4.0**) while using native NeoForge APIs.
+original Fabric mod (**0.4.0** where supported on this Minecraft version) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
 | **Port version** | **1.1** |
-| **Minecraft** | 26.1.2 |
-| **NeoForge** | 26.1.2.78 |
-| **Java** | 25 |
+| **Mod version** | 1.21.1-1.1 |
+| **Minecraft** | 1.21.1 |
+| **NeoForge** | 21.1.235 |
+| **Java** | 21 |
 | **License** | LGPL-3.0-or-later |
 
 ---
@@ -46,16 +47,16 @@ Penchant ships several optional behaviors as built-in datapacks you can enable/d
 | `loot_rework` | ✔ | Reworks where enchantment books appear in loot & mob equipment |
 | `guaranteed_drops` | ✔ | Guarantees certain enchanted drops (e.g. tridents) |
 | `reduced_curses` | ✘ | Reduces how often curses appear |
-| `randomized_librarians` | ✘ | Librarians sell a different enchanted book on each purchase |
+| `randomized_librarians` | — | *Not available on 1.21.1* (no villager trade registry) |
 
 ### Item tags & components (0.4.0)
 
 - `#penchant:max_level_enchantments` - items in this tag receive enchantments at max level (for gear without
-  durability, such as harnesses and horse/nautilus armor).
+  durability).
 - `penchant:enchantment_progress_cost_factor` - controls how much durability damage is needed per level on items with
   max damage. If absent, a fallback is computed from max durability (`clamp(floor(max_durability / 100), 1, 8)`).
-- `penchant:random_enchantment` - marks loot that resolves to a random enchantment when crafted or traded (used by
-  the randomized librarians module).
+- `penchant:random_enchantment` - marks loot that resolves to a random enchantment when crafted (used when the
+  randomized librarians module is available).
 
 ---
 
@@ -102,7 +103,7 @@ Enchanting Table, or find it in the Tools & Utilities creative tab. The book is 
 
 ## Building from source
 
-Requires JDK 25.
+Requires JDK 21.
 
 ```bash
 # Build the mod jar (output in build/libs/)

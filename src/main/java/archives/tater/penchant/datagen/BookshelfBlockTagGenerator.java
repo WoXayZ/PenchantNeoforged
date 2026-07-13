@@ -9,12 +9,13 @@ import net.minecraft.world.level.block.Blocks;
 
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.concurrent.CompletableFuture;
 
 public class BookshelfBlockTagGenerator extends BlockTagsProvider {
-    public BookshelfBlockTagGenerator(PackOutput output, CompletableFuture<Provider> registriesFuture) {
-        super(output, registriesFuture, Penchant.MOD_ID);
+    public BookshelfBlockTagGenerator(PackOutput output, CompletableFuture<Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
+        super(output, registriesFuture, Penchant.MOD_ID, existingFileHelper);
     }
 
     @Override

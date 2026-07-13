@@ -49,22 +49,6 @@
       },
       "trigger": "minecraft:inventory_changed"
     },
-    "minecraft:breach": {
-      "conditions": {
-        "items": [
-          {
-            "predicates": {
-              "minecraft:stored_enchantments": [
-                {
-                  "enchantments": "minecraft:breach"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
     "minecraft:channeling": {
       "conditions": {
         "items": [
@@ -73,22 +57,6 @@
               "minecraft:stored_enchantments": [
                 {
                   "enchantments": "minecraft:channeling"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "minecraft:density": {
-      "conditions": {
-        "items": [
-          {
-            "predicates": {
-              "minecraft:stored_enchantments": [
-                {
-                  "enchantments": "minecraft:density"
                 }
               ]
             }
@@ -265,22 +233,6 @@
               "minecraft:stored_enchantments": [
                 {
                   "enchantments": "minecraft:luck_of_the_sea"
-                }
-              ]
-            }
-          }
-        ]
-      },
-      "trigger": "minecraft:inventory_changed"
-    },
-    "minecraft:lunge": {
-      "conditions": {
-        "items": [
-          {
-            "predicates": {
-              "minecraft:stored_enchantments": [
-                {
-                  "enchantments": "minecraft:lunge"
                 }
               ]
             }
@@ -488,6 +440,7 @@
     },
     "frame": "goal",
     "icon": {
+      "count": 1,
       "id": "minecraft:enchanted_book"
     },
     "title": {
@@ -526,12 +479,6 @@
       "minecraft:punch"
     ],
     [
-      "minecraft:density"
-    ],
-    [
-      "minecraft:breach"
-    ],
-    [
       "minecraft:looting"
     ],
     [
@@ -551,9 +498,6 @@
     ],
     [
       "minecraft:fortune"
-    ],
-    [
-      "minecraft:lunge"
     ],
     [
       "minecraft:respiration"

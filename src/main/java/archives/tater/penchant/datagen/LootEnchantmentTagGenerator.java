@@ -5,12 +5,14 @@ import archives.tater.penchant.Penchant;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
-import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
+
+import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
@@ -23,7 +25,6 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
             Enchantments.FLAME, // nether fortress, ruined portal
             Enchantments.SILK_TOUCH, // mineshaft, dungeon
             Enchantments.FORTUNE, // mineshaft, dungeon
-            Enchantments.LUNGE, // bastion
             Enchantments.RESPIRATION, // ocean ruins, shipwreck, buried treasure
             Enchantments.DEPTH_STRIDER, // ocean ruins, shipwreck, buried treasure
             Enchantments.CHANNELING, // ruins, buried treasure
@@ -47,8 +48,6 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
             Enchantments.SWEEPING_EDGE,
             Enchantments.KNOCKBACK,
             Enchantments.PUNCH,
-            Enchantments.DENSITY,
-            Enchantments.BREACH,
             Enchantments.LOOTING,
             Enchantments.LUCK_OF_THE_SEA
     );
@@ -66,12 +65,12 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
             Enchantments.LURE
     );
 
-    private static ResourceKey<Enchantment> createKey(String namespace, String path) {
-        return ResourceKey.create(Registries.ENCHANTMENT, Identifier.fromNamespaceAndPath(namespace, path));
+    private static ResourceLocation createOptionalId(String namespace, String path) {
+        return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 
-    public LootEnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
-        super(output, Registries.ENCHANTMENT, registriesFuture);
+    public LootEnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
+        super(output, Registries.ENCHANTMENT, registriesFuture, existingFileHelper);
     }
 
     @Override
@@ -82,12 +81,12 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
 
         builder(rare)
                 .addAll(RARE)
-                .addOptional(createKey("veinminer-enchantment", "veinminer"))
-                .addOptional(createKey("veinminer_enchantment", "veinminer"));
+                .addOptional(createOptionalId("veinminer-enchantment", "veinminer"))
+                .addOptional(createOptionalId("veinminer_enchantment", "veinminer"));
 
         builder(uncommon)
                 .addAll(UNCOMMON)
-                .addOptional(createKey("farmersdelight", "backstabbing"));
+                .addOptional(createOptionalId("farmersdelight", "backstabbing"));
 
         builder(common)
                 .addAll(COMMON);

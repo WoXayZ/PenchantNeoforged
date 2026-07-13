@@ -1,9 +1,7 @@
 package archives.tater.penchant.client.gui;
 
-import net.minecraft.client.gui.GuiGraphicsExtractor;
-import net.minecraft.client.input.MouseButtonEvent;
-import net.minecraft.client.renderer.RenderPipelines;
-import net.minecraft.resources.Identifier;
+import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.resources.ResourceLocation;
 
 import static archives.tater.penchant.client.gui.PenchantGuiUtil.containsPoint;
 import static java.lang.Math.max;
@@ -11,7 +9,7 @@ import static java.lang.Math.round;
 import static net.minecraft.util.Mth.clamp;
 
 public class ScrollbarComponent {
-    private final Identifier texture;
+    private final ResourceLocation texture;
     private final int width;
     private final int scrollerHeight;
     private final int trackHeight;
@@ -29,10 +27,10 @@ public class ScrollbarComponent {
 
     private int position = 0;
 
-    private boolean dragging = true;
+    private boolean dragging = false;
     private double mouseYOffset = 0;
 
-    public ScrollbarComponent(Identifier texture, int width, int height, int trackHeight, int regionWidth, int regionHeight, Runnable onScrolled) {
+    public ScrollbarComponent(ResourceLocation texture, int width, int height, int trackHeight, int regionWidth, int regionHeight, Runnable onScrolled) {
         this.texture = texture;
         this.width = width;
         this.scrollerHeight = height;
@@ -73,15 +71,10 @@ public class ScrollbarComponent {
         return y + getScrollerYOffset();
     }
 
-    public void render(GuiGraphicsExtractor guiGraphics) {
+    public void render(GuiGraphics guiGraphics) {
         if (!canScroll()) return;
         guiGraphics.blitSprite(
-                RenderPipelines.GUI_TEXTURED,
                 texture,
-                width,
-                scrollerHeight,
-                0,
-                0,
                 x,
                 getScrollerY(),
                 width,
@@ -96,21 +89,21 @@ public class ScrollbarComponent {
         return true;
     }
 
-    public boolean mouseClicked(MouseButtonEvent event) {
-        if (!containsPoint(x, y, width, trackHeight, event.x(), event.y())) return false;
+    public boolean mouseClicked(double mouseX, double mouseY, int button) {
+        if (button != 0 || !containsPoint(x, y, width, trackHeight, mouseX, mouseY)) return false;
 
-        if (containsPoint(x, getScrollerY(), width, scrollerHeight, event.x(), event.y())) {
+        if (containsPoint(x, getScrollerY(), width, scrollerHeight, mouseX, mouseY)) {
             dragging = true;
-            mouseYOffset = event.y() - getScrollerY();
+            mouseYOffset = mouseY - getScrollerY();
         } else
-            setPositionForOffset(event.y() - y);
+            setPositionForOffset(mouseY - y);
 
         return true;
     }
 
-    public boolean mouseDragged(MouseButtonEvent event) {
-        if (!dragging) return false;
-        setPositionForOffset(event.y() - y - mouseYOffset);
+    public boolean mouseDragged(double mouseX, double mouseY, int button) {
+        if (!dragging || button != 0) return false;
+        setPositionForOffset(mouseY - y - mouseYOffset);
         return true;
     }
 
@@ -128,7 +121,7 @@ public class ScrollbarComponent {
         this.position = position;
         onScrolled.run();
     }
-    
+
     public void addPosition(int change) {
         setPosition(position + change);
     }

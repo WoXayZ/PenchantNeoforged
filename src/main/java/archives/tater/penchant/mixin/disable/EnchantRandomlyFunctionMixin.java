@@ -14,7 +14,7 @@ import net.minecraft.world.level.storage.loot.functions.EnchantRandomlyFunction;
 @Mixin(EnchantRandomlyFunction.class)
 public class EnchantRandomlyFunctionMixin {
     @ModifyReturnValue(
-            method = "lambda$run$1",
+            method = "run",
             at = @At("RETURN")
     )
     private static boolean disableEnchantment(boolean original, @Local(argsOnly = true) Holder<Enchantment> enchantment) {

@@ -13,7 +13,7 @@ import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.HolderSet;
-import net.minecraft.core.Registry;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.sounds.SoundEvents;
@@ -61,7 +61,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
     private final DataSlot hasDisenchanter = addDataSlot(DataSlot.standalone());
     private final ContainerLevelAccess access;
     private final Player player;
-    private final Registry<Enchantment> enchantments;
+    private final HolderLookup.RegistryLookup<Enchantment> enchantments;
     private Set<Holder<Enchantment>> availableEnchantments = Set.of();
     private List<Holder<Enchantment>> displayedEnchantments = List.of();
 
@@ -93,20 +93,29 @@ public class PenchantmentMenu extends AbstractContainerMenu {
                 return isDisenchantingIngredient(stack) ? 1 : super.getMaxStackSize(stack);
             }
         });
-        addStandardInventorySlots(playerInventory, 23, 90);
+        addPlayerInventory(playerInventory, 23, 90);
 
         access.execute((level, pos) -> {
             bookCount.set(getBookCount(level, pos));
-            hasDisenchanter.set(player.hasInfiniteMaterials() || hasDisenchanter(level, pos) ? 1 : 0);
+            hasDisenchanter.set(player.isCreative() || hasDisenchanter(level, pos) ? 1 : 0);
         });
+    }
+
+    private void addPlayerInventory(Inventory playerInventory, int leftCol, int topRow) {
+        for (int row = 0; row < 3; ++row) {
+            for (int col = 0; col < 9; ++col) {
+                addSlot(new Slot(playerInventory, col + row * 9 + 9, leftCol + col * 18, topRow + row * 18));
+            }
+        }
+        for (int col = 0; col < 9; ++col) {
+            addSlot(new Slot(playerInventory, col, leftCol + col * 18, topRow + 58));
+        }
     }
 
     public void setUnlockedEnchantments(Set<Holder<Enchantment>> unlockedEnchantments) {
         this.availableEnchantments = Stream.concat(
                 unlockedEnchantments.stream(),
-                enchantments
-                        .get(EnchantmentTags.IN_ENCHANTING_TABLE).stream()
-                        .flatMap(HolderSet::stream)
+                enchantments.get(EnchantmentTags.IN_ENCHANTING_TABLE).map(HolderSet::stream).orElse(Stream.empty())
         ).collect(Collectors.toSet());
     }
 
@@ -166,7 +175,10 @@ public class PenchantmentMenu extends AbstractContainerMenu {
                 .filter(offset -> EnchantingTableBlock.isValidBookShelf(level, pos, offset))
                 .map(pos::offset)
                 .map(level::getBlockEntity)
-                .flatMap(entity -> entity instanceof ChiseledBookShelfBlockEntity bookshelf ? bookshelf.getItems().stream() : Stream.empty())
+                .flatMap(entity -> {
+                    if (!(entity instanceof ChiseledBookShelfBlockEntity bookshelf)) return Stream.<ItemStack>empty();
+                    return java.util.stream.IntStream.range(0, 6).mapToObj(bookshelf::getItem);
+                })
                 .flatMap(stack -> PenchantmentHelper.getEnchantments(stack).keySet().stream())
                 .distinct()
                 .filter(enchantment -> !enchantment.is(EnchantmentTags.IN_ENCHANTING_TABLE))
@@ -191,7 +203,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
     public void sendEnchantments() {
         access.execute((level, pos) -> {
             var unlockedEnchantments = getUnlockedEnchantments(level, pos);
-            var effectiveUnlockedEnchantments = player.hasInfiniteMaterials()
+            var effectiveUnlockedEnchantments = player.isCreative()
                     ? enchantments.listElements().<Holder<Enchantment>>map(Function.identity()).collect(Collectors.toSet())
                     : unlockedEnchantments;
             setUnlockedEnchantments(effectiveUnlockedEnchantments);
@@ -205,7 +217,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
         var stack = getEnchantingStack();
         if (isEnchanting()) {
             var levelCost = PenchantmentHelper.getXpLevelCost(enchantment);
-            if (!player.hasInfiniteMaterials() && (
+            if (!player.isCreative() && (
                     !PenchantmentHelper.canEnchant(stack, enchantment)
                             || !availableEnchantments.contains(enchantment)
                             || getIngredientStack().isEmpty()
@@ -220,7 +232,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
                 var result = PenchantmentHelper.enchant(stack, enchantment);
                 enchantSlots.setItem(0, result);
 
-                if (!player.hasInfiniteMaterials())
+                if (!player.isCreative())
                     getIngredientStack().shrink(1);
 
                 player.awardStat(Stats.ENCHANT_ITEM);
@@ -232,7 +244,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
             });
         } else if (isDisenchanting()) {
             var ingredientStack = getIngredientStack();
-            if (!player.hasInfiniteMaterials() &&
+            if (!player.isCreative() &&
                     (!PenchantmentHelper.hasEnchantment(stack, enchantment)
                     || getBookCount() < PenchantmentHelper.getBookRequirement(enchantment)
                     || !EnchantmentHelper.isEnchantmentCompatible(PenchantmentHelper.getEnchantments(ingredientStack).keySet(), enchantment))) {

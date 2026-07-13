@@ -4,7 +4,7 @@ import archives.tater.penchant.Penchant;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
-import net.minecraft.world.InteractionResult;
+import net.minecraft.world.InteractionResultHolder;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
@@ -18,12 +18,13 @@ public class TomeOfPenchantItem extends Item {
     }
 
     @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
+    public InteractionResultHolder<ItemStack> use(Level level, Player player, InteractionHand hand) {
+        var stack = player.getItemInHand(hand);
         if (!level.isClientSide() && player instanceof ServerPlayer serverPlayer) {
             PatchouliAPI.get().openBookGUI(serverPlayer, Penchant.id("tome_of_penchant"));
         }
 
-        return InteractionResult.SUCCESS;
+        return InteractionResultHolder.sidedSuccess(stack, level.isClientSide());
     }
 
     @Override

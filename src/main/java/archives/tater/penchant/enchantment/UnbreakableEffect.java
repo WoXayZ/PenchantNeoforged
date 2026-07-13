@@ -4,9 +4,8 @@ import archives.tater.penchant.registry.PenchantEnchantments;
 
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
-import net.minecraft.advancements.criterion.DataComponentMatchers;
-import net.minecraft.advancements.criterion.ItemPredicate;
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.critereon.ItemPredicate;
+import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.ItemEnchantments;
@@ -33,7 +32,7 @@ public record UnbreakableEffect(MinMaxBounds.Ints level, ItemPredicate item) {
         return false;
     }
 
-    public static final ItemPredicate ANY_ITEM = new ItemPredicate(Optional.empty(), MinMaxBounds.Ints.ANY, DataComponentMatchers.ANY);
+    public static final ItemPredicate ANY_ITEM = ItemPredicate.Builder.item().build();
 
     public static final Codec<UnbreakableEffect> CODEC = RecordCodecBuilder.create(instance -> instance.group(
             MinMaxBounds.Ints.CODEC.optionalFieldOf("level", MinMaxBounds.Ints.ANY).forGetter(UnbreakableEffect::level),

@@ -13,37 +13,35 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.world.entity.EquipmentSlot;
 import net.minecraft.world.entity.LivingEntity;
-import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.EnchantmentHelper;
 
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
-    // In 26.1.2 the ServerPlayer overload of hurtAndBreak only delegates to this LivingEntity overload, which is the
-    // central implementation every durability path (combat, mining, armor...) funnels through. Injecting here ensures
-    // that hitting mobs actually grants enchantment progress. We keep the original player-only leveling behavior.
+    // NeoForge routes durability through the LivingEntity overload; the ServerPlayer overload is only a delegate.
     @Inject(
             at = @At("HEAD"),
             method = "hurtAndBreak(ILnet/minecraft/server/level/ServerLevel;Lnet/minecraft/world/entity/LivingEntity;Ljava/util/function/Consumer;)V"
     )
-	private void updateProgress(int amount, ServerLevel level, @Nullable LivingEntity player, Consumer<Item> onBreak, CallbackInfo ci) {
-        if (player instanceof ServerPlayer)
+    private void updateProgress(int amount, ServerLevel level, @Nullable LivingEntity entity, Consumer<Item> onBreak, CallbackInfo ci) {
+        if (entity instanceof ServerPlayer player)
             EnchantmentProgress.onDurabilityDamage((ItemStack) (Object) this, player);
-	}
+    }
 
     @Inject(
             at = @At("HEAD"),
-            method = "hurtWithoutBreaking"
+            method = "hurtAndBreak(ILnet/minecraft/world/entity/LivingEntity;Lnet/minecraft/world/entity/EquipmentSlot;)V"
     )
-    private void updateProgress(int amount, Player player, CallbackInfo ci) {
-        if (player instanceof ServerPlayer)
+    private void updateArmorProgress(int amount, LivingEntity entity, EquipmentSlot slot, CallbackInfo ci) {
+        if (entity instanceof ServerPlayer player)
             EnchantmentProgress.onDurabilityDamage((ItemStack) (Object) this, player);
     }
 

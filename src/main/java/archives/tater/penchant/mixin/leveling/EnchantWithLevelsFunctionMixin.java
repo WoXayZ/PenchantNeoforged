@@ -2,8 +2,7 @@ package archives.tater.penchant.mixin.leveling;
 
 import archives.tater.penchant.component.EnchantmentProgress;
 
-import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
-import com.llamalad7.mixinextras.sugar.Local;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
@@ -15,11 +14,11 @@ import net.minecraft.world.level.storage.loot.functions.EnchantWithLevelsFunctio
 
 @Mixin(EnchantWithLevelsFunction.class)
 public class EnchantWithLevelsFunctionMixin {
-    @ModifyExpressionValue(
+    @ModifyReturnValue(
             method = "run",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;enchantItem(Lnet/minecraft/util/RandomSource;Lnet/minecraft/world/item/ItemStack;ILnet/minecraft/core/RegistryAccess;Ljava/util/Optional;)Lnet/minecraft/world/item/ItemStack;")
+            at = @At("RETURN")
     )
-    private static ItemStack addProgress(ItemStack original, @Local(argsOnly = true) LootContext context) {
+    private ItemStack addProgress(ItemStack original, ItemStack stack, LootContext context) {
         if (EnchantmentHelper.getComponentType(original) == DataComponents.STORED_ENCHANTMENTS) return original;
 
         EnchantmentProgress.addRandomProgress(original, context.getRandom());

@@ -16,7 +16,7 @@ import java.util.List;
 @Mixin(EnchantmentMenu.class)
 public class EnchantmentMenuMixin {
     @ModifyExpressionValue(
-            method = "lambda$slotsChanged$0",
+            method = "slotsChanged",
             at = @At(value = "FIELD", target = "Lnet/minecraft/world/level/block/EnchantingTableBlock;BOOKSHELF_OFFSETS:Ljava/util/List;", opcode = Opcodes.GETSTATIC)
     )
     private List<BlockPos> lenientBookshelfPlacement(List<BlockPos> original) {
