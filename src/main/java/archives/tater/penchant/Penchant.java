@@ -5,6 +5,7 @@ import archives.tater.penchant.registry.PenchantAdvancements;
 import archives.tater.penchant.registry.PenchantComponents;
 import archives.tater.penchant.registry.PenchantEnchantments;
 import archives.tater.penchant.registry.PenchantFlag;
+import archives.tater.penchant.registry.PenchantItems;
 import archives.tater.penchant.registry.PenchantMenus;
 import archives.tater.penchant.registry.PenchantModules;
 import archives.tater.penchant.registry.PenchantRegistries;
@@ -69,6 +70,7 @@ public class Penchant {
         PenchantComponents.register(event);
         PenchantEnchantments.register(event);
         PenchantMenus.register(event);
+        PenchantItems.register(event);
         PenchantAdvancements.register(event);
     }
 

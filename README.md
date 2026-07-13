@@ -82,6 +82,11 @@ tag/data-driven rather than hardcoded to vanilla enchantments:
 - **[Item Descriptions](https://modrinth.com/mod/item-descriptions)** - if installed (client-side), Penchant's
   enchantments show extra descriptive tooltips. It is entirely optional and not bundled.
 
+## In-game guide
+
+**[Patchouli](https://modrinth.com/mod/patchouli)** is required. Craft the **Tome of Penchant** with a Book and an
+Enchanting Table, or find it in the Tools & Utilities creative tab. The book is fully localized in English and French.
+
 ---
 
 ## Building from source

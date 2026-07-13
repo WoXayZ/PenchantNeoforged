@@ -16,6 +16,10 @@ repositories {
     mavenCentral()
     maven { url = 'https://jitpack.io' }
     maven {
+        name = "BlameJared (Patchouli)"
+        url = "https://maven.blamejared.com"
+    }
+    maven {
         name = "cassian's maven"
         url = "https://maven.cassian.cc"
     }
@@ -119,6 +123,15 @@ dependencies {
     // Item Descriptions exposes kaleido-config types on its public API; needed at compile time only.
     // (Item Descriptions bundles kaleido at runtime via jar-in-jar.)
     compileOnly "folk.sisby:kaleido-config:${project.kaleido_version}"
+
+    // Patchouli powers the in-game guidebook ("Tome of Penchant"). compileOnly for TomeOfPenchantItem; localRuntime
+    // for dev testing. Required for end users (neoforge.mods.toml). transitive = false keeps its deps out of dev.
+    compileOnly("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
+        transitive = false
+    }
+    localRuntime("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
+        transitive = false
+    }
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {
