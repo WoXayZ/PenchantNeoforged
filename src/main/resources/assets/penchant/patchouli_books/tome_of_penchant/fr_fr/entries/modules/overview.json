@@ -23,7 +23,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(italic)Activés par défaut$()$(br)$(li)Refonte de la Table $(li)Placement des Étagères $(li)Refonte de la Durabilité $(li)Refonte du Butin $(li)Pas de Livres à l'Enclume $(li)Butin Garanti$(br2)$(italic)Désactivé par défaut$()$(br)$(li)Malédictions Réduites"
+            "text": "$(italic)Activés par défaut$()$(br)$(li)Refonte de la Table $(li)Placement des Étagères $(li)Refonte de la Durabilité $(li)Refonte du Butin $(li)Pas de Livres à l'Enclume $(li)Butin Garanti$(br2)$(italic)Désactivé par défaut$()$(br)$(li)Malédictions Réduites $(li)Bibliothécaires aléatoires"
         }
     ]
 }

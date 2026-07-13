@@ -4,15 +4,12 @@ import archives.tater.penchant.PenchantmentDefinition;
 import archives.tater.penchant.api.CanEnchantCallback;
 import archives.tater.penchant.registry.PenchantFlag;
 
-import net.minecraft.ChatFormatting;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
-import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.Style;
-import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.util.TriState;
+import net.minecraft.util.Unit;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -24,6 +21,8 @@ import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.neoforged.fml.ModList;
+
+import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -40,13 +39,11 @@ public class PenchantmentHelper {
             .map(BlockPos::immutable)
             .toList();
 
+    public static ScopedValue<@Nullable Unit> NO_LEVEL_NAME_CONTEXT = ScopedValue.newInstance();
+
     public static Component getName(Holder<Enchantment> enchantment) {
-        return ComponentUtils.mergeStyles(
-                enchantment.value().description().copy(),
-                Style.EMPTY.withColor(enchantment.is(EnchantmentTags.CURSE)
-                        ? ChatFormatting.RED
-                        : ChatFormatting.GRAY
-                )
+        return ScopedValue.where(NO_LEVEL_NAME_CONTEXT, Unit.INSTANCE).call(() ->
+                Enchantment.getFullname(enchantment, 1)
         );
     }
 
@@ -77,9 +74,21 @@ public class PenchantmentHelper {
     }
 
     public static boolean canEnchant(ItemStack stack, Holder<Enchantment> enchantment) {
+        if (hasEnchantment(stack, enchantment)) return false;
         var result = CanEnchantCallback.STACK.invoke(stack, enchantment);
         if (result != TriState.DEFAULT) return result.toBoolean(false);
-        return canEnchantItem(stack, enchantment) && !hasEnchantment(stack, enchantment) && EnchantmentHelper.isEnchantmentCompatible(getEnchantments(stack).keySet(), enchantment);
+        return canEnchantItem(stack, enchantment) && EnchantmentHelper.isEnchantmentCompatible(getEnchantments(stack).keySet(), enchantment);
+    }
+
+    public static ItemStack fixBookType(ItemStack stack) {
+        if (getEnchantments(stack).isEmpty()) {
+            if (stack.is(Items.ENCHANTED_BOOK))
+                return stack.transmuteCopy(Items.BOOK);
+        } else {
+            if (stack.is(Items.BOOK))
+                return stack.transmuteCopy(Items.ENCHANTED_BOOK);
+        }
+        return stack;
     }
 
     public static ItemStack updateEnchantments(ItemStack stack, Consumer<ItemEnchantments.Mutable> updater) {
@@ -89,14 +98,14 @@ public class PenchantmentHelper {
         updater.accept(mutable);
         var newEnchantments = mutable.toImmutable();
         stack.set(type, newEnchantments);
-        if (newEnchantments.isEmpty()) {
-            if (stack.is(Items.ENCHANTED_BOOK))
-                return stack.transmuteCopy(Items.BOOK);
-        } else {
-            if (stack.is(Items.BOOK))
-                return stack.transmuteCopy(Items.ENCHANTED_BOOK);
-        }
-        return stack;
+
+        return fixBookType(stack);
+    }
+
+    public static ItemStack enchant(ItemStack stack, Holder<Enchantment> enchantment) {
+        var effectiveStack = stack.is(Items.BOOK) ? stack.transmuteCopy(Items.ENCHANTED_BOOK) : stack;
+        effectiveStack.enchant(enchantment, 1);
+        return fixBookType(effectiveStack);
     }
 
     public static List<BlockPos> getBookshelfOffsets(List<BlockPos> original) {

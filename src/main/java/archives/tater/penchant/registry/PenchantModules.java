@@ -18,6 +18,7 @@ public class PenchantModules {
     public static final Identifier LOOT_REWORK = Penchant.id("loot_rework");
     public static final Identifier GUARANTEED_DROPS = Penchant.id("guaranteed_drops");
     public static final Identifier REDUCED_CURSES = Penchant.id("reduced_curses");
+    public static final Identifier RANDOMIZED_LIBRARIANS = Penchant.id("randomized_librarians");
 
     /** Off by default, toggleable, with no extra source decoration. */
     private static final PackSource NORMAL_SOURCE = PackSource.create(PackSource.NO_DECORATION, false);
@@ -48,6 +49,7 @@ public class PenchantModules {
         registerPack(event, LOOT_REWORK);
         registerPack(event, GUARANTEED_DROPS);
         registerPack(event, REDUCED_CURSES, NORMAL_SOURCE);
+        registerPack(event, RANDOMIZED_LIBRARIANS, NORMAL_SOURCE);
     }
 
     public static void init() {

@@ -1,6 +1,7 @@
 {
   "remove": [
-    "#penchant:common"
+    "#penchant:common",
+    "#penchant:rare"
   ],
   "values": [
     "#penchant:uncommon"

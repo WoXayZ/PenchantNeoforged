@@ -12,8 +12,10 @@ import com.mojang.blaze3d.platform.InputConstants.Type;
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.KeyMapping;
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import net.neoforged.api.distmarker.Dist;
@@ -38,6 +40,8 @@ public class PenchantClient {
             InputConstants.KEY_LCONTROL,
             PENCHANT_CATEGORY
     );
+
+    public static final ScopedValue<ItemStack> TOOLTIP_ITEM = ScopedValue.newInstance();
 
     public PenchantClient(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, PenchantClientConfig.SPEC);
@@ -78,7 +82,7 @@ public class PenchantClient {
                 .withStyle(ChatFormatting.DARK_GRAY);
     }
 
-    public static Component getProgressTooltip(EnchantmentProgress progress, Holder<Enchantment> enchantment, int level, int maxDamage) {
+    public static Component getProgressTooltip(EnchantmentProgress progress, Holder<Enchantment> enchantment, int level, DataComponentGetter components) {
         if (level >= enchantment.value().getMaxLevel())
             return Component.literal("  ")
                     .append(FontUtils.getBar(getBarWidth(), getBarWidth()))
@@ -86,7 +90,7 @@ public class PenchantClient {
                     .append(Component.translatable("penchant.tooltip.progress.max"))
                     .withStyle(ChatFormatting.LIGHT_PURPLE);
 
-        var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, maxDamage);
+        var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, components);
 
         return Component.literal("  ")
                 .append(FontUtils.getBar(getBarWidth(), getBarWidth() * progress.getProgress(enchantment) / maxProgress))

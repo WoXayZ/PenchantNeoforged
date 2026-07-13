@@ -23,7 +23,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(italic)Enabled by default$()$(br)$(li)Table Rework $(li)Bookshelf Placement $(li)Durability Rework $(li)Loot Rework $(li)No Anvil Books $(li)Guaranteed Drops$(br2)$(italic)Off by default$()$(br)$(li)Reduced Curses"
+            "text": "$(italic)Enabled by default$()$(br)$(li)Table Rework $(li)Bookshelf Placement $(li)Durability Rework $(li)Loot Rework $(li)No Anvil Books $(li)Guaranteed Drops$(br2)$(italic)Off by default$()$(br)$(li)Reduced Curses $(li)Randomized Librarians"
         }
     ]
 }

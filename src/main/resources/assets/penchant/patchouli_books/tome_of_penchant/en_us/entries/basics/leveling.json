@@ -23,7 +23,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(italic)Notes$()$(br)$(li)Single-level enchantments don't show a progress bar.$(li)Items without durability currently can't level up.$(li)Client options (progress display, key hint, bar width) live in the mod's config."
+            "text": "$(italic)Notes$()$(br)$(li)Single-level enchantments don't show a progress bar.$(li)Items without durability can still level up if they are in $(#7A2FBF)#penchant:max_level_enchantments$() (harnesses, horse armor, nautilus armor).$(li)Durability items use the $(#7A2FBF)penchant:enchantment_progress_cost_factor$() component; if absent, progress cost scales from max durability.$(li)Client options (progress display, key hint, bar width) live in the mod's config."
         }
     ]
 }

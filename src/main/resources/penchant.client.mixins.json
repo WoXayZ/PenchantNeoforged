@@ -4,7 +4,8 @@
   "compatibilityLevel": "JAVA_25",
   "client": [
     "leveling.BitmapProviderMixin",
-    "leveling.EnchantmentScreenMixin"
+    "leveling.EnchantmentScreenMixin",
+    "leveling.ItemStackMixin"
   ],
   "injectors": {
     "defaultRequire": 1

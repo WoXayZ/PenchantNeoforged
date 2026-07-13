@@ -100,6 +100,7 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
                 .remove(uncommon);
         builder(EnchantmentTags.TRADEABLE)
                 .remove(common)
+                .remove(rare)
                 .addTag(uncommon);
         builder(EnchantmentTags.ON_RANDOM_LOOT)
                 .addTag(uncommon)

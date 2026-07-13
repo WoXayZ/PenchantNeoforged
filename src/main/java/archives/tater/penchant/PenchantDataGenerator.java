@@ -6,6 +6,7 @@ import archives.tater.penchant.datagen.CurseEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.DurabilityEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.EnchantmentTagGenerator;
 import archives.tater.penchant.datagen.FlagTagGenerator;
+import archives.tater.penchant.datagen.ItemTagGenerator;
 import archives.tater.penchant.datagen.LootAdvancementGenerator;
 import archives.tater.penchant.datagen.LootEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.PackMetaGen;
@@ -49,6 +50,7 @@ public final class PenchantDataGenerator {
         main.addProvider(output -> new FlagTagGenerator(output, lookup));
         main.addProvider(output -> new EnchantmentTagGenerator(output, lookup));
         main.addProvider(output -> new BlockTagGenerator(output, lookup));
+        main.addProvider(output -> new ItemTagGenerator(output, lookup));
 
         // durability_rework
         var durability = builtinPack(generator, PenchantModules.DURABILITY_REWORK);
@@ -90,6 +92,9 @@ public final class PenchantDataGenerator {
         // reduced_curses
         var curses = builtinPack(generator, PenchantModules.REDUCED_CURSES);
         curses.addProvider(output -> new CurseEnchantmentTagGenerator(output, lookup));
+
+        // randomized_librarians
+        builtinPack(generator, PenchantModules.RANDOMIZED_LIBRARIANS);
     }
 
     private static DataGenerator.PackGenerator builtinPack(DataGenerator generator, Identifier id) {

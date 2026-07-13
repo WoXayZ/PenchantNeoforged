@@ -4,11 +4,12 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (0.3.11) while using native NeoForge APIs.
+original Fabric mod (**0.4.0**) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
+| **Port version** | **1.1** |
 | **Minecraft** | 26.1.2 |
 | **NeoForge** | 26.1.2.78 |
 | **Java** | 25 |
@@ -45,6 +46,16 @@ Penchant ships several optional behaviors as built-in datapacks you can enable/d
 | `loot_rework` | ✔ | Reworks where enchantment books appear in loot & mob equipment |
 | `guaranteed_drops` | ✔ | Guarantees certain enchanted drops (e.g. tridents) |
 | `reduced_curses` | ✘ | Reduces how often curses appear |
+| `randomized_librarians` | ✘ | Librarians sell a different enchanted book on each purchase |
+
+### Item tags & components (0.4.0)
+
+- `#penchant:max_level_enchantments` - items in this tag receive enchantments at max level (for gear without
+  durability, such as harnesses and horse/nautilus armor).
+- `penchant:enchantment_progress_cost_factor` - controls how much durability damage is needed per level on items with
+  max damage. If absent, a fallback is computed from max durability (`clamp(floor(max_durability / 100), 1, 8)`).
+- `penchant:random_enchantment` - marks loot that resolves to a random enchantment when crafted or traded (used by
+  the randomized librarians module).
 
 ---
 
