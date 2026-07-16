@@ -99,7 +99,7 @@ public final class PenchantDataGenerator {
     }
 
     private static DataGenerator.PackGenerator builtinPack(DataGenerator generator, ResourceLocation id) {
-        var pack = generator.getPackGenerator(true, id.getPath(), "resourcepacks/" + id.getPath());
+        var pack = generator.getBuiltinDatapack(true, id.getPath(), "resourcepacks/" + id.getPath());
         pack.addProvider(PackMetaGen.pack(id));
         return pack;
     }

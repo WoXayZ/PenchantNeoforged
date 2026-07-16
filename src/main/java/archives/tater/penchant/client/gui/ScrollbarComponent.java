@@ -1,5 +1,6 @@
 package archives.tater.penchant.client.gui;
 
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.resources.ResourceLocation;
 
@@ -73,13 +74,7 @@ public class ScrollbarComponent {
 
     public void render(GuiGraphics guiGraphics) {
         if (!canScroll()) return;
-        guiGraphics.blitSprite(
-                texture,
-                x,
-                getScrollerY(),
-                width,
-                scrollerHeight
-        );
+        guiGraphics.blitSprite(RenderType::guiTextured, texture, x, getScrollerY(), width, scrollerHeight);
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {

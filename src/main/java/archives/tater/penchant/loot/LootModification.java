@@ -8,6 +8,7 @@ import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
 import net.minecraft.core.Registry;
+import net.minecraft.core.RegistryAccess;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -19,6 +20,7 @@ import net.minecraft.world.level.storage.loot.functions.LootItemFunctions;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import net.neoforged.neoforge.common.NeoForge;
+import net.neoforged.neoforge.event.AddReloadListenerEvent;
 import net.neoforged.neoforge.event.LootTableLoadEvent;
 
 import java.util.ArrayList;
@@ -40,15 +42,22 @@ public record LootModification(
 
     public static final ResourceKey<Registry<LootModification>> KEY = ResourceKey.createRegistryKey(Penchant.id("loot_modification"));
 
+    private static RegistryAccess registryAccess = RegistryAccess.EMPTY;
+
     public static void init() {
+        NeoForge.EVENT_BUS.addListener(LootModification::onAddReloadListeners);
         NeoForge.EVENT_BUS.addListener(LootModification::onLootTableLoad);
     }
 
+    private static void onAddReloadListeners(AddReloadListenerEvent event) {
+        registryAccess = event.getRegistryAccess();
+    }
+
     private static void onLootTableLoad(LootTableLoadEvent event) {
-        var lookupOpt = event.getRegistries().lookup(KEY);
+        var lookupOpt = registryAccess.lookup(LootModification.KEY);
         if (lookupOpt.isEmpty()) return;
 
-        var key = event.getKey();
+        var key = ResourceKey.create(Registries.LOOT_TABLE, event.getName());
         var applicable = lookupOpt.get().listElements()
                 .map(Holder::value)
                 .filter(modification -> modification.matches(key))

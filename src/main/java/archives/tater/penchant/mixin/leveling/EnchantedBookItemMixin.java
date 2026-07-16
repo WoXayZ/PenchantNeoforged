@@ -8,10 +8,10 @@ import org.objectweb.asm.Opcodes;
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
 
-import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.enchantment.EnchantmentInstance;
 
-@Mixin(EnchantedBookItem.class)
+// EnchantedBookItem is not exposed on the compile classpath in 1.21.2, but still exists at runtime.
+@Mixin(targets = "net.minecraft.world.item.EnchantedBookItem")
 public class EnchantedBookItemMixin {
     @ModifyExpressionValue(
             method = "createForEnchantment",

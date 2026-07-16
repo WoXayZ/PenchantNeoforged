@@ -8,6 +8,7 @@ import net.neoforged.neoforge.network.PacketDistributor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderType;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -139,7 +140,7 @@ public class EnchantmentSlotWidget extends AbstractButton {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(TEXTURES.get(active, isHovered()), getX(), getY(), getWidth(), getHeight());
+        graphics.blitSprite(RenderType::guiTextured, TEXTURES.get(active, isHovered()), getX(), getY(), getWidth(), getHeight());
 
         var font = Minecraft.getInstance().font;
 
