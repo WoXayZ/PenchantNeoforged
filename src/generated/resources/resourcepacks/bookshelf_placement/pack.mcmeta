@@ -1,11 +1,8 @@
 {
-  "features": {
-    "enabled": []
-  },
   "pack": {
     "description": {
       "translate": "dataPack.penchant.bookshelf_placement.description"
     },
-    "pack_format": 48
+    "pack_format": 80
   }
 }
