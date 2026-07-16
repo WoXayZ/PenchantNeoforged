@@ -1,4 +1,4 @@
-﻿plugins {
+plugins {
     id 'java-library'
     id 'maven-publish'
     id 'net.neoforged.moddev' version '2.0.141'
@@ -124,14 +124,13 @@ dependencies {
     // (Item Descriptions bundles kaleido at runtime via jar-in-jar.)
     compileOnly "folk.sisby:kaleido-config:${project.kaleido_version}"
 
-    // Patchouli powers the in-game guidebook ("Tome of Penchant"). compileOnly for TomeOfPenchantItem; localRuntime
-    // for dev testing. Required for end users (neoforge.mods.toml). transitive = false keeps its deps out of dev.
-    compileOnly("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
-        transitive = false
-    }
-    localRuntime("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
-        transitive = false
-    }
+    // PATCHOULI: Re-enable when a compatible Patchouli release exists for this Minecraft version.
+    // compileOnly("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
+    //     transitive = false
+    // }
+    // localRuntime("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
+    //     transitive = false
+    // }
 }
 
 var generateModMetadata = tasks.register("generateModMetadata", ProcessResources) {

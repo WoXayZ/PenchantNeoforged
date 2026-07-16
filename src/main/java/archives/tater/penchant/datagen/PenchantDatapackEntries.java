@@ -5,7 +5,7 @@ import archives.tater.penchant.enchantment.UnbreakableEffect;
 import archives.tater.penchant.loot.LootModification;
 import archives.tater.penchant.registry.PenchantEnchantments;
 
-import net.minecraft.advancements.criterion.MinMaxBounds;
+import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;

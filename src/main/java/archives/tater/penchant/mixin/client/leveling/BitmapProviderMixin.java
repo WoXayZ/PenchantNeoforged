@@ -20,10 +20,10 @@ public class BitmapProviderMixin {
 
     @ModifyArg(
             method = "load",
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/font/providers/BitmapProvider$Glyph;<init>(FLcom/mojang/blaze3d/platform/NativeImage;IIIIII)V"),
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/client/gui/font/providers/BitmapProvider$Glyph;<init>(FLnet/minecraft/client/gui/font/providers/BitmapProvider$ImageDataHolder;IIIIII)V"),
             index = 6
     )
-    private int disableSpacing(int width) {
-        return file.equals(FontUtils.FONT_TEXTURE) ? width - 1 : width;
+    private int disableSpacing(int advance) {
+        return file.equals(FontUtils.FONT_TEXTURE) ? advance - 1 : advance;
     }
 }

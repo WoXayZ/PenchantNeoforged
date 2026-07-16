@@ -3,9 +3,9 @@ package archives.tater.penchant.datagen;
 import archives.tater.penchant.Penchant;
 import archives.tater.penchant.registry.PenchantBlockTags;
 
+import net.minecraft.references.BlockItemIds;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.PackOutput;
-import net.minecraft.world.level.block.Blocks;
 
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
 
@@ -19,6 +19,6 @@ public class BlockTagGenerator extends BlockTagsProvider {
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
         tag(PenchantBlockTags.DISENCHANTER)
-                .add(Blocks.GRINDSTONE);
+                .add(BlockItemIds.GRINDSTONE.block());
     }
 }

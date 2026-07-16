@@ -49,8 +49,8 @@ public record RandomEnchantment(Optional<HolderSet<Enchantment>> options, boolea
     public static ItemStack resolve(ItemStack stack, ServerLevel level) {
         var randomEnchantment = stack.remove(PenchantComponents.RANDOM_ENCHANTMENT);
         if (randomEnchantment == null) return stack;
-        var builder = EnchantRandomlyFunction.randomEnchantment()
-                .withOptions(randomEnchantment.options);
+        var builder = EnchantRandomlyFunction.randomEnchantment();
+        randomEnchantment.options.ifPresent(builder::withOptions);
         if (!randomEnchantment.onlyCompatible) builder.allowingIncompatibleEnchantments();
         var context = new LootContext.Builder(new LootParams.Builder(level).create(LootContextParamSets.EMPTY)).create(Optional.empty());
         return builder.build().apply(stack, context);

@@ -21,7 +21,7 @@ public abstract class PenchantTagsProvider<T> extends TagsProvider<T> {
         super(output, registryKey, lookupProvider, Penchant.MOD_ID);
     }
 
-    protected TagAppender<ResourceKey<T>, T> builder(TagKey<T> tag) {
+    protected TagAppender<T> builder(TagKey<T> tag) {
         return TagAppender.forBuilder(this.getOrCreateRawBuilder(tag));
     }
 }
