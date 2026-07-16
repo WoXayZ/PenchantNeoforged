@@ -10,8 +10,6 @@ import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-
 import java.util.concurrent.CompletableFuture;
 
 public class EnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
@@ -21,8 +19,8 @@ public class EnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
             ResourceLocation.fromNamespaceAndPath("c", "hidden_from_recipe_viewers")
     );
 
-    public EnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.ENCHANTMENT, registriesFuture, existingFileHelper);
+    public EnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, Registries.ENCHANTMENT, registriesFuture);
     }
 
     @Override

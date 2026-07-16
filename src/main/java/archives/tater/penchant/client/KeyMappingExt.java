@@ -6,11 +6,11 @@ import net.minecraft.client.KeyMapping;
 import net.minecraft.client.Minecraft;
 
 public class KeyMappingExt extends KeyMapping {
-    public KeyMappingExt(String name, Type type, int key, String category) {
+    public KeyMappingExt(String name, Type type, int key, Category category) {
         super(name, type, key, category);
     }
 
     public boolean isDownAnywhere() {
-        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow().getWindow(), getKey().getValue());
+        return InputConstants.isKeyDown(Minecraft.getInstance().getWindow(), key.getValue());
     }
 }

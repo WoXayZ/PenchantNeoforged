@@ -21,6 +21,7 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 
 import net.minecraft.core.Holder;
+import net.minecraft.core.component.DataComponentGetter;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.Item;
@@ -43,7 +44,7 @@ public class ItemEnchantmentsMixin {
             method = "addToTooltip",
             at = @At("HEAD")
     )
-    private void getProgress(Item.TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag, CallbackInfo ci, @Share("progress") LocalRef<EnchantmentProgress> progress) {
+    private void getProgress(Item.TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter, CallbackInfo ci, @Share("progress") LocalRef<EnchantmentProgress> progress) {
         var stack = PenchantClient.tooltipItem.get();
         if (stack != null && stack.get(DataComponents.STORED_ENCHANTMENTS) == null && !stack.is(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS))
             progress.set(stack.getOrDefault(PenchantComponents.ENCHANTMENT_PROGRESS, EnchantmentProgress.EMPTY));
@@ -88,7 +89,7 @@ public class ItemEnchantmentsMixin {
             method = "addToTooltip",
             at = @At("TAIL")
     )
-    private void addHint(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, CallbackInfo ci, @Share("progress") LocalRef<EnchantmentProgress> progress) {
+    private void addHint(Item.TooltipContext context, Consumer<Component> tooltipAdder, TooltipFlag flag, DataComponentGetter componentGetter, CallbackInfo ci, @Share("progress") LocalRef<EnchantmentProgress> progress) {
         if (progress.get() == null || enchantments.isEmpty() || !PenchantClient.shouldShowKeyHint()) return;
 
         tooltipAdder.accept(PenchantClient.getProgressKeyHint());
