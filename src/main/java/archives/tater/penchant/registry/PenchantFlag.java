@@ -3,7 +3,7 @@ package archives.tater.penchant.registry;
 import archives.tater.penchant.Penchant;
 
 import net.minecraft.core.Registry;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.TagKey;
 
@@ -20,9 +20,9 @@ public class PenchantFlag {
 
     private static final List<PenchantFlag> TO_REGISTER = new ArrayList<>();
 
-    private final ResourceLocation id;
+    private final Identifier id;
 
-    private PenchantFlag(ResourceLocation id) {
+    private PenchantFlag(Identifier id) {
         this.id = id;
     }
 
@@ -35,7 +35,7 @@ public class PenchantFlag {
         return id.toString();
     }
 
-    private static PenchantFlag create(ResourceLocation id) {
+    private static PenchantFlag create(Identifier id) {
         var flag = new PenchantFlag(id);
         TO_REGISTER.add(flag);
         return flag;

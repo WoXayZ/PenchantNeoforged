@@ -1,25 +1,24 @@
 package archives.tater.penchant.client.gui.screen;
 
 import archives.tater.penchant.Penchant;
-import archives.tater.penchant.client.FontUtils;
 import archives.tater.penchant.client.gui.ScrollbarComponent;
 import archives.tater.penchant.client.gui.widget.EnchantmentSlotWidget;
 import archives.tater.penchant.menu.PenchantmentMenu;
 import archives.tater.penchant.util.PenchantmentHelper;
 
-import com.mojang.blaze3d.vertex.PoseStack;
-import com.mojang.math.Axis;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.screens.inventory.AbstractContainerScreen;
 import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
-import net.minecraft.client.model.BookModel;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.client.model.object.book.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
-import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.core.Holder;
+import com.mojang.datafixers.util.Either;
 import net.minecraft.network.chat.Component;
-import net.minecraft.resources.ResourceLocation;
-import net.minecraft.util.Mth;
+import net.minecraft.network.chat.FormattedText;
+import net.minecraft.resources.Identifier;
 import net.minecraft.util.RandomSource;
 import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.item.ItemStack;
@@ -34,16 +33,19 @@ import static net.minecraft.util.Mth.clamp;
 import static net.minecraft.util.Mth.lerp;
 
 public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu> {
-    private static final ResourceLocation TEXTURE = Penchant.id("textures/gui/container/enchanting_table.png");
-    private static final ResourceLocation BOOK_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/enchanting_table_book.png");
-    private static final ResourceLocation SCROLLLER_TEXTURE = Penchant.id("container/enchanting_table/scroller");
-    public static final ResourceLocation LAPIS_LAZULI_SLOT_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_slot_lapis_lazuli");
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = Penchant.id("item/empty_slot_book");
-    private static final List<ResourceLocation> INGREDIENT_SLOT_TEXTURES = List.of(
+    private static final Identifier TEXTURE = Penchant.id("textures/gui/container/enchanting_table.png");
+    private static final Identifier BOOK_TEXTURE = Identifier.withDefaultNamespace("textures/entity/enchanting_table_book.png");
+    private static final Identifier SCROLLLER_TEXTURE = Penchant.id("container/enchanting_table/scroller");
+    private static final Identifier BOOK_ICON_TEXTURE = Penchant.id("container/enchanting_table/book");
+    private static final Identifier GRINDSTONE_ICON_TEXTURE = Penchant.id("container/enchanting_table/grindstone");
+    private static final int INFO_ICON_SIZE = 9;
+    public static final Identifier LAPIS_LAZULI_SLOT_TEXTURE = Identifier.withDefaultNamespace("container/slot/lapis_lazuli");
+    public static final Identifier BOOK_SLOT_TEXTURE = Penchant.id("container/slot/book");
+    private static final List<Identifier> INGREDIENT_SLOT_TEXTURES = List.of(
             LAPIS_LAZULI_SLOT_TEXTURE,
             BOOK_SLOT_TEXTURE
     );
-    private static final List<ResourceLocation> INGREDIENT_SLOT_TEXTURES_NO_DISENCHANT = List.of(
+    private static final List<Identifier> INGREDIENT_SLOT_TEXTURES_NO_DISENCHANT = List.of(
             LAPIS_LAZULI_SLOT_TEXTURE
     );
     private static final Component ENCHANTING_SLOT_TOOLTIP = Component.translatable("container.penchant.enchant.slot.enchant");
@@ -143,19 +145,19 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
     }
 
     @Override
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        return scrollbar.mouseClicked(mouseX, mouseY, button) || super.mouseClicked(mouseX, mouseY, button);
+    public boolean mouseClicked(MouseButtonEvent event, boolean isDoubleClick) {
+        return scrollbar.mouseClicked(event) || super.mouseClicked(event, isDoubleClick);
     }
 
     @Override
-    public boolean mouseDragged(double mouseX, double mouseY, int button, double dragX, double dragY) {
-        return scrollbar.mouseDragged(mouseX, mouseY, button) || super.mouseDragged(mouseX, mouseY, button, dragX, dragY);
+    public boolean mouseDragged(MouseButtonEvent event, double mouseX, double mouseY) {
+        return scrollbar.mouseDragged(event) || super.mouseDragged(event, mouseX, mouseY);
     }
 
     @Override
-    public boolean mouseReleased(double mouseX, double mouseY, int button) {
+    public boolean mouseReleased(MouseButtonEvent event) {
         scrollbar.mouseReleased();
-        return super.mouseReleased(mouseX, mouseY, button);
+        return super.mouseReleased(event);
     }
 
     @Override
@@ -167,63 +169,63 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = leftPos;
         int y = topPos;
-        graphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
-        renderBook(graphics, x, y, partialTick);
-
-        var font = Minecraft.getInstance().font;
-        var infoText = Component.empty()
-                .append(FontUtils.BOOK_TEXT)
-                .append(FontUtils.THIN_SPACE_TEXT)
-                .append(Integer.toString(menu.getBookCount()))
-                .append(" ")
-                .append(FontUtils.GRINDSTONE_TEXT)
-                .append(FontUtils.THIN_SPACE_TEXT)
-                .append(menu.hasDisenchanter() ? "✔" : "❌");
-        graphics.drawString(font, infoText, leftPos + 32 - font.width(infoText) / 2, topPos + 18, 0xFF606060, false);
+        graphics.blit(RenderPipelines.GUI_TEXTURED, TEXTURE, x, y, 0.0F, 0.0F, imageWidth, imageHeight, 256, 256);
+        renderBook(graphics, x, y);
+        renderInfoBar(graphics);
 
         secondSlotBackground.render(menu, graphics, partialTick, leftPos, topPos);
 
         scrollbar.render(graphics);
     }
 
-    private void renderBook(GuiGraphics guiGraphics, int x, int y, float partialTick) {
+    private void renderBook(GuiGraphics guiGraphics, int x, int y) {
+        var partialTick = minecraft.getDeltaTracker().getGameTimeDeltaPartialTick(false);
         var open = lerp(partialTick, oOpen, this.open);
         var flip = lerp(partialTick, oFlip, this.flip);
-        var i = x + 14;
-        var j = y + 14;
-        PoseStack poseStack = guiGraphics.pose();
-        poseStack.pushPose();
-        poseStack.translate(i + 19, j + 16, 50.0F);
-        float f2 = 1.0F - open;
-        f2 = 1.0F - f2 * f2 * f2;
-        f2 *= 90.0F / (flip + 90.0F);
-        poseStack.mulPose(Axis.YP.rotationDegrees(-90.0F - f2 * 20.0F));
-        float f3 = lerp(partialTick, oFlip, this.flip);
-        poseStack.translate(1.0F, (f3 + 0.25F) * 0.1F, 0.0F);
-        float f4 = 1.0F - (f3 + 0.75F) * 0.1F;
-        poseStack.scale(f4, f4, f4);
-        float f5 = -(f3 + 0.2F) * 20.0F;
-        poseStack.mulPose(Axis.XP.rotationDegrees(f5));
-        poseStack.mulPose(Axis.YP.rotationDegrees(80.0F));
-        requireNonNull(bookModel).setupAnim(0.0F, f3, Mth.clamp(open, 0.0F, 1.0F), 1.0F);
-        var renderType = RenderType.entitySolid(BOOK_TEXTURE);
-        var bufferSource = guiGraphics.bufferSource();
-        bookModel.renderToBuffer(poseStack, bufferSource.getBuffer(renderType), 15728880, 0, -1);
-        bufferSource.endBatch();
-        poseStack.popPose();
+        var x0 = x + 14;
+        var y0 = y + 25;
+        var x1 = x0 + 38;
+        var y1 = y0 + 31;
+        guiGraphics.submitBookModelRenderState(requireNonNull(bookModel), BOOK_TEXTURE, 40.0F, open, flip, x0, y0, x1, y1);
+    }
+
+    private void renderInfoBar(GuiGraphics graphics) {
+        var font = Minecraft.getInstance().font;
+        var count = Integer.toString(menu.getBookCount());
+        var status = menu.hasDisenchanter() ? "✔" : "❌";
+        var countWidth = font.width(count);
+        var statusWidth = font.width(status);
+        var totalWidth = INFO_ICON_SIZE + 2 + countWidth + 4 + INFO_ICON_SIZE + 2 + statusWidth;
+        var x = leftPos + 32 - totalWidth / 2;
+        var y = topPos + 18;
+
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, BOOK_ICON_TEXTURE, x, y, INFO_ICON_SIZE, INFO_ICON_SIZE);
+        x += INFO_ICON_SIZE + 2;
+        graphics.drawString(font, count, x, y + 1, 0xFF606060, false);
+        x += countWidth + 4;
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, GRINDSTONE_ICON_TEXTURE, x, y, INFO_ICON_SIZE, INFO_ICON_SIZE);
+        x += INFO_ICON_SIZE + 2;
+        graphics.drawString(font, status, x, y + 1, 0xFF606060, false);
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
-        if (hoveredSlot != null && !hoveredSlot.hasItem() && hoveredSlot.index <= 1)
-            graphics.renderTooltip(font, font.split(
-                    hoveredSlot.index == 0
-                            ? ENCHANTING_SLOT_TOOLTIP
-                            : menu.canDisenchant()
-                                    ? INGREDIENT_SLOT_DISENCHANT_TOOLTIP
-                                    : INGREDIENT_SLOT_TOOLTIP,
-                    TOOLTIP_WIDTH), mouseX, mouseY);
+        this.renderTooltip(graphics, mouseX, mouseY);
+        if (hoveredSlot != null && !hoveredSlot.hasItem() && hoveredSlot.index <= 1) {
+            var slotTooltip = hoveredSlot.index == 0
+                    ? ENCHANTING_SLOT_TOOLTIP
+                    : menu.canDisenchant()
+                            ? INGREDIENT_SLOT_DISENCHANT_TOOLTIP
+                            : INGREDIENT_SLOT_TOOLTIP;
+            graphics.setComponentTooltipFromElementsForNextFrame(
+                    font,
+                    font.splitIgnoringLanguage(slotTooltip, TOOLTIP_WIDTH).stream().map(Either::<FormattedText, net.minecraft.world.inventory.tooltip.TooltipComponent>left).toList(),
+                    mouseX,
+                    mouseY,
+                    ItemStack.EMPTY
+            );
+        }
     }
 
     public void tickBook() {

@@ -11,7 +11,7 @@ import archives.tater.penchant.registry.PenchantMenus;
 import archives.tater.penchant.registry.PenchantModules;
 import archives.tater.penchant.registry.PenchantRegistries;
 
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -35,11 +35,11 @@ public class Penchant {
     // This logger is used to write text to the console and the log file.
     public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
-    public static ResourceLocation id(String namespace, String path) {
-        return ResourceLocation.fromNamespaceAndPath(namespace, path);
+    public static Identifier id(String namespace, String path) {
+        return Identifier.fromNamespaceAndPath(namespace, path);
     }
 
-    public static ResourceLocation id(String path) {
+    public static Identifier id(String path) {
         return id(MOD_ID, path);
     }
 
@@ -49,7 +49,8 @@ public class Penchant {
         modBus.addListener(this::registerContents);
         modBus.addListener(this::addPackFinders);
         modBus.addListener(PenchantNetworking::register);
-        modBus.addListener(PenchantDataGenerator::gatherData);
+        modBus.addListener((GatherDataEvent.Client event) -> PenchantDataGenerator.gatherData(event));
+        modBus.addListener((GatherDataEvent.Server event) -> PenchantDataGenerator.gatherData(event));
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarted);
 

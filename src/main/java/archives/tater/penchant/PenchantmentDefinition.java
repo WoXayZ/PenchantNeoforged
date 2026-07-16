@@ -34,7 +34,7 @@ public record PenchantmentDefinition(
     }
 
     public static ResourceKey<PenchantmentDefinition> keyOf(ResourceKey<Enchantment> enchantment) {
-        return ResourceKey.create(PenchantRegistries.PENCHANTMENT_DEFINITION, enchantment.location());
+        return ResourceKey.create(PenchantRegistries.PENCHANTMENT_DEFINITION, enchantment.identifier());
     }
 
     public static PenchantmentDefinition createFallback(Holder<Enchantment> enchantment) {

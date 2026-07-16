@@ -8,11 +8,11 @@ import archives.tater.penchant.registry.PenchantAdvancements;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRewards;
 import net.minecraft.advancements.AdvancementType;
-import net.minecraft.advancements.critereon.ItemPredicate;
-import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.criterion.ItemPredicate;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.data.advancements.AdvancementSubProvider;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 
 import java.util.Optional;
@@ -23,14 +23,14 @@ import static archives.tater.penchant.datagen.DatagenUtil.registerAdvancement;
 
 public class TableAdvancementGenerator implements AdvancementSubProvider {
 
-    public static final ResourceLocation ENCHANTED_BOOKSHELF = Penchant.id("enchanted_bookshelf");
-    public static final ResourceLocation FULL_LIBRARY = Penchant.id("full_library");
-    public static final ResourceLocation BABEL = Penchant.id("babel");
-    public static final ResourceLocation EXTRACT_ENCHANTMENT = Penchant.id("extract_enchantment");
+    public static final Identifier ENCHANTED_BOOKSHELF = Penchant.id("enchanted_bookshelf");
+    public static final Identifier FULL_LIBRARY = Penchant.id("full_library");
+    public static final Identifier BABEL = Penchant.id("babel");
+    public static final Identifier EXTRACT_ENCHANTMENT = Penchant.id("extract_enchantment");
 
     @Override
     public void generate(HolderLookup.Provider provider, Consumer<AdvancementHolder> consumer) {
-        var enchanter = createEmptyAdvancement(ResourceLocation.withDefaultNamespace("story/enchant_item"));
+        var enchanter = createEmptyAdvancement(Identifier.withDefaultNamespace("story/enchant_item"));
 
         var enchantedBookshelf = registerAdvancement(ENCHANTED_BOOKSHELF, Items.CHISELED_BOOKSHELF, AdvancementType.TASK, consumer, builder -> builder
                 .parent(enchanter)

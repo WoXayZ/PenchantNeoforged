@@ -5,7 +5,7 @@ import archives.tater.penchant.enchantment.UnbreakableEffect;
 import archives.tater.penchant.loot.LootModification;
 import archives.tater.penchant.registry.PenchantEnchantments;
 
-import net.minecraft.advancements.critereon.MinMaxBounds;
+import net.minecraft.advancements.criterion.MinMaxBounds;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -70,7 +70,7 @@ public final class PenchantDatapackEntries {
                 .withSpecialEffect(PenchantEnchantments.UNBREAKABLE, List.of(
                         new UnbreakableEffect(MinMaxBounds.Ints.atLeast(5))
                 ))
-                .build(Enchantments.UNBREAKING.location())
+                .build(Enchantments.UNBREAKING.identifier())
         );
 
         context.register(Enchantments.MENDING, new Enchantment.Builder(new Enchantment.EnchantmentDefinition(
@@ -82,7 +82,7 @@ public final class PenchantDatapackEntries {
                 new Enchantment.Cost(99, 0),
                 1,
                 List.of()
-        )).build(Enchantments.MENDING.location()));
+        )).build(Enchantments.MENDING.identifier()));
     }
 
     // endregion
@@ -131,7 +131,7 @@ public final class PenchantDatapackEntries {
 
     private static void addInject(BootstrapContext<LootModification> context, ResourceKey<LootTable> target, LootPool.Builder... inject) {
         context.register(
-                ResourceKey.create(LootModification.KEY, Penchant.id(target.location().getNamespace() + "/" + target.location().getPath())),
+                ResourceKey.create(LootModification.KEY, Penchant.id(target.identifier().getNamespace() + "/" + target.identifier().getPath())),
                 new LootModification(
                         List.of(target),
                         Arrays.stream(inject).map(LootPool.Builder::build).toList(),

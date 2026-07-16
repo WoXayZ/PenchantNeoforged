@@ -21,7 +21,7 @@ import net.minecraft.world.level.block.state.BlockState;
 import net.minecraft.world.level.block.state.properties.BooleanProperty;
 
 import net.neoforged.fml.ModList;
-import net.neoforged.neoforge.common.util.TriState;
+import net.minecraft.util.TriState;
 
 import java.util.List;
 import java.util.function.Consumer;

@@ -14,7 +14,7 @@ public class PenchantItems {
 
     public static void register(RegisterEvent event) {
         event.register(Registries.ITEM, helper -> {
-            // PATCHOULI: Tome of Penchant guidebook — requires Patchouli.
+            // PATCHOULI: Tome of Penchant guidebook - requires Patchouli.
             // var id = Penchant.id("tome_of_penchant");
             // var item = new TomeOfPenchantItem(new Item.Properties().stacksTo(1));
             // helper.register(id, item);

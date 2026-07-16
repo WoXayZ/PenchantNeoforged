@@ -1,7 +1,9 @@
 package archives.tater.penchant.client.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.GuiGraphics;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.client.input.MouseButtonEvent;
+import net.minecraft.resources.Identifier;
 
 import static archives.tater.penchant.client.gui.PenchantGuiUtil.containsPoint;
 import static java.lang.Math.max;
@@ -9,7 +11,7 @@ import static java.lang.Math.round;
 import static net.minecraft.util.Mth.clamp;
 
 public class ScrollbarComponent {
-    private final ResourceLocation texture;
+    private final Identifier texture;
     private final int width;
     private final int scrollerHeight;
     private final int trackHeight;
@@ -30,7 +32,7 @@ public class ScrollbarComponent {
     private boolean dragging = false;
     private double mouseYOffset = 0;
 
-    public ScrollbarComponent(ResourceLocation texture, int width, int height, int trackHeight, int regionWidth, int regionHeight, Runnable onScrolled) {
+    public ScrollbarComponent(Identifier texture, int width, int height, int trackHeight, int regionWidth, int regionHeight, Runnable onScrolled) {
         this.texture = texture;
         this.width = width;
         this.scrollerHeight = height;
@@ -73,13 +75,7 @@ public class ScrollbarComponent {
 
     public void render(GuiGraphics guiGraphics) {
         if (!canScroll()) return;
-        guiGraphics.blitSprite(
-                texture,
-                x,
-                getScrollerY(),
-                width,
-                scrollerHeight
-        );
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, texture, x, getScrollerY(), width, scrollerHeight);
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
@@ -89,21 +85,21 @@ public class ScrollbarComponent {
         return true;
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button != 0 || !containsPoint(x, y, width, trackHeight, mouseX, mouseY)) return false;
+    public boolean mouseClicked(MouseButtonEvent event) {
+        if (event.button() != 0 || !containsPoint(x, y, width, trackHeight, event.x(), event.y())) return false;
 
-        if (containsPoint(x, getScrollerY(), width, scrollerHeight, mouseX, mouseY)) {
+        if (containsPoint(x, getScrollerY(), width, scrollerHeight, event.x(), event.y())) {
             dragging = true;
-            mouseYOffset = mouseY - getScrollerY();
+            mouseYOffset = event.y() - getScrollerY();
         } else
-            setPositionForOffset(mouseY - y);
+            setPositionForOffset(event.y() - y);
 
         return true;
     }
 
-    public boolean mouseDragged(double mouseX, double mouseY, int button) {
-        if (!dragging || button != 0) return false;
-        setPositionForOffset(mouseY - y - mouseYOffset);
+    public boolean mouseDragged(MouseButtonEvent event) {
+        if (!dragging || event.button() != 0) return false;
+        setPositionForOffset(event.y() - y - mouseYOffset);
         return true;
     }
 

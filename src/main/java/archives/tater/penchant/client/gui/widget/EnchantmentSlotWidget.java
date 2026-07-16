@@ -4,26 +4,24 @@ import archives.tater.penchant.Penchant;
 import archives.tater.penchant.network.EnchantPayload;
 import archives.tater.penchant.util.PenchantmentHelper;
 
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Tooltip;
 import net.minecraft.client.gui.components.WidgetSprites;
-import net.minecraft.client.gui.narration.NarrationElementOutput;
+import net.minecraft.client.input.InputWithModifiers;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.ComponentUtils;
-import net.minecraft.network.chat.contents.TranslatableContents;
-import net.minecraft.resources.ResourceLocation;
+import net.minecraft.network.chat.FontDescription;
+import net.minecraft.client.gui.narration.NarrationElementOutput;
 import net.minecraft.tags.EnchantmentTags;
 import net.minecraft.world.item.enchantment.Enchantment;
 
-import cc.cassian.item_descriptions.client.DescriptionKey;
-import cc.cassian.item_descriptions.client.ModClient;
-import cc.cassian.item_descriptions.client.helpers.ModStyle;
 import javax.annotation.Nullable;
 
 import java.util.ArrayList;
@@ -37,7 +35,7 @@ public class EnchantmentSlotWidget extends AbstractButton {
             Penchant.id("container/enchanting_table/slot_disabled"),
             Penchant.id("container/enchanting_table/slot_highlighted")
     );
-    public static final ResourceLocation ALT_FONT = Minecraft.ALT_FONT;
+    public static final FontDescription ALT_FONT = new FontDescription.Resource(Minecraft.ALT_FONT);
 
     public static final int DISABLED_COLOR = 0xFF685E4A;
     public static final int INSUFFICIENT_COLOR = 0xffff5555;
@@ -115,14 +113,6 @@ public class EnchantmentSlotWidget extends AbstractButton {
                     .append(Component.translatable("widget.penchant.enchantment_slot.tooltip.xp_cost", xpCost)
                             .withColor(hasEnoughXp ? XP_COLOR : INSUFFICIENT_COLOR));
 
-            if (PenchantmentHelper.ITEM_DESCRIPTIONS_INSTALLED
-                    && ModClient.CONFIG.enchantmentDescriptions.enable.value()
-                    && ModClient.CONFIG.enchantmentDescriptions.enchantingTable.value()
-                    && Enchantment.getFullname(enchantment, 1).getContents() instanceof TranslatableContents content)
-                tooltip
-                        .append("\n")
-                        .append(new DescriptionKey(content.getKey()).toText().setStyle(ModStyle.ENCHANTMENT_DESCRIPTIONS));
-
             setTooltip(Tooltip.create(tooltip));
         }
 
@@ -138,8 +128,8 @@ public class EnchantmentSlotWidget extends AbstractButton {
     }
 
     @Override
-    protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(TEXTURES.get(active, isHovered()), getX(), getY(), getWidth(), getHeight());
+    protected void renderContents(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, TEXTURES.get(active, isHovered()), getX(), getY(), getWidth(), getHeight());
 
         var font = Minecraft.getInstance().font;
 
@@ -150,8 +140,8 @@ public class EnchantmentSlotWidget extends AbstractButton {
     }
 
     @Override
-    public void onPress() {
-        PacketDistributor.sendToServer(new EnchantPayload(enchantment));
+    public void onPress(InputWithModifiers input) {
+        ClientPacketDistributor.sendToServer(new EnchantPayload(enchantment));
     }
 
     @Override
