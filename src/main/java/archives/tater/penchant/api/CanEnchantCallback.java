@@ -3,7 +3,7 @@ package archives.tater.penchant.api;
 import archives.tater.penchant.menu.PenchantmentMenu;
 
 import net.minecraft.core.Holder;
-import net.neoforged.neoforge.common.util.TriState;
+import net.minecraft.util.TriState;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.enchantment.Enchantment;
 

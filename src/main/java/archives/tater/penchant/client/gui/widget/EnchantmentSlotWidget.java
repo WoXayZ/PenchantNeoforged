@@ -4,10 +4,11 @@ import archives.tater.penchant.Penchant;
 import archives.tater.penchant.network.EnchantPayload;
 import archives.tater.penchant.util.PenchantmentHelper;
 
-import net.neoforged.neoforge.network.PacketDistributor;
+import net.neoforged.neoforge.client.network.ClientPacketDistributor;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.client.Minecraft;
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.GuiGraphics;
 import net.minecraft.client.gui.components.AbstractButton;
 import net.minecraft.client.gui.components.Tooltip;
@@ -139,7 +140,7 @@ public class EnchantmentSlotWidget extends AbstractButton {
 
     @Override
     protected void renderWidget(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
-        graphics.blitSprite(TEXTURES.get(active, isHovered()), getX(), getY(), getWidth(), getHeight());
+        graphics.blitSprite(RenderPipelines.GUI_TEXTURED, TEXTURES.get(active, isHovered()), getX(), getY(), getWidth(), getHeight());
 
         var font = Minecraft.getInstance().font;
 
@@ -151,7 +152,7 @@ public class EnchantmentSlotWidget extends AbstractButton {
 
     @Override
     public void onPress() {
-        PacketDistributor.sendToServer(new EnchantPayload(enchantment));
+        ClientPacketDistributor.sendToServer(new EnchantPayload(enchantment));
     }
 
     @Override

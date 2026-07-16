@@ -20,7 +20,7 @@ public class AnvilMenuMixin {
     @Definition(id = "STORED_ENCHANTMENTS", field = "Lnet/minecraft/core/component/DataComponents;STORED_ENCHANTMENTS:Lnet/minecraft/core/component/DataComponentType;")
     @Expression("?.has(STORED_ENCHANTMENTS)")
     @WrapOperation(
-            method = "createResult",
+            method = "createResultInternal",
             at = @At("MIXINEXTRAS:EXPRESSION")
     )
     private boolean preventBookEnchanting(ItemStack instance, DataComponentType<ItemEnchantments> dataComponentType, Operation<Boolean> original) {

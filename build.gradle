@@ -107,17 +107,14 @@ configurations {
 }
 
 dependencies {
-    // MixinExtras is bundled with NeoForge; declare the annotation processor for @Mixin/@Expression support.
-    // (NeoForge already provides mixin + mixinextras at runtime.)
+    // NeoForge 21.2.1-beta bundles MixinExtras 0.4.1, which lacks @Expression/@Definition (added in 0.5.0).
+    compileOnly("io.github.llamalad7:mixinextras-common:0.5.4")
+    annotationProcessor("io.github.llamalad7:mixinextras-common:0.5.4")
+    implementation(jarJar("io.github.llamalad7:mixinextras-neoforge:0.5.4"))
 
-    // Optional integration: Item Descriptions (NeoForge build). Present at compile & dev runtime only.
-    // transitive = false: its Maven metadata drags in unrelated mods (RRV, cloth-config, fast-item-frames,
-    // puzzles-lib) even though its neoforge.mods.toml only requires neoforge + minecraft. We want zero RRV in the
-    // dev runtime, and Item Descriptions bundles kaleido-config via jar-in-jar, so nothing else is needed.
-    compileOnly("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}+${project.minecraft_version}") {
-        transitive = false
-    }
-    localRuntime("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}+${project.minecraft_version}") {
+    // Optional integration: Item Descriptions (NeoForge build). compileOnly for API refs; dev runtime only when a matching MC build exists.
+    // +1.21.1 crashes on 1.21.4+ (SpawnEggItem.getType API change) — omit localRuntime until +1.21.4 is published.
+    compileOnly("cc.cassian.item-descriptions:item-descriptions-neoforge:${project.item_descriptions_version}+1.21.1") {
         transitive = false
     }
 
