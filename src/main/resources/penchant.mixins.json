@@ -15,7 +15,6 @@
     "drops.ZombieMixin",
     "effect.ItemStackMixin",
     "leveling.AnvilMenuMixin",
-    "leveling.EnchantedBookItemMixin",
     "leveling.EnchantmentHelperMixin",
     "leveling.EnchantRandomlyFunctionMixin",
     "leveling.EnchantWithLevelsFunctionMixin",

@@ -5,13 +5,14 @@ import archives.tater.penchant.Penchant;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
+import net.minecraft.advancements.critereon.DataComponentMatchers;
 import net.minecraft.advancements.critereon.EnchantmentPredicate;
 import net.minecraft.advancements.critereon.InventoryChangeTrigger;
-import net.minecraft.advancements.critereon.ItemEnchantmentsPredicate;
-import net.minecraft.advancements.critereon.ItemSubPredicates;
 import net.minecraft.advancements.critereon.ItemPredicate;
 import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.HolderLookup;
+import net.minecraft.core.component.predicates.DataComponentPredicates;
+import net.minecraft.core.component.predicates.EnchantmentsPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
 import net.minecraft.resources.ResourceLocation;
@@ -53,14 +54,14 @@ public class LootAdvancementGenerator implements AdvancementSubProvider {
                     .map(enchantments::getOrThrow)
                     .forEach(enchantment -> builder.addCriterion(
                             enchantment.unwrapKey().orElseThrow().location().toString(),
-                            InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item()
-                                    .withSubPredicate(
-                                            ItemSubPredicates.STORED_ENCHANTMENTS,
-                                            ItemEnchantmentsPredicate.storedEnchantments(List.of(
+                            InventoryChangeTrigger.TriggerInstance.hasItems(ItemPredicate.Builder.item().withComponents(
+                                    DataComponentMatchers.Builder.components().partial(
+                                            DataComponentPredicates.STORED_ENCHANTMENTS,
+                                            EnchantmentsPredicate.StoredEnchantments.storedEnchantments(List.of(
                                                     new EnchantmentPredicate(enchantment, MinMaxBounds.Ints.ANY)
                                             ))
-                                    )
-                                    .build())
+                                    ).build()
+                            ))
                     ));
         });
     }

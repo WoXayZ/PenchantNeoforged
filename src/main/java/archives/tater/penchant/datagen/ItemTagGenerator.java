@@ -9,8 +9,6 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
 
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-
 import java.util.concurrent.CompletableFuture;
 
 public class ItemTagGenerator extends PenchantTagsProvider<Item> {
@@ -19,8 +17,8 @@ public class ItemTagGenerator extends PenchantTagsProvider<Item> {
         return TagKey.create(Registries.ITEM, ResourceLocation.fromNamespaceAndPath(namespace, path));
     }
 
-    public ItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.ITEM, registriesFuture, existingFileHelper);
+    public ItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, Registries.ITEM, registriesFuture);
     }
 
     @Override

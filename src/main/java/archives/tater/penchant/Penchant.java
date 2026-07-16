@@ -49,7 +49,8 @@ public class Penchant {
         modBus.addListener(this::registerContents);
         modBus.addListener(this::addPackFinders);
         modBus.addListener(PenchantNetworking::register);
-        modBus.addListener(PenchantDataGenerator::gatherData);
+        modBus.addListener((GatherDataEvent.Client event) -> PenchantDataGenerator.gatherData(event));
+        modBus.addListener((GatherDataEvent.Server event) -> PenchantDataGenerator.gatherData(event));
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarted);
 
