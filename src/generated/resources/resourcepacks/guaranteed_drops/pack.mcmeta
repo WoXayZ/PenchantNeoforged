@@ -1,7 +1,4 @@
 {
-  "features": {
-    "enabled": []
-  },
   "pack": {
     "description": {
       "translate": "dataPack.penchant.guaranteed_drops.description"
