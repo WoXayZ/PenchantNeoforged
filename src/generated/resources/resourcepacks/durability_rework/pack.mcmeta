@@ -1,11 +1,9 @@
 {
-  "features": {
-    "enabled": []
-  },
   "pack": {
     "description": {
       "translate": "dataPack.penchant.durability_rework.description"
     },
-    "pack_format": 48
+    "min_format": 88,
+    "max_format": 88
   }
 }
