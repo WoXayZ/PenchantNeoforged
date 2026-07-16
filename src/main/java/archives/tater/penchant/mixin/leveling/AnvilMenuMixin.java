@@ -28,7 +28,7 @@ import it.unimi.dsi.fastutil.objects.Object2IntMap.Entry;
 @Mixin(AnvilMenu.class)
 public abstract class AnvilMenuMixin {
     @Inject(
-            method = "createResult",
+            method = "createResultInternal",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/EnchantmentHelper;getEnchantmentsForCrafting(Lnet/minecraft/world/item/ItemStack;)Lnet/minecraft/world/item/enchantment/ItemEnchantments;", ordinal = 0)
     )
     private void saveProgress(CallbackInfo ci, @Share("progress") LocalRef<EnchantmentProgress.Mutable> progress, @Local(ordinal = 1) ItemStack result, @Local(ordinal = 2) ItemStack sacrifice) {
@@ -38,7 +38,7 @@ public abstract class AnvilMenuMixin {
 
     @Expression("? + 1")
     @ModifyExpressionValue(
-            method = "createResult",
+            method = "createResultInternal",
             at = @At("MIXINEXTRAS:EXPRESSION")
     )
     private int noIncreasePair(int original, @Local Holder<Enchantment> enchantment) {
@@ -46,7 +46,7 @@ public abstract class AnvilMenuMixin {
     }
 
     @WrapOperation(
-            method = "createResult",
+            method = "createResultInternal",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/ItemEnchantments$Mutable;set(Lnet/minecraft/core/Holder;I)V")
     )
     private void sumProgress(ItemEnchantments.Mutable instance, Holder<Enchantment> enchantment, int level, Operation<Void> original, @Share("progress") LocalRef<EnchantmentProgress.Mutable> progressRef, @Local(ordinal = 2) ItemStack sacrifice, @Local Entry<Holder<Enchantment>> entry) {
@@ -67,7 +67,7 @@ public abstract class AnvilMenuMixin {
     }
 
     @WrapOperation(
-            method = "createResult",
+            method = "createResultInternal",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/ItemEnchantments$Mutable;toImmutable()Lnet/minecraft/world/item/enchantment/ItemEnchantments;")
     )
     private ItemEnchantments setProgress(ItemEnchantments.Mutable instance, Operation<ItemEnchantments> original, @Share("progress") LocalRef<EnchantmentProgress.Mutable> progressRef, @Local(ordinal = 1) ItemStack result) {

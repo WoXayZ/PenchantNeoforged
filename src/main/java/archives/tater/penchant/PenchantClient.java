@@ -33,7 +33,7 @@ import static net.minecraft.Util.makeDescriptionId;
 
 @Mod(value = Penchant.MOD_ID, dist = Dist.CLIENT)
 public class PenchantClient {
-    public static final String PENCHANT_CATEGORY = Penchant.MOD_ID;
+    public static final KeyMapping.Category PENCHANT_CATEGORY = KeyMapping.Category.register(Penchant.id("keybinds"));
 
     public static final KeyMappingExt SHOW_PROGRESS_KEYBIND = new KeyMappingExt(
             makeDescriptionId("key", Penchant.id("show_progress")),

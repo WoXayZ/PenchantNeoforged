@@ -24,7 +24,6 @@ import net.minecraft.data.advancements.AdvancementProvider;
 import net.minecraft.resources.ResourceLocation;
 
 import net.neoforged.neoforge.common.data.DatapackBuiltinEntriesProvider;
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 
 import java.util.List;
@@ -45,61 +44,60 @@ public final class PenchantDataGenerator {
     public static void gatherData(GatherDataEvent event) {
         DataGenerator generator = event.getGenerator();
         CompletableFuture<HolderLookup.Provider> lookup = event.getLookupProvider();
-        ExistingFileHelper existingFileHelper = event.getExistingFileHelper();
 
         // Main mod data pack.
         var main = generator.getVanillaPack(true);
-        main.addProvider(output -> new FlagTagGenerator(output, lookup, existingFileHelper));
-        main.addProvider(output -> new EnchantmentTagGenerator(output, lookup, existingFileHelper));
-        main.addProvider(output -> new BlockTagGenerator(output, lookup, existingFileHelper));
-        main.addProvider(output -> new ItemTagGenerator(output, lookup, existingFileHelper));
+        main.addProvider(output -> new FlagTagGenerator(output, lookup));
+        main.addProvider(output -> new EnchantmentTagGenerator(output, lookup));
+        main.addProvider(output -> new BlockTagGenerator(output, lookup));
+        main.addProvider(output -> new ItemTagGenerator(output, lookup));
 
         // durability_rework
         var durability = builtinPack(generator, PenchantModules.DURABILITY_REWORK);
         durability.addProvider(output -> new DatapackBuiltinEntriesProvider(output, lookup,
                 new RegistrySetBuilder().add(Registries.ENCHANTMENT, PenchantDatapackEntries::bootstrapDurabilityEnchantments),
                 VANILLA_OVERRIDE_IDS));
-        durability.addProvider(output -> new DurabilityEnchantmentTagGenerator(output, lookup, existingFileHelper));
+        durability.addProvider(output -> new DurabilityEnchantmentTagGenerator(output, lookup));
 
         // bookshelf_placement
         var bookshelf = builtinPack(generator, PenchantModules.BOOKSHELF_PLACEMENT);
-        bookshelf.addProvider(output -> new FlagTagGenerator(output, lookup, existingFileHelper, PenchantFlag.LENIENT_BOOKSHELF_PLACEMENT));
-        bookshelf.addProvider(output -> new BookshelfBlockTagGenerator(output, lookup, existingFileHelper));
+        bookshelf.addProvider(output -> new FlagTagGenerator(output, lookup, PenchantFlag.LENIENT_BOOKSHELF_PLACEMENT));
+        bookshelf.addProvider(output -> new BookshelfBlockTagGenerator(output, lookup));
 
         // no_anvil_books
         var anvil = builtinPack(generator, PenchantModules.NO_ANVIL_BOOKS);
-        anvil.addProvider(output -> new FlagTagGenerator(output, lookup, existingFileHelper, PenchantFlag.NO_ANVIL_BOOKS));
+        anvil.addProvider(output -> new FlagTagGenerator(output, lookup, PenchantFlag.NO_ANVIL_BOOKS));
 
         // table_rework
         var table = builtinPack(generator, PenchantModules.TABLE_REWORK);
-        table.addProvider(output -> new FlagTagGenerator(output, lookup, existingFileHelper, PenchantFlag.REWORKED_TABLE_MENU));
+        table.addProvider(output -> new FlagTagGenerator(output, lookup, PenchantFlag.REWORKED_TABLE_MENU));
         table.addProvider(output -> new AdvancementProvider(output, lookup, List.of(new TableAdvancementGenerator())));
 
         // loot_rework
         var loot = builtinPack(generator, PenchantModules.LOOT_REWORK);
-        loot.addProvider(output -> new FlagTagGenerator(output, lookup, existingFileHelper, PenchantFlag.ZOMBIE_SPAWN_PICKAXE));
+        loot.addProvider(output -> new FlagTagGenerator(output, lookup, PenchantFlag.ZOMBIE_SPAWN_PICKAXE));
         loot.addProvider(output -> new DatapackBuiltinEntriesProvider(output, lookup,
                 new RegistrySetBuilder()
                         .add(LootModification.KEY, PenchantDatapackEntries::bootstrapLootModifications)
                         .add(Registries.ENCHANTMENT_PROVIDER, PenchantDatapackEntries::bootstrapLootEnchantmentProviders),
                 VANILLA_OVERRIDE_IDS));
-        loot.addProvider(output -> new LootEnchantmentTagGenerator(output, lookup, existingFileHelper));
+        loot.addProvider(output -> new LootEnchantmentTagGenerator(output, lookup));
         loot.addProvider(output -> new AdvancementProvider(output, lookup, List.of(new LootAdvancementGenerator())));
 
         // guaranteed_drops
         var drops = builtinPack(generator, PenchantModules.GUARANTEED_DROPS);
-        drops.addProvider(output -> new FlagTagGenerator(output, lookup, existingFileHelper,
+        drops.addProvider(output -> new FlagTagGenerator(output, lookup,
                 PenchantFlag.GUARANTEED_ENCHANTED_DROP, PenchantFlag.GUARANTEED_TRIDENT_DROP));
 
         // reduced_curses
         var curses = builtinPack(generator, PenchantModules.REDUCED_CURSES);
-        curses.addProvider(output -> new CurseEnchantmentTagGenerator(output, lookup, existingFileHelper));
+        curses.addProvider(output -> new CurseEnchantmentTagGenerator(output, lookup));
 
         // randomized_librarians disabled on 1.21.1 (no VILLAGER_TRADE registry)
     }
 
     private static DataGenerator.PackGenerator builtinPack(DataGenerator generator, ResourceLocation id) {
-        var pack = generator.getPackGenerator(true, id.getPath(), "resourcepacks/" + id.getPath());
+        var pack = generator.getBuiltinDatapack(true, id.getPath(), "resourcepacks/" + id.getPath());
         pack.addProvider(PackMetaGen.pack(id));
         return pack;
     }

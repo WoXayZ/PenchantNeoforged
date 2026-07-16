@@ -1,6 +1,8 @@
 package archives.tater.penchant.client.gui;
 
+import net.minecraft.client.renderer.RenderPipelines;
 import net.minecraft.client.gui.GuiGraphics;
+import net.minecraft.client.input.MouseButtonEvent;
 import net.minecraft.resources.ResourceLocation;
 
 import static archives.tater.penchant.client.gui.PenchantGuiUtil.containsPoint;
@@ -73,13 +75,7 @@ public class ScrollbarComponent {
 
     public void render(GuiGraphics guiGraphics) {
         if (!canScroll()) return;
-        guiGraphics.blitSprite(
-                texture,
-                x,
-                getScrollerY(),
-                width,
-                scrollerHeight
-        );
+        guiGraphics.blitSprite(RenderPipelines.GUI_TEXTURED, texture, x, getScrollerY(), width, scrollerHeight);
     }
 
     public boolean mouseScrolled(double mouseX, double mouseY, double scrollAmount) {
@@ -89,21 +85,21 @@ public class ScrollbarComponent {
         return true;
     }
 
-    public boolean mouseClicked(double mouseX, double mouseY, int button) {
-        if (button != 0 || !containsPoint(x, y, width, trackHeight, mouseX, mouseY)) return false;
+    public boolean mouseClicked(MouseButtonEvent event) {
+        if (event.button() != 0 || !containsPoint(x, y, width, trackHeight, event.x(), event.y())) return false;
 
-        if (containsPoint(x, getScrollerY(), width, scrollerHeight, mouseX, mouseY)) {
+        if (containsPoint(x, getScrollerY(), width, scrollerHeight, event.x(), event.y())) {
             dragging = true;
-            mouseYOffset = mouseY - getScrollerY();
+            mouseYOffset = event.y() - getScrollerY();
         } else
-            setPositionForOffset(mouseY - y);
+            setPositionForOffset(event.y() - y);
 
         return true;
     }
 
-    public boolean mouseDragged(double mouseX, double mouseY, int button) {
-        if (!dragging || button != 0) return false;
-        setPositionForOffset(mouseY - y - mouseYOffset);
+    public boolean mouseDragged(MouseButtonEvent event) {
+        if (!dragging || event.button() != 0) return false;
+        setPositionForOffset(event.y() - y - mouseYOffset);
         return true;
     }
 
