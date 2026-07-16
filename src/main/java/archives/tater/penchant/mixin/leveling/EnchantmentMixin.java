@@ -15,6 +15,6 @@ public class EnchantmentMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I")
     )
     private static int nameWithoutLevel(int original) {
-        return PenchantmentHelper.NO_LEVEL_NAME_CONTEXT.isBound() ? 1 : original;
+        return PenchantmentHelper.isNoLevelNameContext() ? 1 : original;
     }
 }

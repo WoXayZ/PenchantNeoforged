@@ -1,6 +1,6 @@
 package archives.tater.penchant.datagen;
 
-import archives.tater.penchant.Penchant;
+import archives.tater.penchant.registry.PenchantEnchantmentTags;
 
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -8,7 +8,6 @@ import net.minecraft.data.PackOutput;
 import net.minecraft.resources.ResourceKey;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.EnchantmentTags;
-import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 
@@ -18,6 +17,12 @@ import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
 public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
+
+    public static final List<ResourceKey<Enchantment>> UNIQUE = List.of(
+            Enchantments.WIND_BURST, // ominous vault
+            Enchantments.SOUL_SPEED, // bartering/bastion
+            Enchantments.SWIFT_SNEAK // ancient city
+    );
 
     public static final List<ResourceKey<Enchantment>> RARE = List.of(
             Enchantments.FROST_WALKER, // igloo
@@ -32,9 +37,6 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
             Enchantments.THORNS, // desert temple
             Enchantments.INFINITY, // jungle temple
             Enchantments.MULTISHOT // pillager outpost
-            // wind burst: trial chambers
-            // soul speed: bartering/bastion
-            // swift sneak: ancient city
     );
 
     public static final List<ResourceKey<Enchantment>> UNCOMMON = List.of(
@@ -75,37 +77,43 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
 
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
-        var rare = TagKey.create(Registries.ENCHANTMENT, Penchant.id("rare"));
-        var uncommon = TagKey.create(Registries.ENCHANTMENT, Penchant.id("uncommon"));
-        var common = TagKey.create(Registries.ENCHANTMENT, Penchant.id("common"));
+        builder(PenchantEnchantmentTags.UNIQUE)
+                .addAll(UNIQUE);
 
-        builder(rare)
+        builder(PenchantEnchantmentTags.RARE)
                 .addAll(RARE)
                 .addOptional(createOptionalId("veinminer-enchantment", "veinminer"))
                 .addOptional(createOptionalId("veinminer_enchantment", "veinminer"));
 
-        builder(uncommon)
+        builder(PenchantEnchantmentTags.UNCOMMON)
                 .addAll(UNCOMMON)
                 .addOptional(createOptionalId("farmersdelight", "backstabbing"));
 
-        builder(common)
+        builder(PenchantEnchantmentTags.COMMON)
                 .addAll(COMMON);
 
         builder(EnchantmentTags.TREASURE)
-                .addTag(rare);
+                .addTag(PenchantEnchantmentTags.RARE)
+                .addTag(PenchantEnchantmentTags.UNIQUE);
         builder(EnchantmentTags.NON_TREASURE)
-                .remove(rare);
+                .remove(PenchantEnchantmentTags.RARE)
+                .remove(PenchantEnchantmentTags.UNIQUE);
         builder(EnchantmentTags.IN_ENCHANTING_TABLE)
-                .remove(uncommon);
+                .remove(PenchantEnchantmentTags.UNCOMMON)
+                .remove(PenchantEnchantmentTags.RARE)
+                .remove(PenchantEnchantmentTags.UNIQUE);
         builder(EnchantmentTags.TRADEABLE)
-                .remove(common)
-                .remove(rare)
-                .addTag(uncommon);
+                .remove(PenchantEnchantmentTags.COMMON)
+                .addTag(PenchantEnchantmentTags.UNCOMMON)
+                .remove(PenchantEnchantmentTags.RARE)
+                .remove(PenchantEnchantmentTags.UNIQUE);
         builder(EnchantmentTags.ON_RANDOM_LOOT)
-                .addTag(uncommon)
-                .addTag(rare);
+                .addTag(PenchantEnchantmentTags.UNCOMMON)
+                .addTag(PenchantEnchantmentTags.RARE)
+                .remove(PenchantEnchantmentTags.UNIQUE);
         builder(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT)
-                .addTag(uncommon)
-                .addTag(rare);
+                .addTag(PenchantEnchantmentTags.UNCOMMON)
+                .addTag(PenchantEnchantmentTags.RARE)
+                .remove(PenchantEnchantmentTags.UNIQUE);
     }
 }
