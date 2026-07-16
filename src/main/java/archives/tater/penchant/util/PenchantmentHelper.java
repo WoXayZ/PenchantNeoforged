@@ -9,7 +9,6 @@ import net.minecraft.core.Holder;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.util.TriState;
-import net.minecraft.util.Unit;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -21,8 +20,6 @@ import net.minecraft.world.level.block.LecternBlock;
 import net.minecraft.world.level.block.state.BlockState;
 
 import net.neoforged.fml.ModList;
-
-import org.jspecify.annotations.Nullable;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -39,12 +36,19 @@ public class PenchantmentHelper {
             .map(BlockPos::immutable)
             .toList();
 
-    public static ScopedValue<@Nullable Unit> NO_LEVEL_NAME_CONTEXT = ScopedValue.newInstance();
+    private static final ThreadLocal<Boolean> NO_LEVEL_NAME_CONTEXT = ThreadLocal.withInitial(() -> false);
+
+    public static boolean isNoLevelNameContext() {
+        return NO_LEVEL_NAME_CONTEXT.get();
+    }
 
     public static Component getName(Holder<Enchantment> enchantment) {
-        return ScopedValue.where(NO_LEVEL_NAME_CONTEXT, Unit.INSTANCE).call(() ->
-                Enchantment.getFullname(enchantment, 1)
-        );
+        NO_LEVEL_NAME_CONTEXT.set(true);
+        try {
+            return Enchantment.getFullname(enchantment, 1);
+        } finally {
+            NO_LEVEL_NAME_CONTEXT.remove();
+        }
     }
 
     public static int getProgressCostFactor(Holder<Enchantment> enchantment, int targetLevel) {

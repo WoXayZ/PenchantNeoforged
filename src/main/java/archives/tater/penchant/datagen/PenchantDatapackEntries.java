@@ -128,6 +128,7 @@ public final class PenchantDatapackEntries {
         addInject(context, BuiltInLootTables.DESERT_PYRAMID, createBooks(registry, 9, Enchantments.THORNS));
         addInject(context, BuiltInLootTables.PILLAGER_OUTPOST, createBooks(registry, 4, Enchantments.MULTISHOT));
         addInject(context, BuiltInLootTables.BASTION_OTHER, createBooks(registry, 7, Enchantments.LUNGE));
+        addInject(context, BuiltInLootTables.TRIAL_CHAMBERS_REWARD_RARE, createBooks(registry, 11, Enchantments.DENSITY, Enchantments.BREACH));
     }
 
     private static void addInject(BootstrapContext<LootModification> context, ResourceKey<LootTable> target, LootPool.Builder... inject) {
