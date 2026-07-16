@@ -12,8 +12,6 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 import net.minecraft.world.item.enchantment.Enchantments;
 
-import net.neoforged.neoforge.common.data.ExistingFileHelper;
-
 import java.util.List;
 import java.util.concurrent.CompletableFuture;
 
@@ -69,8 +67,8 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
         return ResourceLocation.fromNamespaceAndPath(namespace, path);
     }
 
-    public LootEnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture, ExistingFileHelper existingFileHelper) {
-        super(output, Registries.ENCHANTMENT, registriesFuture, existingFileHelper);
+    public LootEnchantmentTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
+        super(output, Registries.ENCHANTMENT, registriesFuture);
     }
 
     @Override

@@ -16,6 +16,7 @@ import net.minecraft.client.gui.screens.inventory.CyclingSlotBackground;
 import net.minecraft.client.model.BookModel;
 import net.minecraft.client.model.geom.ModelLayers;
 import net.minecraft.client.renderer.RenderType;
+import net.minecraft.client.renderer.texture.OverlayTexture;
 import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
@@ -37,8 +38,8 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
     private static final ResourceLocation TEXTURE = Penchant.id("textures/gui/container/enchanting_table.png");
     private static final ResourceLocation BOOK_TEXTURE = ResourceLocation.withDefaultNamespace("textures/entity/enchanting_table_book.png");
     private static final ResourceLocation SCROLLLER_TEXTURE = Penchant.id("container/enchanting_table/scroller");
-    public static final ResourceLocation LAPIS_LAZULI_SLOT_TEXTURE = ResourceLocation.withDefaultNamespace("item/empty_slot_lapis_lazuli");
-    public static final ResourceLocation BOOK_SLOT_TEXTURE = Penchant.id("item/empty_slot_book");
+    public static final ResourceLocation LAPIS_LAZULI_SLOT_TEXTURE = ResourceLocation.withDefaultNamespace("container/slot/lapis_lazuli");
+    public static final ResourceLocation BOOK_SLOT_TEXTURE = Penchant.id("container/slot/book");
     private static final List<ResourceLocation> INGREDIENT_SLOT_TEXTURES = List.of(
             LAPIS_LAZULI_SLOT_TEXTURE,
             BOOK_SLOT_TEXTURE
@@ -167,7 +168,7 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
     protected void renderBg(GuiGraphics graphics, float partialTick, int mouseX, int mouseY) {
         int x = leftPos;
         int y = topPos;
-        graphics.blit(TEXTURE, x, y, 0, 0, imageWidth, imageHeight, 256, 256);
+        graphics.blit(RenderType::guiTextured, TEXTURE, x, y, 0.0F, 0.0F, imageWidth, imageHeight, 256, 256);
         renderBook(graphics, x, y, partialTick);
 
         var font = Minecraft.getInstance().font;
@@ -206,16 +207,17 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
         poseStack.mulPose(Axis.XP.rotationDegrees(f5));
         poseStack.mulPose(Axis.YP.rotationDegrees(80.0F));
         requireNonNull(bookModel).setupAnim(0.0F, f3, Mth.clamp(open, 0.0F, 1.0F), 1.0F);
-        var renderType = RenderType.entitySolid(BOOK_TEXTURE);
-        var bufferSource = guiGraphics.bufferSource();
-        bookModel.renderToBuffer(poseStack, bufferSource.getBuffer(renderType), 15728880, 0, -1);
-        bufferSource.endBatch();
+        guiGraphics.drawSpecial(bufferSource -> {
+            var vertexConsumer = bufferSource.getBuffer(bookModel.renderType(BOOK_TEXTURE));
+            bookModel.renderToBuffer(guiGraphics.pose(), vertexConsumer, 15728880, OverlayTexture.NO_OVERLAY);
+        });
         poseStack.popPose();
     }
 
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(graphics, mouseX, mouseY);
         if (hoveredSlot != null && !hoveredSlot.hasItem() && hoveredSlot.index <= 1)
             graphics.renderTooltip(font, font.split(
                     hoveredSlot.index == 0
