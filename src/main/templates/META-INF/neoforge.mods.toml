@@ -34,12 +34,13 @@ versionRange="${minecraft_version_range}"
 ordering="NONE"
 side="BOTH"
 
-[[dependencies.${mod_id}]]
-modId="patchouli"
-type="required"
-versionRange="*"
-ordering="AFTER"
-side="BOTH"
+# PATCHOULI: Re-enable when a compatible Patchouli release exists for this Minecraft version.
+# [[dependencies.${mod_id}]]
+# modId="patchouli"
+# type="required"
+# versionRange="*"
+# ordering="AFTER"
+# side="BOTH"
 
 [[dependencies.${mod_id}]]
 modId="item_descriptions"
