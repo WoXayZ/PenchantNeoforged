@@ -46,7 +46,7 @@ public class ItemEnchantmentsMixin {
             at = @At("HEAD")
     )
     private void getProgress(TooltipContext tooltipContext, Consumer<Component> consumer, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter, CallbackInfo ci, @Share("progress") LocalRef<EnchantmentProgress> progress) {
-        if (dataComponentGetter.get(DataComponents.STORED_ENCHANTMENTS) == null && !PenchantClient.TOOLTIP_ITEM.orElse(ItemStack.EMPTY).is(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS))
+        if (dataComponentGetter.get(DataComponents.STORED_ENCHANTMENTS) == null && !PenchantClient.getTooltipItem().is(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS))
             progress.set(dataComponentGetter.getOrDefault(PenchantComponents.ENCHANTMENT_PROGRESS, EnchantmentProgress.EMPTY));
     }
 

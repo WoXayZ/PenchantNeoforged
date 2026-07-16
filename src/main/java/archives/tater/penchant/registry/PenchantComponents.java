@@ -61,7 +61,8 @@ public class PenchantComponents {
     @SubscribeEvent
     public static void modifyDefaultComponents(ModifyDefaultComponentsEvent event) {
         event.modifyMatching(
-                (item, componentTypes) -> componentTypes.has(DataComponents.MAX_DAMAGE),
+                (item, componentTypes) -> componentTypes.has(DataComponents.MAX_DAMAGE)
+                        && !componentTypes.has(ENCHANTMENT_PROGRESS_COST_FACTOR),
                 (components, context, item) -> components.set(
                         ENCHANTMENT_PROGRESS_COST_FACTOR,
                         clamp(components.getOrDefault(DataComponents.MAX_DAMAGE, 0) / 100, 1, 8)

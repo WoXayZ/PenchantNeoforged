@@ -41,7 +41,20 @@ public class PenchantClient {
             PENCHANT_CATEGORY
     );
 
-    public static final ScopedValue<ItemStack> TOOLTIP_ITEM = ScopedValue.newInstance();
+    private static final ThreadLocal<ItemStack> TOOLTIP_ITEM = new ThreadLocal<>();
+
+    public static ItemStack getTooltipItem() {
+        var item = TOOLTIP_ITEM.get();
+        return item != null ? item : ItemStack.EMPTY;
+    }
+
+    public static void setTooltipItem(ItemStack stack) {
+        TOOLTIP_ITEM.set(stack);
+    }
+
+    public static void clearTooltipItem() {
+        TOOLTIP_ITEM.remove();
+    }
 
     public PenchantClient(IEventBus modBus, ModContainer container) {
         container.registerConfig(ModConfig.Type.CLIENT, PenchantClientConfig.SPEC);

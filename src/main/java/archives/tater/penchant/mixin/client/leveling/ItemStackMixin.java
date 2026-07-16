@@ -23,6 +23,11 @@ public class ItemStackMixin {
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/component/TooltipProvider;addToTooltip(Lnet/minecraft/world/item/Item$TooltipContext;Ljava/util/function/Consumer;Lnet/minecraft/world/item/TooltipFlag;Lnet/minecraft/core/component/DataComponentGetter;)V")
     )
     private void setTooltipItem(TooltipProvider instance, Item.TooltipContext tooltipContext, Consumer<Component> componentConsumer, TooltipFlag tooltipFlag, DataComponentGetter dataComponentGetter, Operation<Void> original) {
-        ScopedValue.where(PenchantClient.TOOLTIP_ITEM, (ItemStack) (Object) this).call(() -> original.call(instance, tooltipContext, componentConsumer, tooltipFlag, dataComponentGetter));
+        PenchantClient.setTooltipItem((ItemStack) (Object) this);
+        try {
+            original.call(instance, tooltipContext, componentConsumer, tooltipFlag, dataComponentGetter);
+        } finally {
+            PenchantClient.clearTooltipItem();
+        }
     }
 }

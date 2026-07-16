@@ -9,8 +9,8 @@ original Fabric mod (**0.4.0**) while using native NeoForge APIs.
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.1** |
-| **Mod version** | 26.2.0-1.1 |
+| **Port version** | **1.2** |
+| **Mod version** | 26.2.0-1.2 |
 | **Minecraft** | 26.2.0 |
 | **NeoForge** | 26.2.0.21-beta |
 | **Java** | 25 |
