@@ -216,6 +216,7 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
     @Override
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         super.render(graphics, mouseX, mouseY, partialTick);
+        this.renderTooltip(graphics, mouseX, mouseY);
         if (hoveredSlot != null && !hoveredSlot.hasItem() && hoveredSlot.index <= 1)
             graphics.renderTooltip(font, font.split(
                     hoveredSlot.index == 0
