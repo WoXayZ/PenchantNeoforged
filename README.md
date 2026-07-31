@@ -4,13 +4,13 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (**0.4.0**) while using native NeoForge APIs.
+original Fabric mod (**0.4.3**) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.2** |
-| **Mod version** | 26.2.0-1.2 |
+| **Port version** | **1.3** |
+| **Mod version** | 26.2.0-1.3 |
 | **Minecraft** | 26.2.0 |
 | **NeoForge** | 26.2.0.21-beta |
 | **Java** | 25 |

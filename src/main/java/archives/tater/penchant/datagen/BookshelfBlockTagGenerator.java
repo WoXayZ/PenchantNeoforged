@@ -3,9 +3,12 @@ package archives.tater.penchant.datagen;
 import archives.tater.penchant.Penchant;
 
 import net.minecraft.core.HolderLookup.Provider;
+import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.references.BlockItemIds;
+import net.minecraft.resources.Identifier;
 import net.minecraft.tags.BlockTags;
+import net.minecraft.tags.TagKey;
 
 import net.neoforged.neoforge.common.Tags;
 import net.neoforged.neoforge.common.data.BlockTagsProvider;
@@ -21,6 +24,7 @@ public class BookshelfBlockTagGenerator extends BlockTagsProvider {
     protected void addTags(Provider provider) {
         tag(BlockTags.ENCHANTMENT_POWER_PROVIDER)
                 .add(BlockItemIds.CHISELED_BOOKSHELF.block(), BlockItemIds.LECTERN.block())
-                .addTag(Tags.Blocks.BOOKSHELVES);
+                .addTag(Tags.Blocks.BOOKSHELVES)
+                .addOptionalTag(TagKey.create(Registries.BLOCK, Identifier.fromNamespaceAndPath("c", "chiseled_bookshelves")));
     }
 }
