@@ -4,13 +4,13 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (**0.4.0** where supported on this Minecraft version) while using native NeoForge APIs.
+original Fabric mod (**0.4.3** where supported on this Minecraft version) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.2** |
-| **Mod version** | 1.21.4-1.2 |
+| **Port version** | **1.3** |
+| **Mod version** | 1.21.4-1.3 |
 | **Minecraft** | 1.21.4 |
 | **NeoForge** | 21.4.157 |
 | **Java** | 21 |
@@ -49,7 +49,7 @@ Penchant ships several optional behaviors as built-in datapacks you can enable/d
 | `reduced_curses` | ✘ | Reduces how often curses appear |
 | `randomized_librarians` | — | *Not available on 1.21.1* (no villager trade registry) |
 
-### Item tags & components (0.4.0)
+### Item tags & components (0.4.3)
 
 - `#penchant:max_level_enchantments` - items in this tag receive enchantments at max level (for gear without
   durability).
