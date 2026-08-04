@@ -47,6 +47,7 @@ public class Penchant {
         modBus.addListener(this::registerDatapackRegistries);
         modBus.addListener(this::registerNewRegistries);
         modBus.addListener(this::registerContents);
+        modBus.addListener(PenchantItems::addCreative);
         modBus.addListener(this::addPackFinders);
         modBus.addListener(PenchantNetworking::register);
         modBus.addListener(PenchantDataGenerator::gatherData);
