@@ -6,6 +6,7 @@ import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.PackOutput;
 import net.minecraft.resources.Identifier;
+import net.minecraft.resources.ResourceKey;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
@@ -18,6 +19,10 @@ public class ItemTagGenerator extends PenchantTagsProvider<Item> {
         return TagKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(namespace, path));
     }
 
+    private static ResourceKey<Item> createKey(String namespace, String path) {
+        return ResourceKey.create(Registries.ITEM, Identifier.fromNamespaceAndPath(namespace, path));
+    }
+
     public ItemTagGenerator(PackOutput output, CompletableFuture<HolderLookup.Provider> registriesFuture) {
         super(output, Registries.ITEM, registriesFuture);
     }
@@ -27,6 +32,8 @@ public class ItemTagGenerator extends PenchantTagsProvider<Item> {
         builder(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS)
                 .addTag(ItemTags.HARNESSES)
                 .addOptionalTag(itemTag("c", "armors/horse"))
-                .addOptionalTag(itemTag("c", "armors/nautilus"));
+                .addOptionalTag(itemTag("c", "armors/nautilus"))
+                .addOptional(createKey("enderscape", "mirror"))
+                .addOptional(createKey("enderscape", "magnia_attractor"));
     }
 }

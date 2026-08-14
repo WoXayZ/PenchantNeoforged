@@ -28,8 +28,6 @@
   "dataPack.penchant.loot_rework.description": "Змінення порядку, у якому відкриваються та знаходяться зачарування",
   "dataPack.penchant.guaranteed_drops.name": "Гарантована здобич [Penchant]",
   "dataPack.penchant.guaranteed_drops.description": "З мобів завжди випадатиме зачароване спорядження",
-  "dataPack.penchant.reduced_curses.name": "Менше проклять [Penchant]",
-  "dataPack.penchant.reduced_curses.description": "Прокляття з'являються лише на спорядженні мобів",
   "dataPack.penchant.randomized_librarians.name": "Випадкові бібліотекарі [Penchant]",
   "dataPack.penchant.randomized_librarians.description": "Бібліотекарі продають різну книгу щоразу",
   "advancements.penchant.enchanted_bookshelf.title": "Дослідження та розроблення",

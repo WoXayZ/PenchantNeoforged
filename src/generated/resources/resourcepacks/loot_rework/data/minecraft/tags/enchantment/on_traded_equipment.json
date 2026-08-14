@@ -1,11 +1,10 @@
 {
   "remove": [
-    "#penchant:common",
     "#penchant:rare",
-    "#penchant:unique",
-    "#minecraft:curse"
+    "#penchant:unique"
   ],
   "values": [
+    "#penchant:common",
     "#penchant:uncommon"
   ]
 }

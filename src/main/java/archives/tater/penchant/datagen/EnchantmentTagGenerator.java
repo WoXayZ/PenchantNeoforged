@@ -11,6 +11,7 @@ import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.enchantment.Enchantment;
 
 import java.util.concurrent.CompletableFuture;
+
 public class EnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
 
     private static final TagKey<Enchantment> HIDDEN_FROM_RECIPE_VIEWERS = TagKey.create(
@@ -25,6 +26,9 @@ public class EnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
     @Override
     protected void addTags(HolderLookup.Provider wrapperLookup) {
         builder(PenchantEnchantmentTags.DISABLED);
+
+        builder(PenchantEnchantmentTags.ON_RANDOM_LOOT_BOOKS)
+                .addTag(EnchantmentTags.ON_RANDOM_LOOT);
 
         builder(EnchantmentTags.IN_ENCHANTING_TABLE)
                 .remove(PenchantEnchantmentTags.DISABLED);

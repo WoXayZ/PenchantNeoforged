@@ -4,15 +4,15 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (**0.4.3**) while using native NeoForge APIs.
+original Fabric mod (**0.5.0**) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.3** |
+| **Port version** | **1.4** |
 | **Minecraft** | 26.1.2 |
 | **NeoForge** | 26.1.2.78 |
-| **Mod version** | 26.1.2-1.3 |
+| **Mod version** | 26.1.2-1.4 |
 | **Java** | 25 |
 | **License** | LGPL-3.0-or-later |
 
@@ -44,9 +44,8 @@ Penchant ships several optional behaviors as built-in datapacks you can enable/d
 | `bookshelf_placement` | ✔ | More lenient bookshelf placement around the table |
 | `table_rework` | ✔ | Enables the custom enchanting table menu + advancements |
 | `no_anvil_books` | ✔ | Prevents combining enchanted books on an anvil |
-| `loot_rework` | ✔ | Reworks where enchantment books appear in loot & mob equipment |
+| loot_rework | ✔ | Reworks loot/trades; uncategorized off table; curses off trades & loot books |
 | `guaranteed_drops` | ✔ | Guarantees certain enchanted drops (e.g. tridents) |
-| `reduced_curses` | ✘ | Reduces how often curses appear |
 | `randomized_librarians` | ✘ | Librarians sell a different enchanted book on each purchase |
 
 ### Item tags & components (0.4.3)
