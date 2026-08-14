@@ -4,13 +4,13 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (**0.4.3** where supported on this Minecraft version) while using native NeoForge APIs.
+original Fabric mod (**0.5.0** where supported on this Minecraft version) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.3-fix** |
-| **Mod version** | 1.21.1-1.3-fix |
+| **Port version** | **1.4** |
+| **Mod version** | 1.21.1-1.4
 | **Minecraft** | 1.21.1 |
 | **NeoForge** | 21.1.235 |
 | **Java** | 21 |
@@ -44,12 +44,11 @@ Penchant ships several optional behaviors as built-in datapacks you can enable/d
 | `bookshelf_placement` | ✔ | More lenient bookshelf placement around the table |
 | `table_rework` | ✔ | Enables the custom enchanting table menu + advancements |
 | `no_anvil_books` | ✔ | Prevents combining enchanted books on an anvil |
-| `loot_rework` | ✔ | Reworks where enchantment books appear in loot & mob equipment |
+| `loot_rework` | âœ” | Reworks loot/trades; uncategorized off table; curses off trades & loot books |
 | `guaranteed_drops` | ✔ | Guarantees certain enchanted drops (e.g. tridents) |
-| `reduced_curses` | ✘ | Reduces how often curses appear |
 | `randomized_librarians` | — | *Not available on 1.21.1* (no villager trade registry) |
 
-### Item tags & components (0.4.3)
+### Item tags & components (0.5.0)
 
 - `#penchant:max_level_enchantments` - items in this tag receive enchantments at max level (for gear without
   durability).
