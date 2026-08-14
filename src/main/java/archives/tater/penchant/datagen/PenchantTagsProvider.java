@@ -24,4 +24,11 @@ public abstract class PenchantTagsProvider<T> extends TagsProvider<T> {
     protected TagAppender<T> builder(TagKey<T> tag) {
         return TagAppender.forBuilder(this.getOrCreateRawBuilder(tag));
     }
+
+    /** Like {@link #builder} but marks the tag as {@code "replace": true}. */
+    protected TagAppender<T> replaceBuilder(TagKey<T> tag) {
+        var raw = this.getOrCreateRawBuilder(tag);
+        raw.replace();
+        return TagAppender.forBuilder(raw);
+    }
 }

@@ -3,7 +3,13 @@
     "description": {
       "translate": "dataPack.penchant.loot_rework.description"
     },
-    "min_format": [107, 1],
-    "max_format": [107, 1]
+    "max_format": [
+      107,
+      1
+    ],
+    "min_format": [
+      107,
+      1
+    ]
   }
 }
