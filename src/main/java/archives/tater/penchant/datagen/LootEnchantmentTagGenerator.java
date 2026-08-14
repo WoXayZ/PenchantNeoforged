@@ -48,6 +48,8 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
             Enchantments.SWEEPING_EDGE,
             Enchantments.KNOCKBACK,
             Enchantments.PUNCH,
+            Enchantments.DENSITY,
+            Enchantments.BREACH,
             Enchantments.LOOTING,
             Enchantments.LUCK_OF_THE_SEA
     );
@@ -62,7 +64,8 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
             Enchantments.QUICK_CHARGE,
             Enchantments.IMPALING,
             Enchantments.LOYALTY,
-            Enchantments.LURE
+            Enchantments.LURE,
+            Enchantments.DENSITY
     );
 
     private static ResourceKey<Enchantment> createOptionalId(String namespace, String path) {
@@ -96,20 +99,29 @@ public class LootEnchantmentTagGenerator extends PenchantTagsProvider<Enchantmen
         builder(EnchantmentTags.NON_TREASURE)
                 .remove(PenchantEnchantmentTags.RARE)
                 .remove(PenchantEnchantmentTags.UNIQUE);
-        builder(EnchantmentTags.IN_ENCHANTING_TABLE)
-                .remove(PenchantEnchantmentTags.UNCOMMON)
-                .remove(PenchantEnchantmentTags.RARE)
-                .remove(PenchantEnchantmentTags.UNIQUE);
+        replaceBuilder(EnchantmentTags.IN_ENCHANTING_TABLE)
+                .addTag(PenchantEnchantmentTags.COMMON);
         builder(EnchantmentTags.TRADEABLE)
                 .remove(PenchantEnchantmentTags.COMMON)
                 .addTag(PenchantEnchantmentTags.UNCOMMON)
                 .remove(PenchantEnchantmentTags.RARE)
+                .remove(PenchantEnchantmentTags.UNIQUE)
+                .remove(EnchantmentTags.CURSE);
+        builder(EnchantmentTags.ON_TRADED_EQUIPMENT)
+                .addTag(PenchantEnchantmentTags.COMMON)
+                .addTag(PenchantEnchantmentTags.UNCOMMON)
+                .remove(PenchantEnchantmentTags.RARE)
                 .remove(PenchantEnchantmentTags.UNIQUE);
         builder(EnchantmentTags.ON_RANDOM_LOOT)
+                .addTag(PenchantEnchantmentTags.COMMON)
                 .addTag(PenchantEnchantmentTags.UNCOMMON)
                 .addTag(PenchantEnchantmentTags.RARE)
                 .remove(PenchantEnchantmentTags.UNIQUE);
+        builder(PenchantEnchantmentTags.ON_RANDOM_LOOT_BOOKS)
+                .remove(PenchantEnchantmentTags.COMMON)
+                .remove(EnchantmentTags.CURSE);
         builder(EnchantmentTags.ON_MOB_SPAWN_EQUIPMENT)
+                .addTag(PenchantEnchantmentTags.COMMON)
                 .addTag(PenchantEnchantmentTags.UNCOMMON)
                 .addTag(PenchantEnchantmentTags.RARE)
                 .remove(PenchantEnchantmentTags.UNIQUE);

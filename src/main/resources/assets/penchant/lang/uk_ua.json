@@ -1,4 +1,4 @@
-{
+﻿{
   "penchant.tooltip.progress": "%s/%s",
   "penchant.tooltip.progress.max": "ÐœÐÐšÐ¡",
   "penchant.tooltip.progress.key": "[%s] ÐŸÐµÑ€ÐµÐ³Ð»ÑÐ½ÑƒÑ‚Ð¸ Ð¿Ñ€Ð¾Ð³Ñ€ÐµÑ",
@@ -26,10 +26,7 @@
   "dataPack.penchant.loot_rework.name": "ÐŸÐµÑ€ÐµÑ€Ð¾Ð±Ð»ÐµÐ½Ð½Ñ Ð·Ð´Ð¾Ð±Ð¸Ñ‡Ñ– [Penchant]",
   "dataPack.penchant.loot_rework.description": "Ð—Ð¼Ñ–Ð½ÐµÐ½Ð½Ñ Ð¿Ð¾Ñ€ÑÐ´ÐºÑƒ, Ñƒ ÑÐºÐ¾Ð¼Ñƒ Ð²Ñ–Ð´ÐºÑ€Ð¸Ð²Ð°ÑŽÑ‚ÑŒÑÑ Ñ‚Ð° Ð·Ð½Ð°Ñ…Ð¾Ð´ÑÑ‚ÑŒÑÑ Ð·Ð°Ñ‡Ð°Ñ€ÑƒÐ²Ð°Ð½Ð½Ñ",
   "dataPack.penchant.guaranteed_drops.name": "Ð“Ð°Ñ€Ð°Ð½Ñ‚Ð¾Ð²Ð°Ð½Ð° Ð·Ð´Ð¾Ð±Ð¸Ñ‡ [Penchant]",
-  "dataPack.penchant.guaranteed_drops.description": "Ð— Ð¼Ð¾Ð±Ñ–Ð² Ð·Ð°Ð²Ð¶Ð´Ð¸ Ð²Ð¸Ð¿Ð°Ð´Ð°Ñ‚Ð¸Ð¼Ðµ Ð·Ð°Ñ‡Ð°Ñ€Ð¾Ð²Ð°Ð½Ðµ ÑÐ¿Ð¾Ñ€ÑÐ´Ð¶ÐµÐ½Ð½Ñ",
-  "dataPack.penchant.reduced_curses.name": "ÐœÐµÐ½ÑˆÐµ Ð¿Ñ€Ð¾ÐºÐ»ÑÑ‚ÑŒ [Penchant]",
-  "dataPack.penchant.reduced_curses.description": "ÐŸÑ€Ð¾ÐºÐ»ÑÑ‚Ñ‚Ñ Ð·'ÑÐ²Ð»ÑÑŽÑ‚ÑŒÑÑ Ð»Ð¸ÑˆÐµ Ð½Ð° ÑÐ¿Ð¾Ñ€ÑÐ´Ð¶ÐµÐ½Ð½Ñ– Ð¼Ð¾Ð±Ñ–Ð²",
-  "dataPack.penchant.randomized_librarians.name": "Ð’Ð¸Ð¿Ð°Ð´ÐºÐ¾Ð²Ñ– Ð±Ñ–Ð±Ð»Ñ–Ð¾Ñ‚ÐµÐºÐ°Ñ€Ñ– [Penchant]",
+  "dataPack.penchant.guaranteed_drops.description": "Ð— Ð¼Ð¾Ð±Ñ–Ð² Ð·Ð°Ð²Ð¶Ð´Ð¸ Ð²Ð¸Ð¿Ð°Ð´Ð°Ñ‚Ð¸Ð¼Ðµ Ð·Ð°Ñ‡Ð°Ñ€Ð¾Ð²Ð°Ð½Ðµ ÑÐ¿Ð¾Ñ€ÑÐ´Ð¶ÐµÐ½Ð½Ñ",  "dataPack.penchant.randomized_librarians.name": "Ð’Ð¸Ð¿Ð°Ð´ÐºÐ¾Ð²Ñ– Ð±Ñ–Ð±Ð»Ñ–Ð¾Ñ‚ÐµÐºÐ°Ñ€Ñ– [Penchant]",
   "dataPack.penchant.randomized_librarians.description": "Ð‘Ñ–Ð±Ð»Ñ–Ð¾Ñ‚ÐµÐºÐ°Ñ€Ñ– Ð¿Ñ€Ð¾Ð´Ð°ÑŽÑ‚ÑŒ Ñ€Ñ–Ð·Ð½Ñ– ÐºÐ½Ð¸Ð³Ð¸ Ð¿Ñ€Ð¸ ÐºÐ¾Ð¶Ð½Ñ–Ð¹ Ð¿Ð¾ÐºÑƒÐ¿Ñ†Ñ–",
   "penchant.tooltip.random_enchantment": "Ð’Ð¸Ð¿Ð°Ð´ÐºÐ¾Ð²Ðµ Ð·Ð°Ñ‡Ð°Ñ€ÑƒÐ²Ð°Ð½Ð½Ñ",
   "advancements.penchant.enchanted_bookshelf.title": "Ð”Ð¾ÑÐ»Ñ–Ð´Ð¶ÐµÐ½Ð½Ñ Ñ‚Ð° Ñ€Ð¾Ð·Ñ€Ð¾Ð±Ð»ÐµÐ½Ð½Ñ",

@@ -17,8 +17,13 @@ public class PenchantModules {
     public static final Identifier NO_ANVIL_BOOKS = Penchant.id("no_anvil_books");
     public static final Identifier LOOT_REWORK = Penchant.id("loot_rework");
     public static final Identifier GUARANTEED_DROPS = Penchant.id("guaranteed_drops");
-    public static final Identifier REDUCED_CURSES = Penchant.id("reduced_curses");
     public static final Identifier RANDOMIZED_LIBRARIANS = Penchant.id("randomized_librarians");
+
+    /**
+     * @deprecated Folded into {@link #LOOT_REWORK} in 1.4 / upstream 0.5.0.
+     */
+    @Deprecated
+    public static final Identifier REDUCED_CURSES = Penchant.id("reduced_curses");
 
     /** Off by default, toggleable, with no extra source decoration. */
     private static final PackSource NORMAL_SOURCE = PackSource.create(PackSource.NO_DECORATION, false);
@@ -48,7 +53,6 @@ public class PenchantModules {
         registerPack(event, NO_ANVIL_BOOKS);
         registerPack(event, LOOT_REWORK);
         registerPack(event, GUARANTEED_DROPS);
-        registerPack(event, REDUCED_CURSES, NORMAL_SOURCE);
         // randomized_librarians disabled on 1.21.1 (no VILLAGER_TRADE registry)
     }
 
