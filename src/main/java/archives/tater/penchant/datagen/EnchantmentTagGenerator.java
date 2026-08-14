@@ -27,6 +27,9 @@ public class EnchantmentTagGenerator extends PenchantTagsProvider<Enchantment> {
     protected void addTags(HolderLookup.Provider wrapperLookup) {
         builder(PenchantEnchantmentTags.DISABLED);
 
+        builder(PenchantEnchantmentTags.ON_RANDOM_LOOT_BOOKS)
+                .addTag(EnchantmentTags.ON_RANDOM_LOOT);
+
         builder(EnchantmentTags.IN_ENCHANTING_TABLE)
                 .remove(PenchantEnchantmentTags.DISABLED);
         builder(EnchantmentTags.TRADEABLE)

@@ -1,4 +1,4 @@
-﻿{
+{
     "penchant.tooltip.progress":  "%s/%s",
     "penchant.tooltip.progress.max":  "MAX",
     "penchant.tooltip.progress.key":  "[%s] Voir la progression",
@@ -26,10 +26,7 @@
     "dataPack.penchant.loot_rework.name":  "Refonte du butin [Penchant]",
     "dataPack.penchant.loot_rework.description":  "RÃ©organise oÃ¹ les enchantements se dÃ©bloquent et se trouvent",
     "dataPack.penchant.guaranteed_drops.name":  "Butin garanti [Penchant]",
-    "dataPack.penchant.guaranteed_drops.description":  "Les mobs lÃ¢chent toujours leur Ã©quipement enchantÃ©",
-    "dataPack.penchant.reduced_curses.name":  "MalÃ©dictions rÃ©duites [Penchant]",
-    "dataPack.penchant.reduced_curses.description":  "Les malÃ©dictions n\u0027apparaissent que sur l\u0027Ã©quipement des mobs",
-    "dataPack.penchant.randomized_librarians.name":  "BibliothÃ©caires alÃ©atoires [Penchant]",
+    "dataPack.penchant.guaranteed_drops.description":  "Les mobs lÃ¢chent toujours leur Ã©quipement enchantÃ©",    "dataPack.penchant.randomized_librarians.name":  "BibliothÃ©caires alÃ©atoires [Penchant]",
     "dataPack.penchant.randomized_librarians.description":  "Les bibliothÃ©caires vendent un livre diffÃ©rent Ã  chaque achat",
     "advancements.penchant.enchanted_bookshelf.title":  "Recherche \u0026 DÃ©veloppement",
     "advancements.penchant.enchanted_bookshelf.description":  "DÃ©bloquez un enchantement en plaÃ§ant un livre enchantÃ© prÃ¨s de votre table",
