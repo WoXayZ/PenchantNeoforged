@@ -23,6 +23,8 @@
     "leveling.ItemStackMixin",
     "loot.LootPoolAccessor",
     "loot.LootTableAccessor",
+    "loot.EnchantRandomlyFunctionMixin",
+    "loot.EnchantWithLevelsFunctionMixin",
     "randomenchantment.ItemStackMixin",
     "table.EnchantingTableBlockMixin"
   ],

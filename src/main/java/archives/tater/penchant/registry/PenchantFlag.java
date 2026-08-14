@@ -51,6 +51,7 @@ public class PenchantFlag {
     public static final PenchantFlag GUARANTEED_ENCHANTED_DROP = create("guaranteed_enchanted_drop");
     public static final PenchantFlag GUARANTEED_TRIDENT_DROP = create("guaranteed_trident_drop");
     public static final PenchantFlag ZOMBIE_SPAWN_PICKAXE = create("zombie_spawn_pickaxe");
+    public static final PenchantFlag REPLACE_BOOK_LOOT_TAG = create("replace_book_loot_tag");
 
     public static void register(RegisterEvent event) {
         event.register(REGISTRY_KEY, helper -> {
