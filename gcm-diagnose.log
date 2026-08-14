@@ -1,0 +1,242 @@
+﻿Diagnose log at 2026-08-14T12:19:00Z
+
+AppPath: C:\Program Files\Git\mingw64\bin\git-credential-manager.exe
+InstallDir: C:\Program Files\Git\mingw64\bin\
+Version: 2.6.1+786ab03440ddc82e807a97c0e540f5247e44cec6
+
+------------
+Diagnostic: Environment
+Skipped: False
+Success: True
+Exception: None
+Log:
+OSType: Windows
+OSVersion: 10.0 (build 26200)
+Reading environment variables... OK
+ Variables:
+PROCESSOR_ARCHITEW6432=AMD64
+DriverData=C:\Windows\System32\Drivers\DriverData
+COMPUTERNAME=WOX-PC
+GIT_TRACE2_PARENT_SID=e736ab68-e1eb-4ff2-b2a4-06d79c7514d4
+CommonProgramFiles(x86)=C:\Program Files (x86)\Common Files
+OneDrive=C:\Users\cdaguenet\OneDrive
+GIT_COMMITTER_NAME=woxayz
+HOMEPATH=\Users\cdaguenet
+VSCODE_HANDLES_UNCAUGHT_ERRORS=true
+PSExecutionPolicyPreference=Bypass
+CURSOR_AGENT=1
+PROCESSOR_REVISION=2102
+PATHEXT=.COM;.EXE;.BAT;.CMD;.VBS;.VBE;.JS;.JSE;.WSF;.WSH;.MSC;.CPL
+VSCODE_IPC_HOOK=\\.\pipe\e5459740-3.14.7-main-sock
+GIT_AUTHOR_EMAIL=woxayz@gmail.com
+SystemDrive=C:
+CHROME_CRASHPAD_PIPE_NAME=\\.\pipe\crashpad_28384_TVEHXVSZYCYWMEEM
+CURSOR_RIPGREP_PATH=c:\Program Files\cursor\resources\app\node_modules\@vscode\ripgrep\bin\rg.exe
+LOCALAPPDATA=C:\Users\cdaguenet\AppData\Local
+PUBLIC=C:\Users\Public
+TERM=dumb
+AMDRMSDKPATH=C:\Program Files\AMD\RyzenMasterSDK\
+VSCODE_ESM_ENTRYPOINT=vs/workbench/api/node/extensionHostProcess
+USERDOMAIN=WOX-PC
+CURSOR_LAYOUT=unifiedAgent
+NO_COLOR=1
+PROCESSOR_LEVEL=25
+PROCESSOR_IDENTIFIER=AMD64 Family 25 Model 33 Stepping 2, AuthenticAMD
+CURSOR_EXTENSION_HOST_ROLE=agent-exec
+ProgramFiles(x86)=C:\Program Files (x86)
+AGENT_TRANSCRIPTS=C:\Users\cdaguenet\.cursor\projects\c-Users-cdaguenet-Desktop-Minecraft\agent-transcripts
+NUMBER_OF_PROCESSORS=16
+FPS_BROWSER_USER_PROFILE_STRING=Default
+CommonProgramFiles=C:\Program Files (x86)\Common Files
+TMP=C:\Users\CDAGUE~1\AppData\Local\Temp
+VSCODE_PROCESS_TITLE=extension-host (agent-exec) Minecraft [2-7]
+VSCODE_NLS_CONFIG={"userLocale":"en-us","osLocale":"fr-fr","resolvedLanguage":"en","defaultMessagesFile":"C:\\Program Files\\cursor\\resources\\app\\out\\nls.messages.json","locale":"en-us","availableLanguages":{}}
+EFC_9436_1592913036=1
+GIT_AUTHOR_NAME=woxayz
+CURSOR_CONVERSATION_ID=6719ddca-353a-4f09-bdaa-06b7223f4671
+ProgramW6432=C:\Program Files
+ProgramFiles=C:\Program Files (x86)
+GIT_COMMITTER_EMAIL=woxayz@gmail.com
+GCM_GITHUB_ACCOUNT=WoXayZ
+EFC_9436_4126798990=1
+SystemRoot=C:\WINDOWS
+CURSOR_WORKSPACE_LABEL=Minecraft
+SESSIONNAME=Console
+FORCE_COLOR=0
+windir=C:\WINDOWS
+CommonProgramW6432=C:\Program Files\Common Files
+LOGONSERVER=\\WOX-PC
+USERPROFILE=C:\Users\cdaguenet
+ProgramData=C:\ProgramData
+USERDOMAIN_ROAMINGPROFILE=WOX-PC
+APPDATA=C:\Users\cdaguenet\AppData\Roaming
+HOMEDRIVE=C:
+VSCODE_CODE_CACHE_PATH=C:\Users\cdaguenet\AppData\Roaming\Cursor\CachedData\a758f2241ca99fecf380180b6cbdbbce0f1f42c0
+VSCODE_PID=28384
+_ZO_DOCTOR=0
+__CURSOR_SANDBOX_ENV_RESTORE=builtin unset CURSOR_CONVERSATION_ID CURSOR_AGENT_STORE_FILES_DIR CURSOR_AGENT_STORE_SHARED_PATHS 2>/dev/null || true; builtin export CURSOR_CONVERSATION_ID='6719ddca-353a-4f09-bdaa-06b7223f4671'
+PSModulePath=C:\Users\cdaguenet\Documents\WindowsPowerShell\Modules;C:\Program Files\WindowsPowerShell\Modules;C:\WINDOWS\system32\WindowsPowerShell\v1.0\Modules
+VSCODE_CWD=C:\Program Files\cursor
+USERNAME=cdaguenet
+FPS_BROWSER_APP_PROFILE_STRING=Internet Explorer
+PROCESSOR_ARCHITECTURE=x86
+OS=Windows_NT
+ComSpec=C:\WINDOWS\system32\cmd.exe
+TEMP=C:\Users\CDAGUE~1\AppData\Local\Temp
+Path=c:\Program Files\cursor\resources\app\node_modules\@vscode\ripgrep\bin;C:\Program Files\Common Files\Oracle\Java\javapath;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\Program Files\dotnet\;D:\Videos\ffmpeg-master-latest-win64-gpl-shared\bin;C:\Program Files\Git\cmd;C:\Program Files\Docker\Docker\resources\bin;C:\Program Files\nodejs\;C:\Program Files\PuTTY\;C:\Program Files\cursor\resources\app\bin;C:\Users\cdaguenet\AppData\Local\Microsoft\WindowsApps;C:\Users\cdaguenet\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\cdaguenet\AppData\Local\GitHubDesktop\bin;C:\Users\cdaguenet\AppData\Roaming\npm;C:\Users\cdaguenet\AppData\Local\Programs\cursor\resources\app\bin
+VSCODE_CRASH_REPORTER_PROCESS_TYPE=extensionHost
+OneDriveConsumer=C:\Users\cdaguenet\OneDrive
+ALLUSERSPROFILE=C:\ProgramData
+
+
+------------
+Diagnostic: File system
+Skipped: False
+Success: True
+Exception: None
+Log:
+Temporary directory is 'C:\Users\cdaguenet\AppData\Local\Temp\'...
+Checking basic file I/O...
+Writing to temporary file 'C:\Users\cdaguenet\AppData\Local\Temp\17c74493985a14eb6390a47d'... OK
+Reading from temporary file 'C:\Users\cdaguenet\AppData\Local\Temp\17c74493985a14eb6390a47d'... OK
+Deleting temporary file 'C:\Users\cdaguenet\AppData\Local\Temp\17c74493985a14eb6390a47d'... OK
+Testing IFileSystem instance...
+UserHomePath: C:\Users\cdaguenet
+UserDataDirectoryPath: C:\Users\cdaguenet\.gcm
+GetCurrentDirectory(): C:\Users\cdaguenet\Desktop\Minecraft\Penchant\Penchant Neoforged
+
+------------
+Diagnostic: Networking
+Skipped: False
+Success: True
+Exception: None
+Log:
+Checking networking and HTTP stack...
+Creating HTTP client... OK
+IsNetworkAvailable: True
+Sending HEAD request to http://example.com...Sending HEAD request to https://example.com... OK
+ OK
+Acquiring free TCP port... OK
+Testing local HTTP loopback connections...
+Creating new HTTP listener for http://localhost:49987/... OK
+Waiting for loopback connection... OK
+Writing response... OK
+Waiting for response data... OK
+Loopback connection data OK
+
+------------
+Diagnostic: Git
+Skipped: False
+Success: True
+Exception: None
+Log:
+Getting Git version... OK
+Git version is '2.49.0.windows.1'
+Locating current repository...Git repository at 'C:/Users/cdaguenet/Desktop/Minecraft/Penchant/Penchant Neoforged/.git'
+ OK
+Listing all Git configuration... OK
+Git configuration:
+file:C:/Program Files/Git/etc/gitconfig	diff.astextplain.textconv=astextplain
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Program Files/Git/etc/gitconfig	filter.lfs.required=true
+file:C:/Program Files/Git/etc/gitconfig	http.sslbackend=schannel
+file:C:/Program Files/Git/etc/gitconfig	core.autocrlf=true
+file:C:/Program Files/Git/etc/gitconfig	core.fscache=true
+file:C:/Program Files/Git/etc/gitconfig	core.symlinks=false
+file:C:/Program Files/Git/etc/gitconfig	pull.rebase=false
+file:C:/Program Files/Git/etc/gitconfig	credential.helper=manager
+file:C:/Program Files/Git/etc/gitconfig	credential.https://dev.azure.com.usehttppath=true
+file:C:/Program Files/Git/etc/gitconfig	init.defaultbranch=master
+file:C:/Users/cdaguenet/.gitconfig	user.email=woxayz@gmail.com
+file:C:/Users/cdaguenet/.gitconfig	user.name=woxayz
+file:C:/Users/cdaguenet/.gitconfig	filter.lfs.clean=git-lfs clean -- %f
+file:C:/Users/cdaguenet/.gitconfig	filter.lfs.smudge=git-lfs smudge -- %f
+file:C:/Users/cdaguenet/.gitconfig	filter.lfs.process=git-lfs filter-process
+file:C:/Users/cdaguenet/.gitconfig	filter.lfs.required=true
+file:.git/config	core.repositoryformatversion=0
+file:.git/config	core.filemode=false
+file:.git/config	core.bare=false
+file:.git/config	core.logallrefupdates=true
+file:.git/config	core.symlinks=false
+file:.git/config	core.ignorecase=true
+file:.git/config	remote.origin.url=https://github.com/WoXayZ/PenchantNeoforged.git
+file:.git/config	remote.origin.fetch=+refs/heads/*:refs/remotes/origin/*
+file:.git/config	remote.origin.pushurl=https://WoXayZ@github.com/WoXayZ/PenchantNeoforged.git
+file:.git/config	branch.26.1.2.remote=origin
+file:.git/config	branch.26.1.2.vscode-merge-base=origin/main
+file:.git/config	branch.26.1.2.merge=refs/heads/26.1.2
+file:.git/config	branch.1.21.1.vscode-merge-base=origin/main
+file:.git/config	branch.1.21.1.remote=origin
+file:.git/config	branch.1.21.1.merge=refs/heads/1.21.1
+file:.git/config	branch.26.2.0.vscode-merge-base=origin/main
+file:.git/config	branch.26.2.0.remote=origin
+file:.git/config	branch.26.2.0.merge=refs/heads/26.2.0
+file:.git/config	branch.1.21.2.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.2.remote=origin
+file:.git/config	branch.1.21.2.merge=refs/heads/1.21.2
+file:.git/config	branch.1.21.3.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.3.remote=origin
+file:.git/config	branch.1.21.3.merge=refs/heads/1.21.3
+file:.git/config	branch.1.21.4.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.4.remote=origin
+file:.git/config	branch.1.21.4.merge=refs/heads/1.21.4
+file:.git/config	branch.1.21.5.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.5.remote=origin
+file:.git/config	branch.1.21.5.merge=refs/heads/1.21.5
+file:.git/config	branch.1.21.6.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.6.remote=origin
+file:.git/config	branch.1.21.6.merge=refs/heads/1.21.6
+file:.git/config	branch.1.21.7.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.7.remote=origin
+file:.git/config	branch.1.21.7.merge=refs/heads/1.21.7
+file:.git/config	branch.1.21.8.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.8.remote=origin
+file:.git/config	branch.1.21.8.merge=refs/heads/1.21.8
+file:.git/config	branch.1.21.9.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.9.remote=origin
+file:.git/config	branch.1.21.9.merge=refs/heads/1.21.9
+file:.git/config	branch.1.21.10.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.10.remote=origin
+file:.git/config	branch.1.21.10.merge=refs/heads/1.21.10
+file:.git/config	branch.1.21.11.vscode-merge-base=origin/1.21.1
+file:.git/config	branch.1.21.11.remote=origin
+file:.git/config	branch.1.21.11.merge=refs/heads/1.21.11
+
+
+------------
+Diagnostic: Credential storage
+Skipped: False
+Success: True
+Exception: None
+Log:
+ICredentialStore instance is of type: CredentialStore
+Writing test credential... OK
+Reading test credential... OK
+Deleting test credential... OK
+
+------------
+Diagnostic: Microsoft authentication (AAD/MSA)
+Skipped: False
+Success: True
+Exception: None
+Log:
+Broker is not enabled.
+Flow type is: Auto
+Gathering MSAL token cache data... OK
+CacheDirectory: C:\Users\cdaguenet\AppData\Local\.IdentityService
+CacheFileName: msal.cache
+CacheFilePath: C:\Users\cdaguenet\AppData\Local\.IdentityService\msal.cache
+Creating cache helper... OK
+Verifying MSAL token cache persistence... OK
+
+------------
+Diagnostic: GitHub API
+Skipped: False
+Success: True
+Exception: None
+Log:
+Using 'https://github.com/' as API target.
+Querying '/meta' endpoint... OK
+

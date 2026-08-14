@@ -2,7 +2,6 @@ package archives.tater.penchant;
 
 import archives.tater.penchant.datagen.BlockTagGenerator;
 import archives.tater.penchant.datagen.BookshelfBlockTagGenerator;
-import archives.tater.penchant.datagen.CurseEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.DurabilityEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.EnchantmentTagGenerator;
 import archives.tater.penchant.datagen.FlagTagGenerator;
@@ -75,7 +74,7 @@ public final class PenchantDataGenerator {
 
         // loot_rework
         var loot = builtinPack(generator, PenchantModules.LOOT_REWORK);
-        loot.addProvider(output -> new FlagTagGenerator(output, lookup, PenchantFlag.ZOMBIE_SPAWN_PICKAXE));
+        loot.addProvider(output -> new FlagTagGenerator(output, lookup, PenchantFlag.ZOMBIE_SPAWN_PICKAXE, PenchantFlag.REPLACE_BOOK_LOOT_TAG));
         loot.addProvider(output -> new DatapackBuiltinEntriesProvider(output, lookup,
                 new RegistrySetBuilder()
                         .add(LootModification.KEY, PenchantDatapackEntries::bootstrapLootModifications)
@@ -89,15 +88,11 @@ public final class PenchantDataGenerator {
         drops.addProvider(output -> new FlagTagGenerator(output, lookup,
                 PenchantFlag.GUARANTEED_ENCHANTED_DROP, PenchantFlag.GUARANTEED_TRIDENT_DROP));
 
-        // reduced_curses
-        var curses = builtinPack(generator, PenchantModules.REDUCED_CURSES);
-        curses.addProvider(output -> new CurseEnchantmentTagGenerator(output, lookup));
-
         // randomized_librarians disabled on 1.21.1 (no VILLAGER_TRADE registry)
     }
 
     private static DataGenerator.PackGenerator builtinPack(DataGenerator generator, ResourceLocation id) {
-        var pack = generator.getBuiltinDatapack(true, id.getPath(), "resourcepacks/" + id.getPath());
+        var pack = generator.getPackGenerator(true, id.getPath(), "resourcepacks/" + id.getPath());
         pack.addProvider(PackMetaGen.pack(id));
         return pack;
     }
