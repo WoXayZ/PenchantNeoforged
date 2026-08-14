@@ -280,6 +280,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
             return;
         }
         if (isEnchanting()) {
+            var creative = player.isCreative();
             displayedEnchantments = streamOrdered(enchantments, EnchantmentTags.TOOLTIP_ORDER)
                     .filter(enchantment ->
                             !enchantment.is(PenchantEnchantmentTags.DISABLED) &&
@@ -287,7 +288,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
                             (!enchantment.is(EnchantmentTags.CURSE) || availableEnchantments.contains(enchantment) || PenchantmentHelper.hasEnchantment(stack, enchantment))
                     )
                     .sorted(comparingInt(enchantment ->
-                            !availableEnchantments.contains(enchantment) && !PenchantmentHelper.hasEnchantment(stack, enchantment) ? 2
+                            creative || !availableEnchantments.contains(enchantment) && !PenchantmentHelper.hasEnchantment(stack, enchantment) ? 2
                             : enchantment.is(EnchantmentTags.CURSE) ? 1
                             : 0
                     ))

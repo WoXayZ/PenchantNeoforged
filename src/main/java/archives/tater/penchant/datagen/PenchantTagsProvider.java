@@ -23,4 +23,10 @@ public abstract class PenchantTagsProvider<T> extends TagsProvider<T> {
     protected TagAppender<T> builder(TagKey<T> tag) {
         return this.tag(tag);
     }
+
+
+    protected TagAppender<T> replaceBuilder(TagKey<T> tag) {
+        this.getOrCreateRawBuilder(tag).replace();
+        return this.tag(tag);
+    }
 }
