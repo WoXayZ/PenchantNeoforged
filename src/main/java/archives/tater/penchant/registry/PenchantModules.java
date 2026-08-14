@@ -17,6 +17,10 @@ public class PenchantModules {
     public static final ResourceLocation NO_ANVIL_BOOKS = Penchant.id("no_anvil_books");
     public static final ResourceLocation LOOT_REWORK = Penchant.id("loot_rework");
     public static final ResourceLocation GUARANTEED_DROPS = Penchant.id("guaranteed_drops");
+    /**
+     * @deprecated Folded into {@link #LOOT_REWORK} in 1.4 / upstream 0.5.0.
+     */
+    @Deprecated
     public static final ResourceLocation REDUCED_CURSES = Penchant.id("reduced_curses");
     public static final ResourceLocation RANDOMIZED_LIBRARIANS = Penchant.id("randomized_librarians");
 
@@ -48,7 +52,6 @@ public class PenchantModules {
         registerPack(event, NO_ANVIL_BOOKS);
         registerPack(event, LOOT_REWORK);
         registerPack(event, GUARANTEED_DROPS);
-        registerPack(event, REDUCED_CURSES, NORMAL_SOURCE);
         // randomized_librarians disabled on 1.21.1 (no VILLAGER_TRADE registry)
     }
 
