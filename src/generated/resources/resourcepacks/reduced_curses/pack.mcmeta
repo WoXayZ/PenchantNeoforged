@@ -1,9 +1,0 @@
-{
-  "pack": {
-    "description": {
-      "translate": "dataPack.penchant.reduced_curses.description"
-    },
-    "min_format": 88,
-    "max_format": 88
-  }
-}

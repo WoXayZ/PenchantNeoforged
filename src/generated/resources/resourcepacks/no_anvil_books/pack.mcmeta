@@ -1,9 +1,12 @@
 {
+  "features": {
+    "enabled": []
+  },
   "pack": {
     "description": {
       "translate": "dataPack.penchant.no_anvil_books.description"
     },
-    "min_format": 88,
-    "max_format": 88
+    "max_format": 88,
+    "min_format": 88
   }
 }
