@@ -17,7 +17,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
  */
 @Mixin(Enchantment.class)
 public class EnchantmentMixin {
-    @Inject(method = "getFullname", at = @At("HEAD"), cancellable = true)
+    @Inject(method = "getFullname(I)Lnet/minecraft/network/chat/Component;", at = @At("HEAD"), cancellable = true)
     private void penchant$hideRomanNumeral(int level, CallbackInfoReturnable<Component> cir) {
         Enchantment self = (Enchantment) (Object) this;
         if (PenchantEnchantmentTags.isNoLeveling(self)) return;

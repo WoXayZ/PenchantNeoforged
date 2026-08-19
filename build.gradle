@@ -72,6 +72,9 @@ repositories {
 dependencies {
     minecraft "net.minecraftforge:forge:${minecraft_version}-${forge_version}"
 
+    // Required for penchant.refmap.json
+    annotationProcessor 'org.spongepowered:mixin:0.8.5:processor'
+
     // MixinExtras (optional helpers; core mixins work without it)
     compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
     implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {
