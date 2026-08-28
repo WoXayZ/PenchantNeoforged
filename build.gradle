@@ -165,6 +165,17 @@ publishing {
     }
 }
 
+
+def releaseFolder = "${mod_version}".replaceFirst("^${minecraft_version}-", "")
+tasks.register('copyToReleases', Copy) {
+    from layout.buildDirectory.dir('libs')
+    include "penchant-neoforge-${mod_version}.jar"
+    into layout.projectDirectory.dir("releases/${releaseFolder}")
+}
+tasks.named('jar') {
+    finalizedBy 'copyToReleases'
+}
+
 tasks.withType(JavaCompile).configureEach {
     options.encoding = 'UTF-8'
     options.release = 21

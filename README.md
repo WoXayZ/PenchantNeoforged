@@ -9,8 +9,8 @@ original Fabric mod (**0.5.0** where supported on this Minecraft version) while 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.4** |
-| **Mod version** | 1.21.11-1.4 |
+| **Port version** | **1.5** |
+| **Mod version** | 1.21.11-1.5 |
 | **Minecraft** | 1.21.11 |
 | **NeoForge** | 21.11.44 |
 | **Java** | 21 |
@@ -90,6 +90,7 @@ tag/data-driven rather than hardcoded to vanilla enchantments:
 
 ## Optional integration
 
+- **Max Protection** (and similarly named mods) - if installed, Protection, Fire Protection, Blast Protection, and Projectile Protection can be combined on the same piece in the Penchant table, not only on the anvil.
 - **[Item Descriptions](https://modrinth.com/mod/item-descriptions)** - if installed (client-side), Penchant's
   enchantments show extra descriptive tooltips. It is entirely optional and not bundled.
 
