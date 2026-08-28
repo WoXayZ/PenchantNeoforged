@@ -30,6 +30,7 @@ import org.jetbrains.annotations.ApiStatus;
 import org.jetbrains.annotations.Nullable;
 
 import static net.minecraft.Util.makeDescriptionId;
+import static net.minecraft.util.Mth.clamp;
 
 @Mod(value = Penchant.MOD_ID, dist = Dist.CLIENT)
 public class PenchantClient {
@@ -92,12 +93,14 @@ public class PenchantClient {
                     .withStyle(ChatFormatting.LIGHT_PURPLE);
 
         var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, stack.getMaxDamage());
+        var storedProgress = clamp(progress.getProgress(enchantment), 0, Math.max(maxProgress, 0));
+        int filled = maxProgress <= 0 ? 0 : (int) ((long) getBarWidth() * storedProgress / maxProgress);
 
         return Component.literal("  ")
-                .append(FontUtils.getBar(getBarWidth(), getBarWidth() * progress.getProgress(enchantment) / maxProgress))
+                .append(FontUtils.getBar(getBarWidth(), filled))
                 .append(" ")
                 .append(Component.translatable("penchant.tooltip.progress",
-                        Component.literal(Integer.toString(progress.getProgress(enchantment))).withStyle(ChatFormatting.LIGHT_PURPLE),
+                        Component.literal(Integer.toString(storedProgress)).withStyle(ChatFormatting.LIGHT_PURPLE),
                         maxProgress
                 ).withStyle(ChatFormatting.DARK_GRAY))
                 ;
