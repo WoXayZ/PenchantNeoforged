@@ -7,6 +7,7 @@ import net.minecraft.network.chat.Component;
 import net.minecraft.network.chat.MutableComponent;
 import net.minecraft.network.chat.Style;
 import net.minecraft.resources.ResourceLocation;
+import net.minecraft.util.Mth;
 
 public final class FontUtils {
     private FontUtils() {}
@@ -24,8 +25,8 @@ public final class FontUtils {
     }
 
     public static MutableComponent getBar(int width, int progress) {
-        int filled = Math.max(0, Math.min(progress, width));
-        int empty = Math.max(0, width - filled);
+        int filled = Mth.clamp(progress, 0, width);
+        int empty = width - filled;
         MutableComponent bar = Component.empty();
         if (filled > 0) {
             bar.append(Component.literal(BAR_SEGMENT.repeat(filled))

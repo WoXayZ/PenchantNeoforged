@@ -1,6 +1,7 @@
 package archives.tater.penchant.util;
 
 import archives.tater.penchant.PenchantmentDefinition;
+import archives.tater.penchant.compat.MaxProtectionCompat;
 import archives.tater.penchant.registry.PenchantFlag;
 
 import net.minecraft.core.BlockPos;
@@ -75,9 +76,14 @@ public final class PenchantmentHelper {
         if (hasEnchantment(stack, enchantment)) return false;
         if (!canEnchantItem(stack, enchantment)) return false;
         for (Enchantment other : getEnchantments(stack).keySet()) {
-            if (!enchantment.isCompatibleWith(other)) return false;
+            if (!areCompatible(enchantment, other)) return false;
         }
         return true;
+    }
+
+    public static boolean areCompatible(Enchantment first, Enchantment second) {
+        if (MaxProtectionCompat.allowsTogether(first, second)) return true;
+        return first.isCompatibleWith(second);
     }
 
     /** Add an enchantment at the given level (always 1 for levelable enchants at the table). */

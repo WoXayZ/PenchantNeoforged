@@ -7,6 +7,7 @@ import archives.tater.penchant.util.PenchantmentHelper;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
+import net.minecraft.util.Mth;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -60,9 +61,11 @@ public class PenchantTooltips {
                             .append(Component.translatable("penchant.tooltip.progress.max"))
                             .withStyle(ChatFormatting.LIGHT_PURPLE));
                 } else {
-                    int current = progress.getProgress(enchantment);
                     int max = EnchantmentProgress.getMaxProgress(enchantment, level, stack.getMaxDamage());
-                    int filled = max <= 0 ? 0 : BAR_WIDTH * current / max;
+                    // Uncapped datapack enchantments can store progress far past the bar;
+                    // BAR_WIDTH * current overflows int and String.repeat crashes (JakeBreathild).
+                    int current = Mth.clamp(progress.getProgress(enchantment), 0, Math.max(max, 0));
+                    int filled = max <= 0 ? 0 : (int) ((long) BAR_WIDTH * current / max);
                     rebuilt.add(Component.literal("  ")
                             .append(FontUtils.getBar(BAR_WIDTH, filled))
                             .append(" ")

@@ -113,6 +113,18 @@ tasks.named('jar', Jar).configure {
         ])
     }
     finalizedBy 'reobfJar'
+    finalizedBy 'copyToReleases'
+}
+
+def releaseFolder = "${mod_version}".replaceFirst("^${minecraft_version}-", "")
+tasks.register('copyToReleases', Copy) {
+    dependsOn 'reobfJar'
+    from layout.buildDirectory.dir('libs')
+    include "penchant-forge-${mod_version}.jar"
+    into layout.projectDirectory.dir("releases/${releaseFolder}")
+}
+tasks.named('build') {
+    finalizedBy 'copyToReleases'
 }
 
 tasks.withType(JavaCompile).configureEach {

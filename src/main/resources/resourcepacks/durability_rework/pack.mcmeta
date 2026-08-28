@@ -1,6 +1,8 @@
 ﻿{
   "pack": {
-    "description": "Penchant durability_rework",
+    "description": {
+      "translate": "dataPack.penchant.durability_rework.description"
+    },
     "pack_format": 15
   }
 }

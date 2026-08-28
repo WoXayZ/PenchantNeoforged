@@ -2,6 +2,7 @@ package archives.tater.penchant.registry;
 
 import archives.tater.penchant.Penchant;
 
+import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.packs.PackType;
@@ -19,11 +20,17 @@ import java.nio.file.Path;
 import java.util.function.Consumer;
 
 /**
- * Built-in datapack modules. For 1.20.1-1.4 the feature flags default to on;
- * datapack folders under {@code resourcepacks/} are registered when present.
+ * Built-in datapack modules. Packs are enabled by default on new worlds but are
+ * not required, so they can be turned off in the datapack screen / {@code /datapack}.
  */
 @Mod.EventBusSubscriber(modid = Penchant.MOD_ID, bus = Mod.EventBusSubscriber.Bus.MOD)
 public final class PenchantModules {
+    /** Builtin label, but {@code shouldAddAutomatically} so new worlds get the modules. */
+    private static final PackSource MODULE = PackSource.create(
+            name -> Component.translatable("pack.nameAndSource", name, Component.translatable("pack.source.builtin"))
+                    .withStyle(ChatFormatting.GRAY),
+            true
+    );
     public static final ResourceLocation DURABILITY_REWORK = Penchant.id("durability_rework");
     public static final ResourceLocation BOOKSHELF_PLACEMENT = Penchant.id("bookshelf_placement");
     public static final ResourceLocation TABLE_REWORK = Penchant.id("table_rework");
@@ -53,14 +60,14 @@ public final class PenchantModules {
             return;
         }
 
-        PackSource source = enabledByDefault ? PackSource.BUILT_IN : PackSource.create(name -> name, false);
+        PackSource source = enabledByDefault ? MODULE : PackSource.create(name -> name, false);
         event.addRepositorySource((Consumer<Pack> consumer) -> {
             try {
                 Pack.ResourcesSupplier resources = (packId) -> new PathPackResources(packId, true, root);
                 Pack pack = Pack.readMetaAndCreate(
                         id.toString(),
                         Component.translatable("dataPack." + id.getNamespace() + "." + id.getPath() + ".name"),
-                        enabledByDefault,
+                        false,
                         resources,
                         PackType.SERVER_DATA,
                         Pack.Position.TOP,

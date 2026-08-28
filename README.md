@@ -5,13 +5,13 @@ Unofficial **Forge 1.20.1** port of [Penchant](https://modrinth.com/mod/penchant
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.4** |
-| **Mod version** | 1.20.1-1.4 |
+| **Port version** | **1.5** |
+| **Mod version** | 1.20.1-1.5 |
 | **Minecraft** | 1.20.1 |
 | **Forge** | 47.4.0 |
 | **Java** | 17 |
 
-## Features (1.4)
+## Features (1.5)
 
 - Usage-based enchantment leveling (progress stored in NBT)
 - Reworked enchanting table menu (pick an enchantment, extract onto books)
@@ -20,6 +20,7 @@ Unofficial **Forge 1.20.1** port of [Penchant](https://modrinth.com/mod/penchant
 - Lenient bookshelf placement
 - Loot rework (common / uncommon / rare / unique pools; books skip commons & curses)
 - Guaranteed enchanted equipment / drowned trident drops
+- Max Protection compat: Protection / Fire / Blast / Projectile can stack in the Penchant table
 
 This branch is a **rewrite** for the 1.20.1 enchantment system (not a line-port of NeoForge 1.21+).
 
@@ -29,7 +30,7 @@ This branch is a **rewrite** for the 1.20.1 enchantment system (not a line-port 
 ./gradlew build
 ```
 
-JAR: `build/libs/penchant-forge-1.20.1-1.4.jar`
+JAR: `build/libs/penchant-forge-1.20.1-1.5.jar`
 
 ## Dev / release QA deps
 

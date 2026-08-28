@@ -1,33 +1,58 @@
 package archives.tater.penchant.registry;
 
+import archives.tater.penchant.Penchant;
+
+import net.minecraft.core.registries.BuiltInRegistries;
+import net.minecraft.core.registries.Registries;
+import net.minecraft.resources.ResourceLocation;
+import net.minecraft.server.MinecraftServer;
+import net.minecraft.tags.TagKey;
+import net.minecraft.world.item.Item;
+import net.minecraftforge.server.ServerLifecycleHooks;
+
+import java.util.Collection;
+
 /**
- * Runtime feature flags. Defaults match the built-in datapack modules enabled for 1.4.
+ * Feature flags tied to built-in datapack modules. Prefer the server's selected
+ * pack list (what the player toggles); fall back to the module's marker item tag
+ * on the client when no server is available.
  */
 public enum PenchantFlag {
-    REWORKED_TABLE_MENU(true),
-    LENIENT_BOOKSHELF_PLACEMENT(true),
-    NO_ANVIL_BOOKS(true),
-    LOOT_REWORK(true),
-    GUARANTEED_ENCHANTED_DROP(true),
-    GUARANTEED_TRIDENT_DROP(true);
+    REWORKED_TABLE_MENU("table_rework"),
+    LENIENT_BOOKSHELF_PLACEMENT("bookshelf_placement"),
+    NO_ANVIL_BOOKS("no_anvil_books"),
+    LOOT_REWORK("loot_rework"),
+    GUARANTEED_ENCHANTED_DROP("guaranteed_drops"),
+    GUARANTEED_TRIDENT_DROP("guaranteed_drops");
 
-    private final boolean defaultEnabled;
-    private boolean enabled;
+    private final String packPath;
+    private final ResourceLocation packId;
+    private final TagKey<Item> enabledTag;
 
-    PenchantFlag(boolean defaultEnabled) {
-        this.defaultEnabled = defaultEnabled;
-        this.enabled = defaultEnabled;
+    PenchantFlag(String packPath) {
+        this.packPath = packPath;
+        this.packId = Penchant.id(packPath);
+        this.enabledTag = TagKey.create(Registries.ITEM, Penchant.id("flags/" + packPath));
     }
 
     public boolean isEnabled() {
-        return enabled;
+        MinecraftServer server = ServerLifecycleHooks.getCurrentServer();
+        if (server != null) {
+            return isSelected(server.getPackRepository().getSelectedIds());
+        }
+        return BuiltInRegistries.ITEM.getTag(enabledTag)
+                .map(tag -> tag.size() > 0)
+                .orElse(false);
     }
 
-    public void setEnabled(boolean enabled) {
-        this.enabled = enabled;
-    }
-
-    public void reset() {
-        this.enabled = defaultEnabled;
+    private boolean isSelected(Collection<String> selected) {
+        String exact = packId.toString();
+        for (String id : selected) {
+            if (id.equals(exact) || id.equals(packPath)
+                    || id.endsWith(":" + packPath) || id.endsWith("/" + packPath)) {
+                return true;
+            }
+        }
+        return false;
     }
 }
