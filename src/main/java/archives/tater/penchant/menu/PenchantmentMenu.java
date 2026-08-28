@@ -247,7 +247,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
             if (!player.isCreative() &&
                     (!PenchantmentHelper.hasEnchantment(stack, enchantment)
                     || getBookCount() < PenchantmentHelper.getBookRequirement(enchantment)
-                    || !EnchantmentHelper.isEnchantmentCompatible(PenchantmentHelper.getEnchantments(ingredientStack).keySet(), enchantment))) {
+                    || !PenchantmentHelper.isCompatibleWithExisting(ingredientStack, enchantment))) {
                 Penchant.LOGGER.warn("Cannot disenchant!");
                 return;
             }
