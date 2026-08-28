@@ -2,6 +2,7 @@ package archives.tater.penchant.util;
 
 import archives.tater.penchant.PenchantmentDefinition;
 import archives.tater.penchant.api.CanEnchantCallback;
+import archives.tater.penchant.compat.MaxProtectionCompat;
 import archives.tater.penchant.registry.PenchantFlag;
 
 import net.minecraft.core.BlockPos;
@@ -81,7 +82,20 @@ public class PenchantmentHelper {
         if (hasEnchantment(stack, enchantment)) return false;
         var result = CanEnchantCallback.STACK.invoke(stack, enchantment);
         if (result != TriState.DEFAULT) return result.toBoolean(false);
-        return canEnchantItem(stack, enchantment) && EnchantmentHelper.isEnchantmentCompatible(getEnchantments(stack).keySet(), enchantment);
+        return canEnchantItem(stack, enchantment) && isCompatibleWithExisting(stack, enchantment);
+    }
+
+
+    public static boolean areCompatible(Holder<Enchantment> first, Holder<Enchantment> second) {
+        if (MaxProtectionCompat.allowsTogether(first, second)) return true;
+        return Enchantment.areCompatible(first, second);
+    }
+
+    public static boolean isCompatibleWithExisting(ItemStack stack, Holder<Enchantment> enchantment) {
+        for (var other : getEnchantments(stack).keySet()) {
+            if (!areCompatible(enchantment, other)) return false;
+        }
+        return true;
     }
 
     public static ItemStack fixBookType(ItemStack stack) {
