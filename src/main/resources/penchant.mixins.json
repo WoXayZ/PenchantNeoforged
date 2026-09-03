@@ -4,6 +4,7 @@
   "package": "archives.tater.penchant.mixin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
+    "effect.DigDurabilityEnchantmentMixin",
     "leveling.ItemStackMixin",
     "leveling.EnchantmentHelperMixin",
     "leveling.EnchantedBookItemMixin",

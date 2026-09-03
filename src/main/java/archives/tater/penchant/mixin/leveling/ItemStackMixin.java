@@ -1,6 +1,7 @@
 package archives.tater.penchant.mixin.leveling;
 
 import archives.tater.penchant.component.EnchantmentProgress;
+import archives.tater.penchant.enchantment.UnbreakingRework;
 import archives.tater.penchant.registry.PenchantItemTags;
 
 import net.minecraft.server.level.ServerPlayer;
@@ -13,11 +14,19 @@ import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.ModifyVariable;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
+import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 import java.util.function.Consumer;
 
 @Mixin(ItemStack.class)
 public abstract class ItemStackMixin {
+    @Inject(method = "isDamageableItem", at = @At("HEAD"), cancellable = true)
+    private void penchant$unbreakingV(CallbackInfoReturnable<Boolean> cir) {
+        if (UnbreakingRework.isUnbreakable((ItemStack) (Object) this)) {
+            cir.setReturnValue(false);
+        }
+    }
+
     @Inject(method = "hurtAndBreak", at = @At("HEAD"))
     private <T extends LivingEntity> void penchant$updateProgress(int amount, T entity, Consumer<T> onBroken, CallbackInfo ci) {
         if (!entity.level().isClientSide && entity instanceof ServerPlayer player) {

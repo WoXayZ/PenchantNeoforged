@@ -21,6 +21,7 @@ public enum PenchantFlag {
     REWORKED_TABLE_MENU("table_rework"),
     LENIENT_BOOKSHELF_PLACEMENT("bookshelf_placement"),
     NO_ANVIL_BOOKS("no_anvil_books"),
+    DURABILITY_REWORK("durability_rework"),
     LOOT_REWORK("loot_rework"),
     GUARANTEED_ENCHANTED_DROP("guaranteed_drops"),
     GUARANTEED_TRIDENT_DROP("guaranteed_drops");

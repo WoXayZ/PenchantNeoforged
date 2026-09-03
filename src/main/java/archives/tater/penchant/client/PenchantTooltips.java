@@ -2,6 +2,7 @@ package archives.tater.penchant.client;
 
 import archives.tater.penchant.Penchant;
 import archives.tater.penchant.component.EnchantmentProgress;
+import archives.tater.penchant.enchantment.UnbreakingRework;
 import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.util.PenchantmentHelper;
 
@@ -35,6 +36,11 @@ public class PenchantTooltips {
 
         boolean showProgress = PenchantKeys.isShowProgressDown();
         List<Component> tooltip = event.getToolTip();
+
+        if (UnbreakingRework.isUnbreakable(stack)
+                && tooltip.stream().noneMatch(line -> line.getString().equals(Component.translatable("item.unbreakable").getString()))) {
+            tooltip.add(Component.translatable("item.unbreakable").withStyle(ChatFormatting.BLUE));
+        }
 
         if (!showProgress) {
             tooltip.add(Component.translatable("penchant.tooltip.progress.key", Component.keybind("key.penchant.show_progress"))

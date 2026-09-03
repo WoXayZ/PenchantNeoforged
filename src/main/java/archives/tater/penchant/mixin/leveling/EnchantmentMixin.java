@@ -1,6 +1,6 @@
 package archives.tater.penchant.mixin.leveling;
 
-import archives.tater.penchant.registry.PenchantEnchantmentTags;
+import archives.tater.penchant.util.PenchantmentHelper;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -13,15 +13,16 @@ import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
 /**
- * Hide Roman numerals for levelable enchantments (levels are shown via progress tooltips instead).
+ * Hide Roman numerals only in Penchant UI (table slots), matching Fabric's
+ * {@code NO_LEVEL_NAME_CONTEXT}. Item tooltips keep vanilla Unbreaking II / III / …
  */
 @Mixin(Enchantment.class)
 public class EnchantmentMixin {
     @Inject(method = "getFullname(I)Lnet/minecraft/network/chat/Component;", at = @At("HEAD"), cancellable = true)
-    private void penchant$hideRomanNumeral(int level, CallbackInfoReturnable<Component> cir) {
-        Enchantment self = (Enchantment) (Object) this;
-        if (PenchantEnchantmentTags.isNoLeveling(self)) return;
+    private void penchant$hideRomanNumeralInUi(int level, CallbackInfoReturnable<Component> cir) {
+        if (!PenchantmentHelper.isNoLevelNameContext()) return;
 
+        Enchantment self = (Enchantment) (Object) this;
         MutableComponent name = Component.translatable(self.getDescriptionId());
         if (self.isCurse()) {
             name.withStyle(ChatFormatting.RED);
