@@ -44,7 +44,5 @@
   "item.penchant.tome_of_penchant": "Tome of Penchant",
   "book.penchant.tome_of_penchant": "Tome of Penchant",
   "book.penchant.tome_of_penchant.landing": "Bienvenue dans le $(#7A2FBF)Tome of Penchant$() - votre guide pour maîtriser la refonte de l'enchantement.$(br2)Les enchantements commencent au niveau 1 et montent en niveau à mesure que vous $(italic)utilisez$() vos outils. Le reste du mod se configure via des $(#7A2FBF)$(l:penchant:modules/overview)Modules$(/l)$() activables par monde.",
-  "book.penchant.tome_of_penchant.subtitle": "Guide de la refonte de l'enchantement",
-  "patchouli.gui.lexicon.progress_meter": "Progrès :",
-  "patchouli.gui.lexicon.progress_tooltip": "%d/%d débloqués"
+  "book.penchant.tome_of_penchant.subtitle": "Guide de la refonte de l'enchantement"
 }

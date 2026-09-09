@@ -6,11 +6,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Les étagères ciselées et les lutrins comptent maintenant dans la puissance de la table, selon le nombre de livres qu'ils contiennent.$(br2)$(#7A2FBF)3 livres = 1 étagère classique.$()"
+            "text": "Avec la $(l:penchant:modules/table_rework)table retravaillée$(/l), les étagères ciselées et les lutrins comptent dans la puissance selon le nombre de livres qu'ils contiennent.$(br2)$(#7A2FBF)3 livres = 1 étagère classique.$()$(br2)Les blocs de mods qui déclarent une puissance d'enchantement comptent pour $(#7A2FBF)3 × cette puissance$() en livres."
         },
         {
             "type": "patchouli:text",
-            "text": "De plus, il n'est plus nécessaire de laisser l'espace vide entre l'étagère et la table, et les étagères peuvent être placées n'importe où dans une zone de $(#7A2FBF)7x4x7$() centrée sur la table (1 dessous, 2 dessus)."
+            "text": "La table $(bold)vanilla$() est laissée tranquille : Penchant n'injecte plus de puissance fractionnaire depuis les étagères ciselées ou les lutrins. C'est le rôle d'un autre mod.$(br2)De plus, il n'est plus nécessaire de laisser l'espace vide entre l'étagère et la table, et les étagères peuvent être placées n'importe où dans une zone de $(#7A2FBF)7x4x7$() centrée sur la table (1 dessous, 2 dessus)."
         },
         {
             "type": "patchouli:image",

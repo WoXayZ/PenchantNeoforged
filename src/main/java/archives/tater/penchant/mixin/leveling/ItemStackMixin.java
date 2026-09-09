@@ -2,6 +2,7 @@ package archives.tater.penchant.mixin.leveling;
 
 import archives.tater.penchant.component.EnchantmentProgress;
 import archives.tater.penchant.registry.PenchantItemTags;
+import archives.tater.penchant.util.PenchantmentHelper;
 
 import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.injection.At;
@@ -57,7 +58,7 @@ public abstract class ItemStackMixin {
         if (EnchantmentHelper.getComponentType((ItemStack) (Object) this) == DataComponents.STORED_ENCHANTMENTS)
             return 1;
         if (((ItemStack) (Object) this).is(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS))
-            return enchantment.value().getMaxLevel();
+            return PenchantmentHelper.getMaxLevel(enchantment);
 
         return level;
     }

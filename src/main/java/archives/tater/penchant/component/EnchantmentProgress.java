@@ -85,10 +85,14 @@ public class EnchantmentProgress {
             return new EnchantmentProgress(progress);
         }
 
+        public boolean isEmpty() {
+            return progress.isEmpty();
+        }
+
     }
 
     public static boolean shouldShowTooltip(Holder<Enchantment> enchantment) {
-        return enchantment.value().getMaxLevel() != 1 && !enchantment.is(PenchantEnchantmentTags.NO_LEVELING);
+        return PenchantmentHelper.getMaxLevel(enchantment) != 1 && !enchantment.is(PenchantEnchantmentTags.NO_LEVELING);
     }
 
     public static final Codec<EnchantmentProgress> CODEC =
@@ -141,7 +145,7 @@ public class EnchantmentProgress {
 
         for (var enchantment : enchantments.keySet()) {
             var level = enchantments.getLevel(enchantment);
-            if (!enchantment.is(PenchantEnchantmentTags.NO_LEVELING) && level < enchantment.value().getMaxLevel())
+            if (!enchantment.is(PenchantEnchantmentTags.NO_LEVELING) && level < PenchantmentHelper.getMaxLevel(enchantment))
                 newProgress.setProgress(enchantment,
                         (int) (random.nextFloat() * getMaxProgress(enchantment, level, stack)));
         }
@@ -163,7 +167,7 @@ public class EnchantmentProgress {
             var level = enchantments.getLevel(enchantment);
 
             while (true) {
-                if (level >= enchantment.value().getMaxLevel()) {
+                if (level >= PenchantmentHelper.getMaxLevel(enchantment)) {
                     progress.removeProgress(enchantment);
                     break;
                 }
