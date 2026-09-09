@@ -6,7 +6,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Mobs that spawn with enchanted equipment are $(#7A2FBF)guaranteed to drop it$() when killed by a player or wolf (as in vanilla).$(br2)This lets you move those enchantments onto books and apply them to your own gear. Also applies to all tridents.$(br2)$(italic)Makes more sense with Loot Rework.$()"
+            "text": "Mobs that spawn with enchanted equipment are $(#7A2FBF)guaranteed to drop it$() when killed by a player or wolf (as in vanilla) - but $(bold)only if the gear has at least one non-common enchantment$().$(br2)A zombie with only Unbreaking or Sharpness still uses the vanilla drop chance. Also applies to all tridents.$(br2)$(italic)Makes more sense with Loot Rework.$()"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Which enchantments are ignored is controlled by $(#7A2FBF)#penchant:ignore_guaranteed_drop$(). By default that tag includes $(#7A2FBF)#penchant:common$(), so only genuinely notable gear is guaranteed.$(br2)A datapack can add or remove entries without touching code."
         },
         {
             "type": "patchouli:image",
@@ -15,7 +19,7 @@
             "images": [
                 "penchant:textures/gui/book/guaranteed_drops.png"
             ],
-            "text": "A mob wielding an enchanted weapon you can claim."
+            "text": "A mob wielding enchanted gear you can actually claim."
         }
     ]
 }

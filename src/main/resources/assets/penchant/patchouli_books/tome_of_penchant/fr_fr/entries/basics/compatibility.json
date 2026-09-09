@@ -10,7 +10,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Deux tags d'enchantement permettent d'ajuster le comportement :$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - appliqué à plein niveau, ne gagne jamais de progression.$(li)$(#7A2FBF)#penchant:disabled$() - retiré de la table d'enchantement."
+            "text": "Des tags d'enchantement permettent d'ajuster le comportement :$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - appliqué à plein niveau, ne gagne jamais de progression.$(li)$(#7A2FBF)#penchant:disabled$() - retiré de la table d'enchantement.$(li)$(#7A2FBF)#penchant:ignore_guaranteed_drop$() - ne rend pas l'équipement d'un mob garanti (par défaut $(#7A2FBF)#penchant:common$())."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Penchant fait progresser un enchantement jusqu'au plus élevé du niveau max stocké dans sa définition et de celui que les autres mods rapportent. Un autre mod peut $(bold)augmenter$() un plafond ; il ne peut pas en faire descendre un sous ce que ses propres données déclarent."
         },
         {
             "type": "patchouli:text",

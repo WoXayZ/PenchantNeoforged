@@ -1,6 +1,6 @@
 {
     "name": "Modules",
-    "description": "Fonctionnalités optionnelles, chacune fournie sous forme de datapack activable à la création ou à la modification d'un monde.",
+    "description": "Fonctionnalités optionnelles, chacune fournie sous forme de datapack. Activez-les à la création ou à la modification d'un monde ; les défauts pour les nouveaux mondes sont dans config/penchant/server.toml.",
     "icon": "minecraft:chiseled_bookshelf",
     "sortnum": 1
 }
