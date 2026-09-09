@@ -5,6 +5,7 @@ import archives.tater.penchant.component.EnchantmentProgress;
 import archives.tater.penchant.enchantment.UnbreakingRework;
 import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.util.PenchantmentHelper;
+import archives.tater.penchant.util.PenchantUtil;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class PenchantTooltips {
     private static final int BAR_WIDTH = 32;
 
-    @SubscribeEvent(priority = EventPriority.LOW)
+    @SubscribeEvent(priority = EventPriority.LOWEST)
     public static void onTooltip(ItemTooltipEvent event) {
         ItemStack stack = event.getItemStack();
         if (stack.is(Items.ENCHANTED_BOOK) || stack.is(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS)) return;
@@ -39,7 +40,7 @@ public class PenchantTooltips {
 
         if (UnbreakingRework.isUnbreakable(stack)
                 && tooltip.stream().noneMatch(line -> line.getString().equals(Component.translatable("item.unbreakable").getString()))) {
-            tooltip.add(Component.translatable("item.unbreakable").withStyle(ChatFormatting.BLUE));
+            tooltip.add(Math.min(1, tooltip.size()), Component.translatable("item.unbreakable").withStyle(ChatFormatting.BLUE));
         }
 
         if (!showProgress) {
@@ -57,10 +58,10 @@ public class PenchantTooltips {
                 Enchantment enchantment = entry.getKey();
                 if (!EnchantmentProgress.shouldShowTooltip(enchantment)) continue;
                 Component name = PenchantmentHelper.getName(enchantment);
-                if (!line.getString().contains(name.getString())) continue;
+                if (!PenchantUtil.containsIgnoreStyle(line, name) && !line.getString().contains(name.getString())) continue;
 
                 int level = entry.getValue();
-                if (level >= enchantment.getMaxLevel()) {
+                if (level >= PenchantmentHelper.getMaxLevel(enchantment)) {
                     rebuilt.add(Component.literal("  ")
                             .append(FontUtils.getBar(BAR_WIDTH, BAR_WIDTH))
                             .append(" ")

@@ -83,7 +83,7 @@ public class EnchantmentProgress {
     }
 
     public static boolean shouldShowTooltip(Enchantment enchantment) {
-        return enchantment.getMaxLevel() != 1 && !PenchantEnchantmentTags.isNoLeveling(enchantment);
+        return PenchantmentHelper.getMaxLevel(enchantment) != 1 && !PenchantEnchantmentTags.isNoLeveling(enchantment);
     }
 
     public static int getMaxProgress(Enchantment enchantment, int currentLevel, int maxDurability) {
@@ -151,7 +151,7 @@ public class EnchantmentProgress {
         for (var entry : enchantments.entrySet()) {
             Enchantment enchantment = entry.getKey();
             int level = entry.getValue();
-            if (!PenchantEnchantmentTags.isNoLeveling(enchantment) && level < enchantment.getMaxLevel()) {
+            if (!PenchantEnchantmentTags.isNoLeveling(enchantment) && level < PenchantmentHelper.getMaxLevel(enchantment)) {
                 mutable.setProgress(enchantment, (int) (random.nextFloat() * getMaxProgress(enchantment, level, stack.getMaxDamage())));
             }
         }
@@ -165,7 +165,7 @@ public class EnchantmentProgress {
 
             int level = enchantments.get(enchantment);
             while (true) {
-                if (level >= enchantment.getMaxLevel()) {
+                if (level >= PenchantmentHelper.getMaxLevel(enchantment)) {
                     progress.removeProgress(enchantment);
                     break;
                 }

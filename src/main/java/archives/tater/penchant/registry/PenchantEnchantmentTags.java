@@ -17,6 +17,7 @@ public final class PenchantEnchantmentTags {
     public static final TagKey<Enchantment> UNCOMMON = TagKey.create(Registries.ENCHANTMENT, Penchant.id("uncommon"));
     public static final TagKey<Enchantment> COMMON = TagKey.create(Registries.ENCHANTMENT, Penchant.id("common"));
     public static final TagKey<Enchantment> ON_RANDOM_LOOT_BOOKS = TagKey.create(Registries.ENCHANTMENT, Penchant.id("on_random_loot_books"));
+    public static final TagKey<Enchantment> IGNORE_GUARANTEED_DROP = TagKey.create(Registries.ENCHANTMENT, Penchant.id("ignore_guaranteed_drop"));
 
     public static boolean isNoLeveling(Enchantment enchantment) {
         return isIn(enchantment, NO_LEVELING);
@@ -24,6 +25,10 @@ public final class PenchantEnchantmentTags {
 
     public static boolean isDisabled(Enchantment enchantment) {
         return isIn(enchantment, DISABLED);
+    }
+
+    public static boolean isIgnoreGuaranteedDrop(Enchantment enchantment) {
+        return isIn(enchantment, IGNORE_GUARANTEED_DROP);
     }
 
     public static boolean isUnique(Enchantment enchantment) {

@@ -5,24 +5,25 @@ Unofficial **Forge 1.20.1** port of [Penchant](https://modrinth.com/mod/penchant
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.5-fix** |
-| **Mod version** | 1.20.1-1.5-fix |
+| **Port version** | **1.6** |
+| **Mod version** | 1.20.1-1.6 |
 | **Minecraft** | 1.20.1 |
 | **Forge** | 47.4.0 |
 | **Java** | 17 |
 
-## Features (1.5-fix)
+## Features (1.6)
 
 - Usage-based enchantment leveling (progress stored in NBT)
 - Reworked enchanting table menu (pick an enchantment, extract onto books)
 - Hold Left Ctrl to view progress tooltips
 - No combining enchanted books on the anvil
-- Lenient bookshelf placement
+- Lenient bookshelf placement; modded enchant-power blocks count as `3 * power` books
 - Loot rework (common / uncommon / rare / unique pools; books skip commons & curses)
-- Guaranteed enchanted equipment / drowned trident drops
+- Guaranteed enchanted equipment / drowned trident drops, unless the enchantments are in `#penchant:ignore_guaranteed_drop` (defaults to `#penchant:common`)
 - Max Protection compat: Protection / Fire / Blast / Projectile can stack in the Penchant table
 - Durability Rework: Unbreaking has 5 levels; Unbreaking V makes the item unbreakable
 - Enchantment tooltips show vanilla Roman numerals (Unbreaking III, Sharpness II, …)
+- `config/penchant/server.toml` for modpack default modules on **new** worlds
 
 This branch is a **rewrite** for the 1.20.1 enchantment system (not a line-port of NeoForge 1.21+).
 
@@ -32,7 +33,7 @@ This branch is a **rewrite** for the 1.20.1 enchantment system (not a line-port 
 ./gradlew build
 ```
 
-JAR: `build/libs/penchant-forge-1.20.1-1.5-fix.jar`
+JAR: `build/libs/penchant-forge-1.20.1-1.6.jar`
 
 ## Dev / release QA deps
 

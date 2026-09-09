@@ -1,6 +1,7 @@
 package archives.tater.penchant.registry;
 
 import archives.tater.penchant.Penchant;
+import archives.tater.penchant.PenchantServerConfig;
 
 import net.minecraft.ChatFormatting;
 import net.minecraft.network.chat.Component;
@@ -43,12 +44,12 @@ public final class PenchantModules {
     @SubscribeEvent
     public static void addPackFinders(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
-        register(event, TABLE_REWORK, true);
-        register(event, BOOKSHELF_PLACEMENT, true);
-        register(event, NO_ANVIL_BOOKS, true);
-        register(event, DURABILITY_REWORK, true);
-        register(event, LOOT_REWORK, true);
-        register(event, GUARANTEED_DROPS, true);
+        register(event, TABLE_REWORK, PenchantServerConfig.TABLE_REWORK.get());
+        register(event, BOOKSHELF_PLACEMENT, PenchantServerConfig.BOOKSHELF_PLACEMENT.get());
+        register(event, NO_ANVIL_BOOKS, PenchantServerConfig.NO_ANVIL_BOOKS.get());
+        register(event, DURABILITY_REWORK, PenchantServerConfig.DURABILITY_REWORK.get());
+        register(event, LOOT_REWORK, PenchantServerConfig.LOOT_REWORK.get());
+        register(event, GUARANTEED_DROPS, PenchantServerConfig.GUARANTEED_DROPS.get());
     }
 
     private static void register(AddPackFindersEvent event, ResourceLocation id, boolean enabledByDefault) {

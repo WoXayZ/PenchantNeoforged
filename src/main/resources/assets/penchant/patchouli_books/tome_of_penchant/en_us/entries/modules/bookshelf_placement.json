@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Chiseled bookshelves and lecterns now count towards the table's bookshelf power, based on how many books they hold.$(br2)$(#7A2FBF)3 books = 1 vanilla bookshelf.$()"
+            "text": "Chiseled bookshelves and lecterns now count towards the table's bookshelf power, based on how many books they hold.$(br2)$(#7A2FBF)3 books = 1 vanilla bookshelf.$()$(br2)Modded blocks that provide enchanting power through Forge's API also count: a fractional power is worth that fraction of a three-book shelf."
         },
         {
             "type": "patchouli:text",

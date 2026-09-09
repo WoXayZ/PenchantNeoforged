@@ -10,7 +10,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Two enchantment tags let packs fine-tune behavior:$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - applied at full level, never gains progress.$(li)$(#7A2FBF)#penchant:disabled$() - removed from the enchanting table."
+            "text": "Two enchantment tags let packs fine-tune behavior:$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - applied at full level, never gains progress.$(li)$(#7A2FBF)#penchant:disabled$() - removed from the enchanting table.$(li)$(#7A2FBF)#penchant:ignore_guaranteed_drop$() - does not make a mob's equipment a guaranteed drop (defaults to common enchantments)."
         },
         {
             "type": "patchouli:text",

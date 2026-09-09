@@ -59,9 +59,25 @@ public final class PenchantmentHelper {
         return PenchantmentDefinition.getDefinition(enchantment).experienceCost();
     }
 
+    /**
+     * The level Penchant levels an enchantment up to.
+     *
+     * <p>Matches NeoForge 1.21+: a global cap injected into {@link Enchantment#getMaxLevel()}
+     * (Remove Enchantment Limits) is honoured whether it raises or lowers the vanilla/Penchant
+     * value. Subclass overrides never run that base method, so a 1-level enchantment is used as
+     * a probe. Without such a cap, Unbreaking stays at 5 with Durability Rework and Protection at 4.
+     */
+    public static int getMaxLevel(Enchantment enchantment) {
+        int global = EnchantmentMaxLevelAccess.injectedGlobalCap();
+        if (global > 0) {
+            return global;
+        }
+        return EnchantmentMaxLevelAccess.get(enchantment);
+    }
+
     public static boolean canEnchantItem(ItemStack stack, Enchantment enchantment) {
         if (stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK)) return enchantment.isAllowedOnBooks();
-        return enchantment.canEnchant(stack);
+        return enchantment.canEnchant(stack.getItem().getDefaultInstance());
     }
 
     public static Map<Enchantment, Integer> getEnchantments(ItemStack stack) {
@@ -75,6 +91,7 @@ public final class PenchantmentHelper {
     public static boolean canEnchant(ItemStack stack, Enchantment enchantment) {
         if (hasEnchantment(stack, enchantment)) return false;
         if (!canEnchantItem(stack, enchantment)) return false;
+        if (!stack.is(Items.BOOK) && !stack.is(Items.ENCHANTED_BOOK) && !enchantment.canEnchant(stack)) return false;
         for (Enchantment other : getEnchantments(stack).keySet()) {
             if (!areCompatible(enchantment, other)) return false;
         }

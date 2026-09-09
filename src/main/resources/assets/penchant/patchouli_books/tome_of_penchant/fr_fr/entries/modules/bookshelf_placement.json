@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Les étagères ciselées et les lutrins comptent maintenant dans la puissance de la table, selon le nombre de livres qu'ils contiennent.$(br2)$(#7A2FBF)3 livres = 1 étagère classique.$()"
+            "text": "Les étagères ciselées et les lutrins comptent maintenant dans la puissance de la table, selon le nombre de livres qu'ils contiennent.$(br2)$(#7A2FBF)3 livres = 1 étagère classique.$()$(br2)Les blocs de mods qui fournissent de la puissance d'enchantement via l'API Forge comptent aussi : une puissance fractionnaire vaut cette fraction d'une étagère de trois livres."
         },
         {
             "type": "patchouli:text",

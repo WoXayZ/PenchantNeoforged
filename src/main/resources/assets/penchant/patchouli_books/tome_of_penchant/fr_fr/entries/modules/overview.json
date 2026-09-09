@@ -10,7 +10,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(bold)Configurer les modules$()$(br)Activez-les dans l'écran $(#7A2FBF)Packs de données$() à la création d'un monde, ou plus tard avec la commande $(#7A2FBF)/datapack$(). Un mod de menu comme Datapack/Gamerule Menus fonctionne aussi.$(br2)Certains modules vont mieux ensemble ; ces recommandations sont indiquées sur chaque page."
+            "text": "$(bold)Configurer les modules$()$(br)Activez-les dans l'écran $(#7A2FBF)Packs de données$() à la création d'un monde, ou plus tard avec la commande $(#7A2FBF)/datapack$(). Un mod de menu comme Datapack/Gamerule Menus fonctionne aussi.$(br2)C'est la méthode recommandée pour les joueurs. Changer les packs ne réécrit pas un monde existant à moins que vous ne le fassiez vous-même."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(bold)Défauts modpack$()$(br)Les développeurs de packs peuvent changer quels modules sont pré-sélectionnés pour les $(italic)nouveaux$() mondes dans $(#7A2FBF)config/penchant/server.toml$(). Ce fichier n'affecte $(bold)pas$() les mondes déjà existants.$(br2)Certains modules vont mieux ensemble ; ces recommandations sont indiquées sur chaque page."
         },
         {
             "type": "patchouli:image",
@@ -23,7 +27,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(italic)Activés par défaut$()$(br)$(li)Refonte de la Table $(li)Placement des Étagères $(li)Refonte de la Durabilité $(li)Refonte du Butin $(li)Pas de Livres à l'Enclume $(li)Butin Garanti$(br2)$(italic)Désactivé par défaut$()$(br)$(li)Malédictions Réduites $(li)Bibliothécaires aléatoires"
+            "text": "$(italic)Activés par défaut$()$(br)$(li)Refonte de la Table $(li)Placement des Étagères $(li)Refonte de la Durabilité $(li)Refonte du Butin $(li)Pas de Livres à l'Enclume $(li)Butin Garanti$(br2)La rareté des malédictions fait partie de la Refonte du butin, pas d'un pack séparé. Les bibliothécaires aléatoires ne sont pas disponibles sur cette version de Minecraft."
         }
     ]
 }

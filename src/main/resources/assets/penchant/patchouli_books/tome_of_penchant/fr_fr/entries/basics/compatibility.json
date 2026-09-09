@@ -10,7 +10,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Deux tags d'enchantement permettent d'ajuster le comportement :$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - appliqué à plein niveau, ne gagne jamais de progression.$(li)$(#7A2FBF)#penchant:disabled$() - retiré de la table d'enchantement."
+            "text": "Deux tags d'enchantement permettent d'ajuster le comportement :$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - appliqué à plein niveau, ne gagne jamais de progression.$(li)$(#7A2FBF)#penchant:disabled$() - retiré de la table d'enchantement.$(li)$(#7A2FBF)#penchant:ignore_guaranteed_drop$() - ne rend pas l'équipement d'un mob garanti (par défaut les enchantements communs)."
         },
         {
             "type": "patchouli:text",

@@ -6,7 +6,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Les mobs qui apparaissent avec un équipement enchanté le $(#7A2FBF)lâchent à coup sûr$() lorsqu'ils sont tués par un joueur ou un loup (comme en vanilla).$(br2)Cela permet de transférer ces enchantements sur des livres et de les appliquer à votre propre équipement. S'applique aussi à tous les tridents.$(br2)$(italic)Plus cohérent avec Refonte du butin.$()"
+            "text": "Les mobs qui apparaissent avec un équipement enchanté le $(#7A2FBF)lâchent à coup sûr$() lorsqu'ils sont tués par un joueur ou un loup (comme en vanilla) - mais $(bold)seulement si l'équipement a au moins un enchantement non-commun$().$(br2)Un zombie avec seulement Solidité ou Tranchant garde la chance de drop vanilla. S'applique aussi à tous les tridents.$(br2)$(italic)Plus cohérent avec Refonte du butin.$()"
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Les enchantements ignorés sont contrôlés par $(#7A2FBF)#penchant:ignore_guaranteed_drop$(). Par défaut ce tag inclut $(#7A2FBF)#penchant:common$(), donc seul l'équipement vraiment notable est garanti.$(br2)Un datapack peut ajouter ou retirer des entrées sans toucher au code."
         },
         {
             "type": "patchouli:image",
@@ -15,7 +19,7 @@
             "images": [
                 "penchant:textures/gui/book/guaranteed_drops.png"
             ],
-            "text": "Un mob brandissant une arme enchantée que vous pouvez récupérer."
+            "text": "Un mob brandissant un équipement enchanté que vous pouvez vraiment récupérer."
         }
     ]
 }

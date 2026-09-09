@@ -3,6 +3,7 @@ package archives.tater.penchant.mixin.leveling;
 import archives.tater.penchant.component.EnchantmentProgress;
 import archives.tater.penchant.enchantment.UnbreakingRework;
 import archives.tater.penchant.registry.PenchantItemTags;
+import archives.tater.penchant.util.PenchantmentHelper;
 
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.entity.LivingEntity;
@@ -42,7 +43,7 @@ public abstract class ItemStackMixin {
             return 1;
         }
         if (self.is(PenchantItemTags.MAX_LEVEL_ENCHANTMENTS)) {
-            return enchantment.getMaxLevel();
+            return PenchantmentHelper.getMaxLevel(enchantment);
         }
         return 1;
     }

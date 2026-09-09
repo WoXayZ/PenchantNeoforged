@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Réorganise les enchantements existants et l'endroit où on les obtient : les enchantements de base sont faciles à avoir, tandis que les plus spéciaux sont plus rares.$(br2)$(italic)Recommande Refonte de la Table.$()"
+            "text": "Réorganise les enchantements existants et l'endroit où on les obtient : les enchantements de base sont faciles à avoir, tandis que les plus spéciaux sont plus rares.$(br2)Les malédictions restent hors des échanges de bibliothécaires et des livres de butin ; elles peuvent encore apparaître sur l'équipement des monstres.$(br2)$(italic)Recommande Refonte de la Table.$()"
         },
         {
             "type": "patchouli:text",

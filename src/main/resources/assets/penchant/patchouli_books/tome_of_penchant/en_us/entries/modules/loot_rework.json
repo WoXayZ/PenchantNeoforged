@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Reorganizes which enchantments exist and where you get them, so basic enchantments are easy to obtain while special ones are harder to find.$(br2)$(italic)Recommends Table Rework.$()"
+            "text": "Reorganizes which enchantments exist and where you get them, so basic enchantments are easy to obtain while special ones are harder to find.$(br2)Curses are kept off librarian trades and loot books; they can still appear on mob equipment.$(br2)$(italic)Recommends Table Rework.$()"
         },
         {
             "type": "patchouli:text",

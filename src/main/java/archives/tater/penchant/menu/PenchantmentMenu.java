@@ -277,6 +277,11 @@ public class PenchantmentMenu extends AbstractContainerMenu {
                 }
             } else if (PenchantmentHelper.isBookshelfPowerProvider(state)) {
                 count += 1;
+            } else {
+                float bonus = state.getEnchantPowerBonus(level, pos);
+                if (bonus > 0f) {
+                    count += (int) Math.floor(3 * bonus);
+                }
             }
         }
         return count;
