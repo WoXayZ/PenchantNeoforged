@@ -1,6 +1,6 @@
 {
     "name": "Modules",
-    "description": "Optional features, each shipped as a datapack you can toggle when creating or editing a world.",
+    "description": "Optional features, each shipped as a datapack. Toggle them when creating or editing a world; pack defaults for new worlds live in config/penchant/server.toml.",
     "icon": "minecraft:chiseled_bookshelf",
     "sortnum": 1
 }
