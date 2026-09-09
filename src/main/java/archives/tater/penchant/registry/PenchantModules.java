@@ -1,6 +1,7 @@
 package archives.tater.penchant.registry;
 
 import archives.tater.penchant.Penchant;
+import archives.tater.penchant.PenchantServerConfig;
 
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
@@ -8,6 +9,7 @@ import net.minecraft.server.packs.PackType;
 import net.minecraft.server.packs.repository.Pack;
 import net.minecraft.server.packs.repository.PackSource;
 
+import net.neoforged.neoforge.common.ModConfigSpec;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 
 public class PenchantModules {
@@ -45,14 +47,18 @@ public class PenchantModules {
         registerPack(event, id, PackSource.BUILT_IN);
     }
 
+    private static void registerPack(AddPackFindersEvent event, Identifier id, ModConfigSpec.BooleanValue defaultEnabled) {
+        registerPack(event, id, defaultEnabled.get() ? PackSource.BUILT_IN : NORMAL_SOURCE);
+    }
+
     public static void addPackFinders(AddPackFindersEvent event) {
         if (event.getPackType() != PackType.SERVER_DATA) return;
-        registerPack(event, DURABILITY_REWORK);
-        registerPack(event, BOOKSHELF_PLACEMENT);
-        registerPack(event, TABLE_REWORK);
-        registerPack(event, NO_ANVIL_BOOKS);
-        registerPack(event, LOOT_REWORK);
-        registerPack(event, GUARANTEED_DROPS);
+        registerPack(event, DURABILITY_REWORK, PenchantServerConfig.DURABILITY_REWORK);
+        registerPack(event, BOOKSHELF_PLACEMENT, PenchantServerConfig.BOOKSHELF_PLACEMENT);
+        registerPack(event, TABLE_REWORK, PenchantServerConfig.TABLE_REWORK);
+        registerPack(event, NO_ANVIL_BOOKS, PenchantServerConfig.NO_ANVIL_BOOKS);
+        registerPack(event, LOOT_REWORK, PenchantServerConfig.LOOT_REWORK);
+        registerPack(event, GUARANTEED_DROPS, PenchantServerConfig.GUARANTEED_DROPS);
         // randomized_librarians disabled on 1.21.1 (no VILLAGER_TRADE registry)
     }
 

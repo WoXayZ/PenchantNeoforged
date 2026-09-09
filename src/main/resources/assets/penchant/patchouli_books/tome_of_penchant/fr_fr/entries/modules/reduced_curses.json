@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Les enchantements malédiction (Malédiction du lien éternel, Malédiction de disparition) ne se trouvent que sur l'$(#7A2FBF)équipement des mobs$().$(br2)$(italic)Désactivé par défaut. Plus cohérent avec Refonte du butin.$()"
+            "text": "Ce n'est plus un module séparé. La rareté des malédictions fait désormais partie de la $(l:penchant:modules/loot_rework)Refonte du butin$(/l) : elles restent hors des échanges de bibliothécaires et des livres de butin, et peuvent encore apparaître sur l'équipement des mobs.$(br2)Il n'y a rien de plus à activer."
         }
     ]
 }
