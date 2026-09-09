@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Réorganise les enchantements existants et l'endroit où on les obtient : les enchantements de base sont faciles à avoir, tandis que les plus spéciaux sont plus rares.$(br2)$(italic)Recommande Refonte de la Table.$()"
+            "text": "Réorganise les enchantements existants et l'endroit où on les obtient : les enchantements de base sont faciles à avoir, tandis que les plus spéciaux sont plus rares.$(br2)Les malédictions restent hors des échanges de bibliothécaires et des livres de butin ; elles peuvent encore apparaître sur l'équipement des mobs.$(br2)$(italic)Recommande Refonte de la Table.$()"
         },
         {
             "type": "patchouli:text",
@@ -14,11 +14,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(#7A2FBF)$(bold)Peu communs$()$(br)Effets spécialisés ou secondaires. Achetés aux villageois, trouvés dans le butin aléatoire et l'équipement d'apparition des monstres.$(br2)Affinité Aquatique, Chute Amortie, les Protections, Châtiment, Fléau des Arthropodes, Fauchage, Recul, Frappe, Densité, Percée, Butin, Chance de la Mer."
+            "text": "$(#7A2FBF)$(bold)Peu communs$()$(br)Effets spécialisés ou secondaires. Achetés aux villageois, trouvés dans le butin aléatoire et l'équipement d'apparition des monstres.$(br2)Affinité Aquatique, Chute Amortie, les Protections, Châtiment, Fléau des Arthropodes, Fauchage, Recul, Frappe, Densité, Butin, Chance de la Mer."
         },
         {
             "type": "patchouli:text",
-            "text": "$(#7A2FBF)$(bold)Rares$()$(br)Capacités uniques et magiques, trouvées dans le $(italic)butin de structures spécifiques$(), le butin aléatoire et l'équipement des monstres.$(br2)Marche Glaciale, Aura de Feu, Flammes, Toucher de Soie, Fortune, Fente, Respiration, Agilité Aquatique, Canalisation, Ricochet, Épines, Infinité, Multi-tir."
+            "text": "$(#7A2FBF)$(bold)Rares$()$(br)Capacités uniques et magiques, trouvées dans le $(italic)butin de structures spécifiques$(), le butin aléatoire et l'équipement des monstres.$(br2)Marche Glaciale, Aura de Feu, Flammes, Toucher de Soie, Fortune, Respiration, Agilité Aquatique, Canalisation, Ricochet, Épines, Infinité, Multi-tir."
         },
         {
             "type": "patchouli:image",
@@ -31,7 +31,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(#7A2FBF)$(bold)Uniques$()$(br)Seulement via leurs sources spéciales (inchangé) :$(br)$(li)Vitesse des Âmes - troc des piglins $(li)Furtivité - cité antique $(li)Rafale - coffre-fort sinistre$(br2)Aussi : les zombies peuvent apparaître avec des pioches en fer, avec la même chance d'être enchantées que les épées et pelles."
+            "text": "$(#7A2FBF)$(bold)Uniques$()$(br)Seulement via leurs sources spéciales (inchangé) :$(br)$(li)Vitesse des Âmes - troc des piglins $(li)Furtivité - cité antique $(li)Rafale - coffre-fort sinistre $(li)Percée - coffre-fort$(br2)Aussi : les zombies peuvent apparaître avec des pioches en fer, avec la même chance d'être enchantées que les épées et pelles."
         }
     ]
 }

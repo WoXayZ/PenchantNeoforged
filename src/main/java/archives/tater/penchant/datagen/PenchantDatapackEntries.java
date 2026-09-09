@@ -68,7 +68,7 @@ public final class PenchantDatapackEntries {
                         ))
                 )
                 .withSpecialEffect(PenchantEnchantments.UNBREAKABLE, List.of(
-                        new UnbreakableEffect(MinMaxBounds.Ints.atLeast(5))
+                        new UnbreakableEffect()
                 ))
                 .build(Enchantments.UNBREAKING.location())
         );

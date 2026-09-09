@@ -9,9 +9,7 @@ import archives.tater.penchant.util.PenchantmentHelper;
 
 import com.llamalad7.mixinextras.injector.wrapoperation.Operation;
 import com.llamalad7.mixinextras.injector.wrapoperation.WrapOperation;
-import com.llamalad7.mixinextras.sugar.Local;
 import com.llamalad7.mixinextras.sugar.Share;
-import com.llamalad7.mixinextras.sugar.ref.LocalIntRef;
 import com.llamalad7.mixinextras.sugar.ref.LocalRef;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -54,35 +52,10 @@ public class ItemEnchantmentsMixin {
             method = "addToTooltip",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getFullname(Lnet/minecraft/core/Holder;I)Lnet/minecraft/network/chat/Component;")
     )
-    private Component hideLevel(Holder<Enchantment> enchantment, int level, Operation<Component> original, @Share("progress") LocalRef<EnchantmentProgress> progress, @Share("enchantmentShare") LocalRef<Holder<Enchantment>> enchantmentShare, @Share("level") LocalIntRef shareLevel) {
+    private Component hideLevel(Holder<Enchantment> enchantment, int level, Operation<Component> original, @Share("progress") LocalRef<EnchantmentProgress> progress) {
         if (enchantment.is(PenchantEnchantmentTags.NO_LEVELING)) return original.call(enchantment, level);
         if (progress.get() == null) return PenchantmentHelper.getName(enchantment);
-        enchantmentShare.set(enchantment);
-        shareLevel.set(level);
         return original.call(enchantment, level);
-    }
-
-    @SuppressWarnings("unchecked")
-    @WrapOperation(
-            method = "addToTooltip",
-            at = @At(value = "INVOKE", target = "Ljava/util/function/Consumer;accept(Ljava/lang/Object;)V")
-    )
-    private <T> void addProgress(Consumer<T> instance, T text, Operation<Void> original, @Share("enchantmentShare") LocalRef<Holder<Enchantment>> enchantmentShare, @Share("level") LocalIntRef level, @Share("progress") LocalRef<EnchantmentProgress> progress) {
-        original.call(instance, text);
-
-        var enchantment = enchantmentShare.get();
-        if (enchantment == null) return;
-        if (!PenchantClient.shouldShowProgress()) return;
-        if (!EnchantmentProgress.shouldShowTooltip(enchantment)) return;
-
-        var stack = PenchantClient.tooltipItem.get();
-        if (stack == null) return;
-        instance.accept((T) PenchantClient.getProgressTooltip(
-                progress.get(),
-                enchantment,
-                level.get(),
-                stack
-        ));
     }
 
     @Inject(

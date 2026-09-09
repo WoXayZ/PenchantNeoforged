@@ -6,11 +6,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Une fois activé, les bibliothécaires vendent un $(#7A2FBF)livre enchanté avec un enchantement échangeable aléatoire$() à chaque achat - plus un livre fixe pour toute la vie du villageois.$(br2)L'échange coûte toujours des émeraudes plus un livre vierge, avec les prix vanilla selon le niveau du bibliothécaire."
+            "text": "$(bold)Indisponible sur cette version de Minecraft.$() Les bibliothécaires aléatoires ont besoin d'un registre d'échanges de villageois que 1.21.1 n'a pas, donc le datapack n'est pas enregistré ici.$(br2)Sur les versions plus récentes, les bibliothécaires vendent un $(#7A2FBF)livre enchanté avec un enchantement échangeable aléatoire$() à chaque achat, au lieu d'un livre fixe pour toute la vie du villageois."
         },
         {
             "type": "patchouli:text",
-            "text": "$(bold)Niveaux d'échange$()$(br)$(li)Novice : 15 émeraudes, 1 utilisation$(li)Apprenti : 18 émeraudes, 1 utilisation$(li)Compagnon : 20 émeraudes, 2 utilisations$(li)Expert : 24 émeraudes, 3 utilisations$(br2)$(italic)Désactivé par défaut.$() Activez le datapack $(#7A2FBF)Bibliothécaires aléatoires$(). Se marie bien avec la $(l:penchant:modules/loot_rework)Refonte du butin$(/l)."
+            "text": "Quand le module existe, l'échange coûte toujours des émeraudes plus un livre vierge, avec les prix vanilla selon le niveau.$(br2)$(li)Novice : 15 émeraudes, 1 utilisation$(li)Apprenti : 18 émeraudes, 1 utilisation$(li)Compagnon : 20 émeraudes, 2 utilisations$(li)Expert : 24 émeraudes, 3 utilisations$(br2)Se marie bien avec la $(l:penchant:modules/loot_rework)Refonte du butin$(/l)."
         }
     ]
 }

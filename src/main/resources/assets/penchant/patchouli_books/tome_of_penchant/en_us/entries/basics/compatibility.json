@@ -10,7 +10,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "Two enchantment tags let packs fine-tune behavior:$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - applied at full level, never gains progress.$(li)$(#7A2FBF)#penchant:disabled$() - removed from the enchanting table."
+            "text": "Enchantment tags let packs fine-tune behavior:$(br2)$(li)$(#7A2FBF)#penchant:no_leveling$() - applied at full level, never gains progress.$(li)$(#7A2FBF)#penchant:disabled$() - removed from the enchanting table.$(li)$(#7A2FBF)#penchant:ignore_guaranteed_drop$() - does not make a mob's equipment a guaranteed drop (defaults to $(#7A2FBF)#penchant:common$())."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "Penchant levels an enchantment up to the highest of the max level stored in its definition and the one other mods report at runtime. Another mod can $(bold)raise$() a cap; it cannot accidentally drag one below what the enchantment's own data declares."
         },
         {
             "type": "patchouli:text",

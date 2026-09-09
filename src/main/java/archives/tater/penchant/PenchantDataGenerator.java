@@ -2,6 +2,7 @@ package archives.tater.penchant;
 
 import archives.tater.penchant.datagen.BlockTagGenerator;
 import archives.tater.penchant.datagen.BookshelfBlockTagGenerator;
+import archives.tater.penchant.datagen.DropEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.DurabilityEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.EnchantmentTagGenerator;
 import archives.tater.penchant.datagen.FlagTagGenerator;
@@ -87,6 +88,7 @@ public final class PenchantDataGenerator {
         var drops = builtinPack(generator, PenchantModules.GUARANTEED_DROPS);
         drops.addProvider(output -> new FlagTagGenerator(output, lookup,
                 PenchantFlag.GUARANTEED_ENCHANTED_DROP, PenchantFlag.GUARANTEED_TRIDENT_DROP));
+        drops.addProvider(output -> new DropEnchantmentTagGenerator(output, lookup));
 
         // randomized_librarians disabled on 1.21.1 (no VILLAGER_TRADE registry)
     }
