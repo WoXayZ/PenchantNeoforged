@@ -5,7 +5,6 @@ import archives.tater.penchant.enchantment.UnbreakableEffect;
 import archives.tater.penchant.loot.LootModification;
 import archives.tater.penchant.registry.PenchantEnchantments;
 
-import net.minecraft.advancements.critereon.MinMaxBounds;
 import net.minecraft.core.HolderGetter;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.registries.Registries;
@@ -68,7 +67,7 @@ public final class PenchantDatapackEntries {
                         ))
                 )
                 .withSpecialEffect(PenchantEnchantments.UNBREAKABLE, List.of(
-                        new UnbreakableEffect(MinMaxBounds.Ints.atLeast(5))
+                        new UnbreakableEffect()
                 ))
                 .build(Enchantments.UNBREAKING.location())
         );
