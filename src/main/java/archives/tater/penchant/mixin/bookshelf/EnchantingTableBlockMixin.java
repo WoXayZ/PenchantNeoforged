@@ -32,7 +32,8 @@ public class EnchantingTableBlockMixin {
     )
     private static float checkChiseled(BlockState instance, LevelReader level, BlockPos pos, Operation<Float> original) {
         float power = original.call(instance, level, pos);
-        return PenchantmentHelper.getBookCount(instance) > 0 ? power : 0f;
+        if (power <= 0) return 0f;
+        return PenchantmentHelper.getBookCount(level, pos) > 0 ? power : 0f;
     }
 
     @ModifyExpressionValue(

@@ -6,7 +6,7 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Curse enchantments (Curse of Binding, Curse of Vanishing) can only be found on $(#7A2FBF)mob equipment$().$(br2)$(italic)Off by default. Makes more sense with Loot Rework.$()"
+            "text": "This is no longer a separate module. Curse rarity now lives in $(l:penchant:modules/loot_rework)Loot Rework$(/l): curses stay off librarian trades and enchanted books found in loot, and can still appear on mob equipment.$(br2)There is nothing extra to enable."
         }
     ]
 }
