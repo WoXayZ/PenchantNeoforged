@@ -3,6 +3,7 @@
   "package": "archives.tater.penchant.mixin",
   "compatibilityLevel": "JAVA_21",
   "mixins": [
+    "archives.tater.penchant.mixin",
     "anvil.AnvilMenuMixin",
     "bookshelf.EnchantingTableBlockMixin",
     "disable.CreativeModeTabsMixin",
@@ -13,6 +14,7 @@
     "drops.MobMixin",
     "drops.SkeletonTrapGoalMixin",
     "drops.ZombieMixin",
+    "effect.EnchantmentMixin",
     "effect.ItemStackMixin",
     "leveling.AnvilMenuMixin",
     "leveling.EnchantmentHelperMixin",
@@ -20,12 +22,14 @@
     "leveling.EnchantWithLevelsFunctionMixin",
     "leveling.EnchantmentMixin",
     "leveling.ItemStackMixin",
+    "leveling.EnchantmentDefinitionAccessor",
     "loot.LootPoolAccessor",
     "loot.LootTableAccessor",
     "loot.EnchantRandomlyFunctionMixin",
     "loot.EnchantWithLevelsFunctionMixin",
     "randomenchantment.ItemStackMixin",
-    "table.EnchantingTableBlockMixin"
+    "table.EnchantingTableBlockMixin",
+    "0.5.0"
   ],
   "injectors": {
     "defaultRequire": 1

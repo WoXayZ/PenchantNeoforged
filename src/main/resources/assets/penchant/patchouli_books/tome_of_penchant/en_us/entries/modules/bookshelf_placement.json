@@ -6,11 +6,11 @@
     "pages": [
         {
             "type": "patchouli:text",
-            "text": "Chiseled bookshelves and lecterns now count towards the table's bookshelf power, based on how many books they hold.$(br2)$(#7A2FBF)3 books = 1 vanilla bookshelf.$()"
+            "text": "With the $(l:penchant:modules/table_rework)reworked table$(/l), chiseled bookshelves and lecterns count towards bookshelf power based on how many books they hold.$(br2)$(#7A2FBF)3 books = 1 vanilla bookshelf.$()$(br2)Modded blocks that advertise enchanting power count as $(#7A2FBF)3 × that power$() in books."
         },
         {
             "type": "patchouli:text",
-            "text": "There is also no longer a requirement to keep the space between shelf and table empty, and shelves can be placed anywhere in a $(#7A2FBF)7x4x7 area$() centered on the table (1 below, 2 above)."
+            "text": "The $(bold)vanilla$() enchanting table is left alone: Penchant no longer injects fractional power from chiseled bookshelves or lecterns into it. That is another mod's job.$(br2)There is also no longer a requirement to keep the space between shelf and table empty, and shelves can be placed anywhere in a $(#7A2FBF)7x4x7 area$() centered on the table (1 below, 2 above)."
         },
         {
             "type": "patchouli:image",
