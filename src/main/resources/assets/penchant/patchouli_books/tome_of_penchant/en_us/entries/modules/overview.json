@@ -10,7 +10,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(bold)Configuring modules$()$(br)Toggle them in the $(#7A2FBF)Data Packs$() screen when creating a world, or later with the $(#7A2FBF)/datapack$() command. A menu mod such as Datapack/Gamerule Menus also works.$(br2)Some modules make more sense together; these soft recommendations are noted on each page."
+            "text": "$(bold)Configuring modules$()$(br)Toggle them in the $(#7A2FBF)Data Packs$() screen when creating a world, or later with the $(#7A2FBF)/datapack$() command. A menu mod such as Datapack/Gamerule Menus also works.$(br2)This is the recommended way for players. Changing packs never rewrites an existing world's selection unless you do it yourself."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(bold)Modpack defaults$()$(br)Pack developers can change which modules are pre-selected for $(italic)new$() worlds in $(#7A2FBF)config/penchant/server.toml$(). That file does $(bold)not$() affect worlds that already exist.$(br2)Some modules make more sense together; these soft recommendations are noted on each page."
         },
         {
             "type": "patchouli:image",
@@ -23,7 +27,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(italic)Enabled by default$()$(br)$(li)Table Rework $(li)Bookshelf Placement $(li)Durability Rework $(li)Loot Rework $(li)No Anvil Books $(li)Guaranteed Drops$(br2)$(italic)Off by default$()$(br)$(li)Reduced Curses $(li)Randomized Librarians"
+            "text": "$(italic)Enabled by default$()$(br)$(li)Table Rework $(li)Bookshelf Placement $(li)Durability Rework $(li)Loot Rework $(li)No Anvil Books $(li)Guaranteed Drops$(br2)$(italic)Not available on this Minecraft version$()$(br)$(li)Randomized Librarians$(br2)Curse rarity is part of Loot Rework, not a separate pack."
         }
     ]
 }
