@@ -4,13 +4,13 @@
 
 This is an **unofficial NeoForge port** of [Penchant](https://modrinth.com/mod/penchant) by
 [ThePotatoArchivist](https://github.com/ThePotatoArchivist/Penchant). It aims for full feature parity with the
-original Fabric mod (**0.5.0** where supported on this Minecraft version) while using native NeoForge APIs.
+original Fabric mod (**0.5.4** where supported on this Minecraft version) while using native NeoForge APIs.
 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.5** |
-| **Mod version** | 1.21.10-1.5 |
+| **Port version** | **1.6** |
+| **Mod version** | 1.21.10-1.6 |
 | **Minecraft** | 1.21.10 |
 | **NeoForge** | 21.10.64 |
 | **Java** | 21 |
@@ -46,9 +46,13 @@ Penchant ships several optional behaviors as built-in datapacks you can enable/d
 | `no_anvil_books` | ✔ | Prevents combining enchanted books on an anvil |
 | `loot_rework` | âœ” | Reworks loot/trades; uncategorized off table; curses off trades & loot books |
 | `guaranteed_drops` | ✔ | Guarantees certain enchanted drops (e.g. tridents) |
-| `randomized_librarians` | — | *Not available on 1.21.1* (no villager trade registry) |
+| `randomized_librarians` | — | *Not available on this Minecraft version* (no villager trade registry) |
 
-### Item tags & components (0.5.0)
+Modpack developers can change which of these are pre-selected for **new** worlds in `config/penchant/server.toml`.
+Existing worlds keep the selection they were created with, and players can still override any module per-world from
+the Data Packs screen - which remains the recommended way for end users.
+
+### Item tags & components (0.5.4)
 
 - `#penchant:max_level_enchantments` - items in this tag receive enchantments at max level (for gear without
   durability).
@@ -72,7 +76,14 @@ tag/data-driven rather than hardcoded to vanilla enchantments:
   - `#penchant:no_leveling` - enchantments in this tag are applied at full level and never gain progress (use this for
     enchantments that don't make sense to level up, e.g. single-level toggles).
   - `#penchant:disabled` - enchantments in this tag are removed from the enchanting table.
+  - `#penchant:ignore_guaranteed_drop` - enchantments in this tag don't make a mob's equipment a guaranteed drop
+    (defaults to `#penchant:common`, so only genuinely notable gear is guaranteed).
   - Single-level enchantments (max level 1) automatically skip the progress bar.
+- **Max levels come from enchantment data.** Penchant levels enchantments up to the highest of the level stored in the
+  enchantment definition and the one reported at runtime, so another mod can raise a cap but cannot accidentally drag
+  one below what its datapack declares.
+- **Modded enchanting power counts.** Blocks that advertise enchanting power through NeoForge's API contribute to the
+  reworked table, with a fractional power counting as that fraction of a full three-book shelf.
 - **Loot integration is additive.** Penchant's `loot_rework` sorts enchantment books into `#penchant:rare`,
   `#penchant:uncommon`, and `#penchant:common` tags. Modded enchantments simply keep their vanilla loot behavior
   unless a datapack adds them to those tags (the port already ships optional entries for a few popular mods).
