@@ -10,7 +10,11 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(bold)Configurer les modules$()$(br)Activez-les dans l'écran $(#7A2FBF)Packs de données$() à la création d'un monde, ou plus tard avec la commande $(#7A2FBF)/datapack$(). Un mod de menu comme Datapack/Gamerule Menus fonctionne aussi.$(br2)Certains modules vont mieux ensemble ; ces recommandations sont indiquées sur chaque page."
+            "text": "$(bold)Configurer les modules$()$(br)Activez-les dans l'écran $(#7A2FBF)Packs de données$() à la création d'un monde, ou plus tard avec la commande $(#7A2FBF)/datapack$(). Un mod de menu comme Datapack/Gamerule Menus fonctionne aussi.$(br2)C'est la méthode recommandée pour les joueurs. Changer les packs ne réécrit jamais la sélection d'un monde déjà créé, sauf si vous le faites vous-même."
+        },
+        {
+            "type": "patchouli:text",
+            "text": "$(bold)Défauts pour les modpacks$()$(br)Les auteurs de packs peuvent choisir quels modules sont pré-sélectionnés pour les $(italic)nouveaux$() mondes dans $(#7A2FBF)config/penchant/server.toml$(). Ce fichier $(bold)n'affecte pas$() les mondes déjà existants.$(br2)Certains modules vont mieux ensemble ; ces recommandations sont indiquées sur chaque page."
         },
         {
             "type": "patchouli:image",
@@ -23,7 +27,7 @@
         },
         {
             "type": "patchouli:text",
-            "text": "$(italic)Activés par défaut$()$(br)$(li)Refonte de la Table $(li)Placement des Étagères $(li)Refonte de la Durabilité $(li)Refonte du Butin $(li)Pas de Livres à l'Enclume $(li)Butin Garanti$(br2)$(italic)Désactivé par défaut$()$(br)$(li)Malédictions Réduites $(li)Bibliothécaires aléatoires"
+            "text": "$(italic)Activés par défaut$()$(br)$(li)Refonte de la Table $(li)Placement des Étagères $(li)Refonte de la Durabilité $(li)Refonte du Butin $(li)Pas de Livres à l'Enclume $(li)Butin Garanti$(br2)$(italic)Indisponible sur cette version de Minecraft$()$(br)$(li)Bibliothécaires aléatoires$(br2)La rareté des malédictions fait partie de Refonte du butin, ce n'est plus un pack séparé."
         }
     ]
 }
