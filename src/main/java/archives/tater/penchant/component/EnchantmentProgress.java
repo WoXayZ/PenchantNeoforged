@@ -111,7 +111,7 @@ public class EnchantmentProgress {
     public static final EnchantmentProgress EMPTY = new EnchantmentProgress(new Object2IntOpenHashMap<>());
 
     public static int getMaxProgress(Holder<Enchantment> enchantment, int currentLevel, DataComponentGetter stack) {
-        return stack.getOrDefault(PenchantComponents.ENCHANTMENT_PROGRESS_COST_FACTOR, 1) * PenchantmentHelper.getProgressCostFactor(enchantment, currentLevel + 1);
+        return PenchantmentHelper.scaleProgress(stack.getOrDefault(PenchantComponents.ENCHANTMENT_PROGRESS_COST_FACTOR, 1) * PenchantmentHelper.getProgressCostFactor(enchantment, currentLevel + 1));
     }
 
     public static EnchantmentProgress getProgress(ItemStack stack) {
@@ -147,7 +147,7 @@ public class EnchantmentProgress {
             var level = enchantments.getLevel(enchantment);
             if (!enchantment.is(PenchantEnchantmentTags.NO_LEVELING) && level < PenchantmentHelper.getMaxLevel(enchantment))
                 newProgress.setProgress(enchantment,
-                        (int) (random.nextFloat() * getMaxProgress(enchantment, level, stack)));
+                        (int) (0.5f * random.nextFloat() * getMaxProgress(enchantment, level, stack)));
         }
 
         if (newProgress.progress.isEmpty()) return;

@@ -126,6 +126,13 @@ dependencies {
 
     // Patchouli powers the in-game guidebook ("Tome of Penchant"). compileOnly for TomeOfPenchantItem; localRuntime
     // for dev testing. Required for end users (neoforge.mods.toml). transitive = false keeps its deps out of dev.
+    compileOnly("maven.modrinth:enchiridion:${project.enchiridion_version}") {
+        transitive = false
+    }
+    compileOnly("maven.modrinth:modest-magic:${project.modest_magic_version}") {
+        transitive = false
+    }
+
     compileOnly("vazkii.patchouli:patchouli-neoforge:${project.patchouli_version}") {
         transitive = false
     }
