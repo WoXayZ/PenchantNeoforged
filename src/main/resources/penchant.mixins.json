@@ -2,10 +2,11 @@
   "required": true,
   "package": "archives.tater.penchant.mixin",
   "compatibilityLevel": "JAVA_21",
-  "mixins": [
-    "archives.tater.penchant.mixin",
+    "mixins": [
     "anvil.AnvilMenuMixin",
     "bookshelf.EnchantingTableBlockMixin",
+    "compat.modestmagic.AltarBlockEntityMixin",
+    "compat.modestmagic.TabletSmithingRecipeMixin",
     "disable.CreativeModeTabsMixin",
     "disable.EnchantmentHelperMixin",
     "disable.ItemStackMixin",
@@ -28,9 +29,10 @@
     "loot.EnchantRandomlyFunctionMixin",
     "loot.EnchantWithLevelsFunctionMixin",
     "randomenchantment.ItemStackMixin",
-    "table.EnchantingTableBlockMixin",
-    "0.5.0"
+    "randomenchantment.MerchantMenuMixin",
+    "table.EnchantingTableBlockMixin"
   ],
+  "plugin": "PenchantMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   },
