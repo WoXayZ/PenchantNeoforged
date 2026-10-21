@@ -37,7 +37,7 @@ import java.util.stream.Stream;
 import static net.minecraft.world.level.storage.loot.LootPool.lootPool;
 import static net.minecraft.world.level.storage.loot.entries.EmptyLootItem.emptyItem;
 import static net.minecraft.world.level.storage.loot.entries.LootItem.lootTableItem;
-import static net.minecraft.world.level.storage.loot.providers.number.ConstantValue.exactly;
+import static net.minecraft.world.level.storage.loot.providers.number.ints.ContextIntProviders.exactly;
 
 /**
  * Bootstrap methods for Penchant's dynamic (datapack) registry entries. Each method mirrors one of the Fabric

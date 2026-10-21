@@ -2,7 +2,7 @@ package archives.tater.penchant.datagen;
 
 import archives.tater.penchant.Penchant;
 
-import net.minecraft.advancements.AdvancementHolder;
+import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementRequirements;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.predicates.DataComponentMatchers;
@@ -10,11 +10,11 @@ import net.minecraft.advancements.predicates.EnchantmentPredicate;
 import net.minecraft.advancements.predicates.ItemPredicate;
 import net.minecraft.advancements.predicates.MinMaxBounds;
 import net.minecraft.advancements.triggers.InventoryChangeTrigger;
-import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.predicates.DataComponentPredicates;
 import net.minecraft.core.component.predicates.EnchantmentsPredicate;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.data.advancements.AdvancementSubProvider;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantments;
@@ -22,22 +22,24 @@ import net.minecraft.world.item.enchantment.Enchantments;
 import com.google.common.collect.Streams;
 
 import java.util.List;
-import java.util.function.Consumer;
 import java.util.stream.Stream;
 
 import static archives.tater.penchant.datagen.DatagenUtil.createEmptyAdvancement;
 import static archives.tater.penchant.datagen.DatagenUtil.registerAdvancement;
 
-public class LootAdvancementGenerator implements AdvancementSubProvider {
+public class LootAdvancementGenerator extends AdvancementSubProvider {
+    public LootAdvancementGenerator(BootstrapContext<Advancement> output) {
+        super(output);
+    }
 
     public static final Identifier ALL_ENCHANTMENTS = Penchant.id("all_enchantments");
 
     @Override
-    public void generate(HolderLookup.Provider registryLookup, Consumer<AdvancementHolder> consumer) {
-        var enchantments = registryLookup.lookupOrThrow(Registries.ENCHANTMENT);
+    public void generate() {
+        var enchantments = this.output.lookup(Registries.ENCHANTMENT);
         var enchantedBookshelf = createEmptyAdvancement(TableAdvancementGenerator.ENCHANTED_BOOKSHELF);
 
-        registerAdvancement(ALL_ENCHANTMENTS, Items.ENCHANTED_BOOK, AdvancementType.GOAL, consumer, builder -> {
+        registerAdvancement(ALL_ENCHANTMENTS, Items.ENCHANTED_BOOK, AdvancementType.GOAL, this.output, builder -> {
             builder
                     .parent(enchantedBookshelf)
                     .requirements(AdvancementRequirements.Strategy.AND);

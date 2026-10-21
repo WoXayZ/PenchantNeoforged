@@ -45,7 +45,7 @@ public class PenchantClient {
 
     public static final KeyMappingExt SHOW_PROGRESS_KEYBIND = new KeyMappingExt(
             makeDescriptionId("key", Penchant.id("show_progress")),
-            Type.KEYSYM,
+            Type.KEYBOARD,
             InputConstants.KEY_LCONTROL,
             PENCHANT_CATEGORY
     );

@@ -1,5 +1,6 @@
 package archives.tater.penchant.mixin.loot;
 
+import net.minecraft.core.Holder;
 import net.minecraft.resources.Identifier;
 import net.minecraft.util.context.ContextKeySet;
 import net.minecraft.world.level.storage.loot.LootPool;
@@ -24,11 +25,11 @@ public interface LootTableAccessor {
     @Accessor("pools")
     List<LootPool> penchant$getPools();
 
-    @Accessor("functions")
-    List<LootItemFunction> penchant$getFunctions();
+    @Accessor("modifier")
+    Optional<Holder<LootItemFunction>> penchant$getModifier();
 
     @Invoker("<init>")
-    static LootTable penchant$create(ContextKeySet paramSet, Optional<Identifier> randomSequence, List<LootPool> pools, List<LootItemFunction> functions) {
+    static LootTable penchant$create(ContextKeySet paramSet, Optional<Identifier> randomSequence, List<LootPool> pools, Optional<Holder<LootItemFunction>> modifier) {
         throw new AssertionError();
     }
 }

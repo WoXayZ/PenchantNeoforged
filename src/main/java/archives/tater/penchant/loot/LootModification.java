@@ -7,6 +7,7 @@ import archives.tater.penchant.mixin.loot.LootTableAccessor;
 import com.mojang.serialization.Codec;
 import com.mojang.serialization.codecs.RecordCodecBuilder;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.Registry;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.resources.ResourceKey;
@@ -14,8 +15,10 @@ import net.minecraft.world.level.storage.loot.LootPool;
 import net.minecraft.world.level.storage.loot.LootTable;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntries;
 import net.minecraft.world.level.storage.loot.entries.LootPoolEntryContainer;
+import net.minecraft.world.level.storage.loot.functions.FunctionUserBuilder;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunction;
 import net.minecraft.world.level.storage.loot.functions.LootItemFunctions;
+import net.minecraft.world.level.storage.loot.predicates.ConditionUserBuilder;
 import net.minecraft.world.level.storage.loot.predicates.LootItemCondition;
 
 import net.neoforged.neoforge.common.NeoForge;
@@ -46,10 +49,10 @@ public record LootModification(
 
     private static void onLootTableLoad(LootTableLoadEvent event) {
         var lookupOpt = event.getRegistries().lookup(KEY);
-        if (lookupOpt.isEmpty()) return;
+        if (lookupOpt.isEmpty() || !(lookupOpt.get() instanceof HolderLookup<LootModification> lookup)) return;
 
         var key = event.getKey();
-        var applicable = lookupOpt.get().listElements()
+        var applicable = lookup.listElements()
                 .map(Holder::value)
                 .filter(modification -> modification.matches(key))
                 .toList();
@@ -59,17 +62,17 @@ public record LootModification(
         var accessor = (LootTableAccessor) table;
 
         List<LootPool> pools = new ArrayList<>(accessor.penchant$getPools());
-        List<LootItemFunction> functions = new ArrayList<>(accessor.penchant$getFunctions());
+        Optional<Holder<LootItemFunction>> modifier = accessor.penchant$getModifier();
 
         for (var modification : applicable) {
-            modification.apply(pools, functions);
+            modifier = modification.apply(pools, modifier);
         }
 
         event.setTable(LootTableAccessor.penchant$create(
                 accessor.penchant$getParamSet(),
                 accessor.penchant$getRandomSequence(),
                 pools,
-                functions
+                modifier
         ));
     }
 
@@ -77,10 +80,26 @@ public record LootModification(
         return targets.contains(key);
     }
 
-    private void apply(List<LootPool> pools, List<LootItemFunction> functions) {
+    private Optional<Holder<LootItemFunction>> apply(List<LootPool> pools, Optional<Holder<LootItemFunction>> modifier) {
         pools.addAll(this.pools);
-        functions.addAll(this.functions);
         modifyPools.ifPresent(patch -> pools.replaceAll(patch::apply));
+        return mergeFunctions(modifier, functions);
+    }
+
+    private static Optional<Holder<LootItemFunction>> mergeFunctions(Optional<Holder<LootItemFunction>> existing, List<LootItemFunction> extra) {
+        if (extra.isEmpty()) return existing;
+        var combined = new ArrayList<Holder<LootItemFunction>>();
+        existing.ifPresent(combined::add);
+        extra.stream().map(Holder::direct).forEach(combined::add);
+        return FunctionUserBuilder.buildFunction(combined);
+    }
+
+    private static Optional<Holder<LootItemCondition>> mergeConditions(Optional<Holder<LootItemCondition>> existing, List<LootItemCondition> extra) {
+        if (extra.isEmpty()) return existing;
+        var combined = new ArrayList<Holder<LootItemCondition>>();
+        existing.ifPresent(combined::add);
+        extra.stream().map(Holder::direct).forEach(combined::add);
+        return ConditionUserBuilder.buildCondition(combined);
     }
 
     public record LootPoolPatch(
@@ -91,7 +110,7 @@ public record LootModification(
         public static final Codec<LootPoolPatch> CODEC = RecordCodecBuilder.create(instance -> instance.group(
                 LootPoolEntries.CODEC.listOf().fieldOf("entries").forGetter(LootPoolPatch::entries),
                 LootItemCondition.DIRECT_CODEC.listOf().optionalFieldOf("conditions", List.of()).forGetter(LootPoolPatch::conditions),
-                LootItemFunctions.ROOT_CODEC.listOf().optionalFieldOf("functions", List.of()).forGetter(LootPoolPatch::functions)
+                LootItemFunctions.DIRECT_CODEC.listOf().optionalFieldOf("functions", List.of()).forGetter(LootPoolPatch::functions)
         ).apply(instance, LootPoolPatch::new));
 
         public LootPool apply(LootPool pool) {
@@ -100,16 +119,10 @@ public record LootModification(
             List<LootPoolEntryContainer> newEntries = new ArrayList<>(accessor.penchant$getEntries());
             newEntries.addAll(entries);
 
-            List<LootItemCondition> newConditions = new ArrayList<>(accessor.penchant$getConditions());
-            newConditions.addAll(conditions);
-
-            List<LootItemFunction> newFunctions = new ArrayList<>(accessor.penchant$getFunctions());
-            newFunctions.addAll(functions);
-
             return LootPoolAccessor.penchant$create(
                     newEntries,
-                    newConditions,
-                    newFunctions,
+                    mergeConditions(accessor.penchant$getCondition(), conditions),
+                    mergeFunctions(accessor.penchant$getModifier(), functions),
                     accessor.penchant$getRolls(),
                     accessor.penchant$getBonusRolls(),
                     Optional.ofNullable(accessor.penchant$getName())

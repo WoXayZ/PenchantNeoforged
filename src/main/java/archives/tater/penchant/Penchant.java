@@ -21,7 +21,7 @@ import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
-import net.neoforged.neoforge.registries.DataPackRegistryEvent;
+import net.neoforged.neoforge.registries.NewDatapackRegistryEvent;
 import net.neoforged.neoforge.registries.NewRegistryEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
@@ -47,7 +47,7 @@ public class Penchant {
         PenchantCompat.init();
 
         container.registerConfig(ModConfig.Type.STARTUP, PenchantServerConfig.SPEC, PenchantServerConfig.FILE_NAME);
-        container.registerConfig(ModConfig.Type.SERVER, PenchantGameplayConfig.SPEC, PenchantGameplayConfig.FILE_NAME);
+        container.registerConfig(ModConfig.Type.SYNCED, PenchantGameplayConfig.SPEC, PenchantGameplayConfig.FILE_NAME);
 
         modBus.addListener(this::registerDatapackRegistries);
         modBus.addListener(this::registerNewRegistries);
@@ -66,9 +66,9 @@ public class Penchant {
         event.register(PenchantFlag.REGISTRY);
     }
 
-    private void registerDatapackRegistries(DataPackRegistryEvent.NewRegistry event) {
-        event.dataPackRegistry(PenchantRegistries.PENCHANTMENT_DEFINITION, PenchantmentDefinition.CODEC, PenchantmentDefinition.CODEC);
-        event.dataPackRegistry(LootModification.KEY, LootModification.CODEC);
+    private void registerDatapackRegistries(NewDatapackRegistryEvent event) {
+        event.worldRegistry(PenchantRegistries.PENCHANTMENT_DEFINITION, PenchantmentDefinition.CODEC, PenchantmentDefinition.CODEC);
+        event.worldRegistry(LootModification.KEY, LootModification.CODEC, LootModification.CODEC);
     }
 
     private void registerContents(RegisterEvent event) {

@@ -4,6 +4,7 @@ import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.AdvancementType;
 import net.minecraft.advancements.DisplayInfo;
+import net.minecraft.data.worldgen.BootstrapContext;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.Identifier;
 import net.minecraft.world.item.ItemStackTemplate;
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
 public class DatagenUtil {
     private DatagenUtil() {}
 
-    static AdvancementHolder registerAdvancement(Identifier id, ItemLike icon, AdvancementType type, Consumer<AdvancementHolder> consumer, Consumer<Advancement.Builder> init) {
+    static AdvancementHolder registerAdvancement(Identifier id, ItemLike icon, AdvancementType type, BootstrapContext<Advancement> output, Consumer<Advancement.Builder> init) {
         var builder = Advancement.Builder.recipeAdvancement() // to avoid sending telemetry
                 .display(new DisplayInfo(
                         new ItemStackTemplate(icon.asItem()),
@@ -28,9 +29,7 @@ public class DatagenUtil {
                         false
                 ));
         init.accept(builder);
-        var advancement = builder.build(id);
-        consumer.accept(advancement);
-        return advancement;
+        return builder.save(output, id.toString());
     }
 
     static AdvancementHolder createEmptyAdvancement(Identifier id) {
