@@ -1,13 +1,16 @@
 package archives.tater.penchant.util;
 
+import archives.tater.penchant.PenchantGameplayConfig;
 import archives.tater.penchant.PenchantmentDefinition;
 import archives.tater.penchant.api.CanEnchantCallback;
+import archives.tater.penchant.api.EnchantmentCompatibleCallback;
 import archives.tater.penchant.compat.MaxProtectionCompat;
 import archives.tater.penchant.mixin.leveling.EnchantmentDefinitionAccessor;
 import archives.tater.penchant.registry.PenchantFlag;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
+import net.minecraft.core.HolderLookup;
 import net.minecraft.core.component.DataComponents;
 import net.minecraft.network.chat.Component;
 import net.minecraft.world.item.ItemStack;
@@ -113,13 +116,13 @@ public class PenchantmentHelper {
         return getEnchantments(stack).getLevel(enchantment) > 0;
     }
 
-    public static boolean canEnchant(ItemStack stack, Holder<Enchantment> enchantment) {
+    public static boolean canEnchant(ItemStack stack, Holder<Enchantment> enchantment, HolderLookup.Provider registries) {
         if (hasEnchantment(stack, enchantment)) return false;
         var result = CanEnchantCallback.STACK.invoke(stack, enchantment);
         if (!result.isDefault()) return result.isTrue();
         return canEnchantItem(stack, enchantment)
                 && stack.supportsEnchantment(enchantment)
-                && isCompatibleWithExisting(stack, enchantment);
+                && isCompatibleWithExisting(stack, enchantment, registries);
     }
 
     public static boolean areCompatible(Holder<Enchantment> first, Holder<Enchantment> second) {
@@ -127,11 +130,26 @@ public class PenchantmentHelper {
         return Enchantment.areCompatible(first, second);
     }
 
-    public static boolean isCompatibleWithExisting(ItemStack stack, Holder<Enchantment> enchantment) {
+    /**
+     * Whether two enchantments can share a stack, including addon rules such as Enchiridion categories.
+     * A {@link TriState#FALSE} from {@link EnchantmentCompatibleCallback} blocks the enchantment.
+     */
+    public static boolean areCompatible(Holder<Enchantment> enchantment, Holder<Enchantment> existing, ItemStack stack, HolderLookup.Provider registries) {
+        if (enchantment.equals(existing)) return true;
+        var result = EnchantmentCompatibleCallback.EVENT.invoke(enchantment, existing, stack, registries);
+        if (!result.isDefault()) return result.isTrue();
+        return areCompatible(enchantment, existing);
+    }
+
+    public static boolean isCompatibleWithExisting(ItemStack stack, Holder<Enchantment> enchantment, HolderLookup.Provider registries) {
         for (var other : getEnchantments(stack).keySet()) {
-            if (!areCompatible(enchantment, other)) return false;
+            if (!areCompatible(enchantment, other, stack, registries)) return false;
         }
         return true;
+    }
+
+    public static int scaleProgress(int baseCost) {
+        return Math.max(1, (int) Math.round(baseCost * PenchantGameplayConfig.progressionMultiplier()));
     }
 
     public static ItemStack fixBookType(ItemStack stack) {
