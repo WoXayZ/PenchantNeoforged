@@ -45,7 +45,10 @@ public class Penchant {
     }
 
     public Penchant(IEventBus modBus, ModContainer container) {
+        PenchantCompat.init();
+
         container.registerConfig(ModConfig.Type.STARTUP, PenchantServerConfig.SPEC, PenchantServerConfig.FILE_NAME);
+        container.registerConfig(ModConfig.Type.SERVER, PenchantGameplayConfig.SPEC, PenchantGameplayConfig.FILE_NAME);
 
         modBus.addListener(this::registerDatapackRegistries);
         modBus.addListener(this::registerNewRegistries);
