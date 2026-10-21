@@ -1,6 +1,9 @@
 package archives.tater.penchant.util;
 
+import archives.tater.penchant.PenchantGameplayConfig;
 import archives.tater.penchant.PenchantmentDefinition;
+import archives.tater.penchant.api.EnchantmentCompatibleCallback;
+import archives.tater.penchant.api.TriState;
 import archives.tater.penchant.compat.MaxProtectionCompat;
 import archives.tater.penchant.registry.PenchantFlag;
 
@@ -93,7 +96,7 @@ public final class PenchantmentHelper {
         if (!canEnchantItem(stack, enchantment)) return false;
         if (!stack.is(Items.BOOK) && !stack.is(Items.ENCHANTED_BOOK) && !enchantment.canEnchant(stack)) return false;
         for (Enchantment other : getEnchantments(stack).keySet()) {
-            if (!areCompatible(enchantment, other)) return false;
+            if (!areCompatible(enchantment, other, stack)) return false;
         }
         return true;
     }
@@ -101,6 +104,21 @@ public final class PenchantmentHelper {
     public static boolean areCompatible(Enchantment first, Enchantment second) {
         if (MaxProtectionCompat.allowsTogether(first, second)) return true;
         return first.isCompatibleWith(second);
+    }
+
+    /**
+     * Whether two enchantments can share a stack, including addon rules.
+     * A {@link TriState#FALSE} from {@link EnchantmentCompatibleCallback} blocks the enchantment.
+     */
+    public static boolean areCompatible(Enchantment enchantment, Enchantment existing, ItemStack stack) {
+        if (enchantment.equals(existing)) return true;
+        TriState result = EnchantmentCompatibleCallback.EVENT.invoke(enchantment, existing, stack);
+        if (!result.isDefault()) return result.isTrue();
+        return areCompatible(enchantment, existing);
+    }
+
+    public static int scaleProgress(int baseCost) {
+        return Math.max(1, (int) Math.round(baseCost * PenchantGameplayConfig.progressionMultiplier()));
     }
 
     /** Add an enchantment at the given level (always 1 for levelable enchants at the table). */

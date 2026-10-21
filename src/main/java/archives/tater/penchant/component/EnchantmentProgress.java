@@ -88,7 +88,7 @@ public class EnchantmentProgress {
 
     public static int getMaxProgress(Enchantment enchantment, int currentLevel, int maxDurability) {
         int durabilityFactor = maxDurability > 0 ? clamp(maxDurability / 100, 1, 8) : 1;
-        return durabilityFactor * PenchantmentHelper.getProgressCostFactor(enchantment, currentLevel + 1);
+        return PenchantmentHelper.scaleProgress(durabilityFactor * PenchantmentHelper.getProgressCostFactor(enchantment, currentLevel + 1));
     }
 
     public static EnchantmentProgress getProgress(ItemStack stack) {
@@ -152,7 +152,7 @@ public class EnchantmentProgress {
             Enchantment enchantment = entry.getKey();
             int level = entry.getValue();
             if (!PenchantEnchantmentTags.isNoLeveling(enchantment) && level < PenchantmentHelper.getMaxLevel(enchantment)) {
-                mutable.setProgress(enchantment, (int) (random.nextFloat() * getMaxProgress(enchantment, level, stack.getMaxDamage())));
+                mutable.setProgress(enchantment, (int) (0.5f * random.nextFloat() * getMaxProgress(enchantment, level, stack.getMaxDamage())));
             }
         }
         if (!mutable.isEmpty()) setProgress(stack, mutable.toImmutable());

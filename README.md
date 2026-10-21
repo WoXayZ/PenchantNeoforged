@@ -5,13 +5,13 @@ Unofficial **Forge 1.20.1** port of [Penchant](https://modrinth.com/mod/penchant
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.6** |
-| **Mod version** | 1.20.1-1.6 |
+| **Port version** | **1.7** |
+| **Mod version** | 1.20.1-1.7 |
 | **Minecraft** | 1.20.1 |
 | **Forge** | 47.4.0 |
 | **Java** | 17 |
 
-## Features (1.6)
+## Features
 
 - Usage-based enchantment leveling (progress stored in NBT)
 - Reworked enchanting table menu (pick an enchantment, extract onto books)

@@ -2,6 +2,7 @@
   "required": true,
   "minVersion": "0.8",
   "package": "archives.tater.penchant.mixin",
+  "plugin": "archives.tater.penchant.PenchantMixinPlugin",
   "compatibilityLevel": "JAVA_17",
   "mixins": [
     "effect.DigDurabilityEnchantmentMixin",
@@ -15,7 +16,9 @@
     "loot.EnchantmentHelperLootMixin",
     "drops.MobMixin",
     "drops.DrownedMixin",
-    "drops.SkeletonTrapGoalMixin"
+    "drops.SkeletonTrapGoalMixin",
+    "compat.modestmagic.AltarBlockEntityMixin",
+    "compat.modestmagic.TabletSmithingRecipeMixin"
   ],
   "client": [
     "leveling.EnchantmentMixin",

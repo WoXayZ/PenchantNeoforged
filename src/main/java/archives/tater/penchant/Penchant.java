@@ -22,6 +22,7 @@ public class Penchant {
     public Penchant() {
         IEventBus modBus = FMLJavaModLoadingContext.get().getModEventBus();
         ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PenchantServerConfig.SPEC, PenchantServerConfig.FILE_NAME);
+        ModLoadingContext.get().registerConfig(ModConfig.Type.COMMON, PenchantGameplayConfig.SPEC, PenchantGameplayConfig.FILE_NAME);
 
         PenchantItems.ITEMS.register(modBus);
         PenchantMenus.MENUS.register(modBus);
