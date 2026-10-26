@@ -53,7 +53,7 @@ public final class PenchantServerConfig {
 
         GUARANTEED_DROPS = builder
                 .comment("Mobs always drop enchanted equipment")
-                .define("guaranteedDrops", true);
+                .define("guaranteedDrops", false);
 
         builder.pop();
 
