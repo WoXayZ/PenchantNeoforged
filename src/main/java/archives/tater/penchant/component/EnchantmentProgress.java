@@ -1,6 +1,7 @@
 package archives.tater.penchant.component;
 
 import archives.tater.penchant.registry.PenchantEnchantmentTags;
+import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.util.PenchantmentHelper;
 
 import net.minecraft.core.particles.ParticleTypes;
@@ -24,7 +25,7 @@ import org.jetbrains.annotations.Nullable;
 
 import java.util.Map;
 
-import static net.minecraft.util.Mth.clamp;
+import static java.lang.Math.max;
 
 /**
  * Enchantment leveling progress stored in ItemStack NBT under {@code penchant.progress}.
@@ -86,8 +87,10 @@ public class EnchantmentProgress {
         return PenchantmentHelper.getMaxLevel(enchantment) != 1 && !PenchantEnchantmentTags.isNoLeveling(enchantment);
     }
 
-    public static int getMaxProgress(Enchantment enchantment, int currentLevel, int maxDurability) {
-        int durabilityFactor = maxDurability > 0 ? clamp(maxDurability / 100, 1, 8) : 1;
+    public static int getMaxProgress(Enchantment enchantment, int currentLevel, ItemStack stack) {
+        int durabilityFactor = stack.is(PenchantItemTags.DEFAULT_PROGRESS_COST_FACTOR_ONE)
+                ? 1
+                : (stack.getMaxDamage() > 0 ? max(stack.getMaxDamage() / 100, 1) : 1);
         return PenchantmentHelper.scaleProgress(durabilityFactor * PenchantmentHelper.getProgressCostFactor(enchantment, currentLevel + 1));
     }
 
@@ -124,8 +127,8 @@ public class EnchantmentProgress {
         stack.getOrCreateTagElement(ROOT_KEY).put(PROGRESS_KEY, progressTag);
     }
 
-    public static void onDurabilityDamage(ItemStack stack, @Nullable LivingEntity user) {
-        addToProgress(stack, 1, user);
+    public static void onDurabilityDamage(ItemStack stack, int amount, @Nullable LivingEntity user) {
+        addToProgress(stack, stack.is(PenchantItemTags.PROPORTIONAL_ENCHANTMENT_PROGRESS) ? amount : 1, user);
     }
 
     public static void addToProgress(ItemStack stack, int increase, @Nullable LivingEntity user) {
@@ -152,13 +155,13 @@ public class EnchantmentProgress {
             Enchantment enchantment = entry.getKey();
             int level = entry.getValue();
             if (!PenchantEnchantmentTags.isNoLeveling(enchantment) && level < PenchantmentHelper.getMaxLevel(enchantment)) {
-                mutable.setProgress(enchantment, (int) (0.5f * random.nextFloat() * getMaxProgress(enchantment, level, stack.getMaxDamage())));
+                mutable.setProgress(enchantment, (int) (0.5f * random.nextFloat() * getMaxProgress(enchantment, level, stack)));
             }
         }
         if (!mutable.isEmpty()) setProgress(stack, mutable.toImmutable());
     }
 
-    public static boolean updateEnchantments(Mutable progress, Map<Enchantment, Integer> enchantments, int maxDamage) {
+    public static boolean updateEnchantments(Mutable progress, Map<Enchantment, Integer> enchantments, ItemStack stack) {
         boolean changed = false;
         for (Enchantment enchantment : enchantments.keySet().toArray(Enchantment[]::new)) {
             if (PenchantEnchantmentTags.isNoLeveling(enchantment)) continue;
@@ -169,7 +172,7 @@ public class EnchantmentProgress {
                     progress.removeProgress(enchantment);
                     break;
                 }
-                int maxProgress = getMaxProgress(enchantment, level, maxDamage);
+                int maxProgress = getMaxProgress(enchantment, level, stack);
                 int value = progress.getProgress(enchantment);
                 if (value < maxProgress) break;
                 level++;
@@ -185,7 +188,7 @@ public class EnchantmentProgress {
     }
 
     public static void updateEnchantmentsForStack(Mutable progress, Map<Enchantment, Integer> enchantments, ItemStack stack, @Nullable LivingEntity user) {
-        if (!updateEnchantments(progress, enchantments, stack.getMaxDamage())) return;
+        if (!updateEnchantments(progress, enchantments, stack)) return;
         setItemEnchantments(stack, enchantments);
 
         if (user == null) return;

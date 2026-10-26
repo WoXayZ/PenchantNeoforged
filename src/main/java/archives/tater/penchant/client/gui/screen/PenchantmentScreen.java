@@ -65,6 +65,7 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
     public float open;
     public float oOpen;
     private ItemStack last = ItemStack.EMPTY;
+    private int lastExperienceLevel;
 
     public PenchantmentScreen(PenchantmentMenu menu, Inventory inventory, Component title) {
         super(menu, inventory, title);
@@ -73,6 +74,7 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
         inventoryLabelX = 23;
         inventoryLabelY = imageHeight - 94;
         menu.setSlotChangeListener(this::rebuildEnchantmentButtons);
+        lastExperienceLevel = minecraft.player == null ? 0 : minecraft.player.experienceLevel;
     }
 
     @Override
@@ -139,6 +141,10 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
 
     @Override
     protected void containerTick() {
+        if (minecraft.player != null && minecraft.player.experienceLevel != lastExperienceLevel) {
+            lastExperienceLevel = minecraft.player.experienceLevel;
+            rebuildEnchantmentButtons();
+        }
         secondSlotBackground.tick(menu.canDisenchant() ? INGREDIENT_SLOT_TEXTURES : INGREDIENT_SLOT_TEXTURES_NO_DISENCHANT);
         tickBook();
     }

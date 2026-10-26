@@ -68,7 +68,7 @@ public class PenchantTooltips {
                             .append(Component.translatable("penchant.tooltip.progress.max"))
                             .withStyle(ChatFormatting.LIGHT_PURPLE));
                 } else {
-                    int max = EnchantmentProgress.getMaxProgress(enchantment, level, stack.getMaxDamage());
+                    int max = EnchantmentProgress.getMaxProgress(enchantment, level, stack);
                     // Uncapped datapack enchantments can store progress far past the bar;
                     // BAR_WIDTH * current overflows int and String.repeat crashes (JakeBreathild).
                     int current = Mth.clamp(progress.getProgress(enchantment), 0, Math.max(max, 0));
