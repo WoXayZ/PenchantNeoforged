@@ -45,6 +45,8 @@ public record PenchantmentDefinition(
         );
     }
 
+    public static final PenchantmentDefinition FALLBACK = new PenchantmentDefinition(1, 0, new Enchantment.Cost(1, 0));
+
     private static final Map<Holder<Enchantment>, PenchantmentDefinition> CACHE = new WeakHashMap<>();
 
     public static void buildCache(HolderLookup.Provider registries) {
@@ -59,6 +61,6 @@ public record PenchantmentDefinition(
     }
 
     public static PenchantmentDefinition getDefinition(Holder<Enchantment> enchantment) {
-        return CACHE.get(enchantment);
+        return CACHE.getOrDefault(enchantment, FALLBACK);
     }
 }

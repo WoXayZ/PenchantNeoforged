@@ -1,10 +1,13 @@
 package archives.tater.penchant;
 
+import archives.tater.penchant.component.EnchantmentProgress;
 import archives.tater.penchant.loot.LootModification;
 import archives.tater.penchant.registry.PenchantAdvancements;
+import archives.tater.penchant.registry.PenchantEntityTags;
 import archives.tater.penchant.registry.PenchantComponents;
 import archives.tater.penchant.registry.PenchantEnchantments;
 import archives.tater.penchant.registry.PenchantFlag;
+import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.registry.PenchantItems;
 import archives.tater.penchant.registry.PenchantLootFunctions;
 import archives.tater.penchant.registry.PenchantMenus;
@@ -12,6 +15,9 @@ import archives.tater.penchant.registry.PenchantModules;
 import archives.tater.penchant.registry.PenchantRegistries;
 
 import net.minecraft.resources.Identifier;
+import net.minecraft.world.entity.EquipmentSlot;
+import net.minecraft.world.entity.LivingEntity;
+import net.minecraft.world.entity.monster.Enemy;
 
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.ModContainer;
@@ -20,6 +26,7 @@ import net.neoforged.fml.config.ModConfig;
 import net.neoforged.neoforge.common.NeoForge;
 import net.neoforged.neoforge.event.AddPackFindersEvent;
 import net.neoforged.neoforge.data.event.GatherDataEvent;
+import net.neoforged.neoforge.event.entity.living.LivingDeathEvent;
 import net.neoforged.neoforge.event.server.ServerStartedEvent;
 import net.neoforged.neoforge.network.event.RegisterPayloadHandlersEvent;
 import net.neoforged.neoforge.registries.DataPackRegistryEvent;
@@ -59,8 +66,22 @@ public class Penchant {
         modBus.addListener((GatherDataEvent.Server event) -> PenchantDataGenerator.gatherData(event));
 
         NeoForge.EVENT_BUS.addListener(this::onServerStarted);
+        NeoForge.EVENT_BUS.addListener(this::onLivingDeath);
+        NeoForge.EVENT_BUS.addListener(PenchantCommands::register);
 
         LootModification.init();
+    }
+
+    private void onLivingDeath(LivingDeathEvent event) {
+        var entity = event.getEntity();
+        if (!(entity instanceof Enemy) && !entity.getType().builtInRegistryHolder().is(PenchantEntityTags.KILL_LEVELS_UP_EQUIPMENT)) return;
+        if (!(event.getSource().getEntity() instanceof LivingEntity killer)) return;
+
+        for (var slot : EquipmentSlot.values()) {
+            var stack = killer.getItemBySlot(slot);
+            if (!stack.is(PenchantItemTags.LEVEL_UP_BY_KILLING) || killer.getEquipmentSlotForItem(stack) != slot) continue;
+            EnchantmentProgress.addToProgress(stack, 1, killer);
+        }
     }
 
     private void registerNewRegistries(NewRegistryEvent event) {
