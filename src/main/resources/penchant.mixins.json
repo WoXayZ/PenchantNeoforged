@@ -25,6 +25,7 @@
     "leveling.EnchantWithLevelsFunctionMixin",
     "leveling.EnchantmentMixin",
     "leveling.ItemStackMixin",
+    "leveling.ServerPlayerGameModeMixin",
     "loot.LootPoolAccessor",
     "loot.LootTableAccessor",
     "loot.EnchantRandomlyFunctionMixin",

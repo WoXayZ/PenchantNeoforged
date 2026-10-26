@@ -138,7 +138,7 @@ public class PenchantClient {
                     .append(Component.translatable("penchant.tooltip.progress.max"))
                     .withStyle(ChatFormatting.LIGHT_PURPLE);
 
-        var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, stack.getMaxDamage());
+        var maxProgress = EnchantmentProgress.getMaxProgress(enchantment, level, stack);
         var storedProgress = clamp(progress.getProgress(enchantment), 0, Math.max(maxProgress, 0));
         int filled = maxProgress <= 0 ? 0 : (int) ((long) getBarWidth() * storedProgress / maxProgress);
 
