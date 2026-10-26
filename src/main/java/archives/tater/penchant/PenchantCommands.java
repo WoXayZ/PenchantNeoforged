@@ -1,0 +1,52 @@
+package archives.tater.penchant;
+
+import archives.tater.penchant.component.EnchantmentProgress;
+
+import com.mojang.brigadier.exceptions.CommandSyntaxException;
+import net.minecraft.commands.arguments.SlotSourceArgument;
+import net.minecraft.network.chat.Component;
+import net.minecraft.server.commands.item.ItemAccessor;
+import net.minecraft.server.commands.item.ItemCommands;
+
+import net.neoforged.neoforge.event.RegisterCommandsEvent;
+
+import static com.mojang.brigadier.arguments.IntegerArgumentType.getInteger;
+import static com.mojang.brigadier.arguments.IntegerArgumentType.integer;
+import static net.minecraft.commands.Commands.argument;
+import static net.minecraft.commands.Commands.hasPermission;
+import static net.minecraft.commands.Commands.literal;
+import static net.minecraft.commands.Commands.LEVEL_GAMEMASTERS;
+import static net.minecraft.commands.arguments.SlotSourceArgument.getSlotSource;
+import static net.minecraft.commands.arguments.SlotSourceArgument.slotSource;
+
+public class PenchantCommands {
+    public static void register(RegisterCommandsEvent event) {
+        var buildContext = event.getBuildContext();
+        var root = literal("penchant")
+                .requires(hasPermission(LEVEL_GAMEMASTERS));
+
+        for (var targetProvider : ItemCommands.TARGET_PROVIDERS) {
+            root.then(targetProvider.wrap(literal("add_progress"), tail -> tail.then(argument("slots", slotSource(buildContext))
+                    .then(argument("increase", integer())
+                            .executes(context ->
+                                    addProgress(context.getSource(), targetProvider.access(context), getSlotSource(context, "slots"), getInteger(context, "increase"))
+                            )
+                    )
+                    .executes(context ->
+                            addProgress(context.getSource(), targetProvider.access(context), getSlotSource(context, "slots"), 1)
+                    )
+            )));
+        }
+
+        event.getDispatcher().register(root);
+    }
+
+    private static int addProgress(net.minecraft.commands.CommandSourceStack source, ItemAccessor<?> access, SlotSourceArgument.Result slots, int increase) throws CommandSyntaxException {
+        access.getSlots(source, slots.value()).modifySlots(slotAccess -> {
+            var stack = slotAccess.get();
+            EnchantmentProgress.addToProgress(stack, increase, null);
+        });
+        source.sendSuccess(() -> Component.translatable("commands.penchant.add_progress.success", increase), true);
+        return 1;
+    }
+}

@@ -18,7 +18,7 @@ import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.neoforge.event.ModifyDefaultComponentsEvent;
 import net.neoforged.neoforge.registries.RegisterEvent;
 
-import static net.minecraft.util.Mth.clamp;
+import static java.lang.Math.max;
 
 @EventBusSubscriber(modid = Penchant.MOD_ID)
 public class PenchantComponents {
@@ -66,7 +66,9 @@ public class PenchantComponents {
                     if (!components.has(ENCHANTMENT_PROGRESS_COST_FACTOR)) {
                         components.set(
                                 ENCHANTMENT_PROGRESS_COST_FACTOR,
-                                clamp(components.getOrDefault(DataComponents.MAX_DAMAGE, 0) / 100, 1, 8)
+                                item.builtInRegistryHolder().is(PenchantItemTags.DEFAULT_PROGRESS_COST_FACTOR_ONE)
+                                        ? 1
+                                        : max(components.getOrDefault(DataComponents.MAX_DAMAGE, 0) / 100, 1)
                         );
                     }
                 }

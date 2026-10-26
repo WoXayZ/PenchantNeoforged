@@ -5,6 +5,7 @@ import archives.tater.penchant.datagen.BookshelfBlockTagGenerator;
 import archives.tater.penchant.datagen.DropEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.DurabilityEnchantmentTagGenerator;
 import archives.tater.penchant.datagen.EnchantmentTagGenerator;
+import archives.tater.penchant.datagen.EntityTagGenerator;
 import archives.tater.penchant.datagen.FlagTagGenerator;
 import archives.tater.penchant.datagen.ItemTagGenerator;
 import archives.tater.penchant.datagen.LootAdvancementGenerator;
@@ -52,6 +53,7 @@ public final class PenchantDataGenerator {
         main.addProvider(output -> new EnchantmentTagGenerator(output, world));
         main.addProvider(output -> new BlockTagGenerator(output, world));
         main.addProvider(output -> new ItemTagGenerator(output, world));
+        main.addProvider(output -> new EntityTagGenerator(output, world));
 
         // durability_rework
         var durability = builtinPack(generator, PenchantModules.DURABILITY_REWORK);

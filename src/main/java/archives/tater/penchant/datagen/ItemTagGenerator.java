@@ -35,5 +35,20 @@ public class ItemTagGenerator extends PenchantTagsProvider<Item> {
                 .addOptionalTag(itemTag("c", "armors/nautilus"))
                 .addOptional(createKey("enderscape", "mirror"))
                 .addOptional(createKey("enderscape", "magnia_attractor"));
+
+        builder(PenchantItemTags.PROPORTIONAL_ENCHANTMENT_PROGRESS)
+                .addTag(ItemTags.ARMOR_ENCHANTABLE)
+                .addTag(itemTag("c", "tools/shield"));
+
+        builder(PenchantItemTags.LEVEL_UP_BY_KILLING)
+                .addTag(ItemTags.ARMOR_ENCHANTABLE)
+                .addTag(itemTag("c", "tools/shield"));
+
+        builder(PenchantItemTags.DEFAULT_PROGRESS_COST_FACTOR_ONE)
+                .addTag(itemTag("c", "tools/bow"))
+                .addTag(itemTag("c", "tools/crossbow"));
+
+        builder(PenchantItemTags.LEVEL_UP_BY_USE)
+                .addOptional(createKey("enderscape", "mirror"));
     }
 }
