@@ -2,6 +2,7 @@ package archives.tater.penchant.component;
 
 import archives.tater.penchant.registry.PenchantComponents;
 import archives.tater.penchant.registry.PenchantEnchantmentTags;
+import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.util.PenchantmentHelper;
 
 import com.mojang.serialization.Codec;
@@ -85,6 +86,10 @@ public class EnchantmentProgress {
             return new EnchantmentProgress(progress);
         }
 
+        public @Nullable EnchantmentProgress toImmutableOrNull() {
+            return isEmpty() ? null : toImmutable();
+        }
+
         public boolean isEmpty() {
             return progress.isEmpty();
         }
@@ -118,8 +123,8 @@ public class EnchantmentProgress {
         return stack.getOrDefault(PenchantComponents.ENCHANTMENT_PROGRESS, EMPTY);
     }
 
-    public static void onDurabilityDamage(ItemStack stack, @Nullable LivingEntity user) {
-        addToProgress(stack, 1, user);
+    public static void onDurabilityDamage(ItemStack stack, int amount, @Nullable LivingEntity user) {
+        addToProgress(stack, stack.is(PenchantItemTags.PROPORTIONAL_ENCHANTMENT_PROGRESS) ? amount : 1, user);
     }
 
     public static void addToProgress(ItemStack stack, int increase, @Nullable LivingEntity user) {
@@ -134,7 +139,7 @@ public class EnchantmentProgress {
 
         updateEnchantmentsForStack(newProgress, enchantments, stack, user);
 
-        stack.set(PenchantComponents.ENCHANTMENT_PROGRESS, newProgress.toImmutable());
+        stack.set(PenchantComponents.ENCHANTMENT_PROGRESS, newProgress.toImmutableOrNull());
     }
 
     public static void addRandomProgress(ItemStack stack, RandomSource random) {
@@ -152,7 +157,7 @@ public class EnchantmentProgress {
 
         if (newProgress.progress.isEmpty()) return;
 
-        stack.set(PenchantComponents.ENCHANTMENT_PROGRESS, newProgress.toImmutable());
+        stack.set(PenchantComponents.ENCHANTMENT_PROGRESS, newProgress.toImmutableOrNull());
     }
 
     /**

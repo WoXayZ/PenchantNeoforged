@@ -54,7 +54,7 @@ public final class PenchantServerConfig {
 
         GUARANTEED_DROPS = builder
                 .comment("Mobs always drop enchanted equipment")
-                .define("guaranteedDrops", true);
+                .define("guaranteedDrops", false);
 
         RANDOMIZED_LIBRARIANS = builder
                 .comment("Librarians sell a different book each time")
