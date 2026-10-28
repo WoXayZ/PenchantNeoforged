@@ -9,7 +9,7 @@ import com.baisylia.modestmagic.recipe.custom.TabletSmithingRecipe;
 @Mixin(TabletSmithingRecipe.class)
 public class TabletSmithingRecipeMixin {
     @ModifyExpressionValue(
-            method = "assemble(Lnet/minecraft/world/item/crafting/SmithingRecipeInput;)Lnet/minecraft/world/item/ItemStack;",
+            method = "assemble(Lnet/minecraft/world/item/crafting/SmithingRecipeInput;Lnet/minecraft/core/HolderLookup$Provider;)Lnet/minecraft/world/item/ItemStack;",
             at = @At(value = "INVOKE", target = "Lnet/minecraft/world/item/enchantment/Enchantment;getMaxLevel()I")
     )
     private int levelOne(int original) {
