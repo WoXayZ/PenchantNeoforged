@@ -85,12 +85,13 @@ public class PenchantmentScreen extends AbstractContainerScreen<PenchantmentMenu
         inventoryLabelX = 23;
         inventoryLabelY = imageHeight - 94;
         menu.setSlotChangeListener(this::rebuildWidgets);
-        lastExperienceLevel = minecraft.player == null ? 0 : minecraft.player.experienceLevel;
     }
 
     @Override
     protected void init() {
         super.init();
+        // minecraft is assigned by Screen.init(Minecraft, ...) before this method runs. It is still null in the constructor.
+        lastExperienceLevel = minecraft.player == null ? 0 : minecraft.player.experienceLevel;
         bookModel = new BookModel(minecraft.getEntityModels().bakeLayer(ModelLayers.BOOK));
         var displayedEnchantments = menu.getDisplayedEnchantments();
         var stack = menu.getEnchantingStack();
