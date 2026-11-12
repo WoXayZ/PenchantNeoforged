@@ -34,7 +34,7 @@
     "randomenchantment.MerchantMenuMixin",
     "table.EnchantingTableBlockMixin"
   ],
-  "plugin": "PenchantMixinPlugin",
+  "plugin": "archives.tater.penchant.PenchantMixinPlugin",
   "injectors": {
     "defaultRequire": 1
   },
