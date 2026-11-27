@@ -6,6 +6,7 @@ import archives.tater.penchant.network.UnlockedEnchantmentsPayload;
 import archives.tater.penchant.registry.PenchantAdvancements;
 import archives.tater.penchant.registry.PenchantBlockTags;
 import archives.tater.penchant.registry.PenchantEnchantmentTags;
+import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.registry.PenchantMenus;
 import archives.tater.penchant.util.PenchantmentHelper;
 
@@ -13,7 +14,6 @@ import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
 import net.minecraft.core.RegistryAccess;
-import net.minecraft.core.component.DataComponents;
 import net.minecraft.core.HolderSet;
 import net.minecraft.core.HolderLookup;
 import net.minecraft.core.registries.Registries;
@@ -31,9 +31,7 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.DataSlot;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
-import net.minecraft.world.item.enchantment.EnchantmentHelper;
 import net.minecraft.world.level.Level;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.EnchantingTableBlock;
@@ -167,11 +165,11 @@ public class PenchantmentMenu extends AbstractContainerMenu {
     }
 
     public static boolean isEnchantingIngredient(ItemStack stack) {
-        return stack.is(Items.LAPIS_LAZULI);
+        return stack.is(PenchantItemTags.ENCHANTMENT_FUEL);
     }
 
     public static boolean isDisenchantingIngredient(ItemStack stack) {
-        return stack.is(Items.BOOK) || EnchantmentHelper.getComponentType(stack) == DataComponents.STORED_ENCHANTMENTS;
+        return PenchantmentHelper.isEnchantmentContainer(stack);
     }
 
     public static Set<Holder<Enchantment>> getUnlockedEnchantments(Level level, BlockPos pos) {
