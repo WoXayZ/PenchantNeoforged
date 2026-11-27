@@ -9,6 +9,7 @@ import net.minecraft.resources.ResourceLocation;
 import net.minecraft.tags.ItemTags;
 import net.minecraft.tags.TagKey;
 import net.minecraft.world.item.Item;
+import net.minecraft.world.item.Items;
 
 import net.neoforged.neoforge.common.data.ExistingFileHelper;
 
@@ -44,5 +45,12 @@ public class ItemTagGenerator extends PenchantTagsProvider<Item> {
 
         builder(PenchantItemTags.LEVEL_UP_BY_USE)
                 .addOptional(ResourceLocation.fromNamespaceAndPath("enderscape", "mirror"));
+
+        builder(PenchantItemTags.ENCHANTMENT_CONTAINERS)
+                .add(Items.BOOK.builtInRegistryHolder().unwrapKey().orElseThrow())
+                .add(Items.ENCHANTED_BOOK.builtInRegistryHolder().unwrapKey().orElseThrow());
+
+        builder(PenchantItemTags.ENCHANTMENT_FUEL)
+                .add(Items.LAPIS_LAZULI.builtInRegistryHolder().unwrapKey().orElseThrow());
     }
 }
