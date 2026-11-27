@@ -9,8 +9,8 @@ original Fabric mod (**0.5.4** where supported on this Minecraft version) while 
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.8-fix2** |
-| **Mod version** | 1.21.5-1.8-fix2 |
+| **Port version** | **1.9** |
+| **Mod version** | 1.21.5-1.9 |
 | **Minecraft** | 1.21.5 |
 | **NeoForge** | 21.5.98 |
 | **Java** | 21 |
