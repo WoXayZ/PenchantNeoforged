@@ -7,6 +7,7 @@ import archives.tater.penchant.api.EnchantmentCompatibleCallback;
 import archives.tater.penchant.compat.MaxProtectionCompat;
 import archives.tater.penchant.mixin.leveling.EnchantmentDefinitionAccessor;
 import archives.tater.penchant.registry.PenchantFlag;
+import archives.tater.penchant.registry.PenchantItemTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Holder;
@@ -95,6 +96,15 @@ public class PenchantmentHelper {
     }
 
     /**
+     * Books, enchanted books, and anything else tagged as a container. Also any stack that already
+     * stores enchantments in the book component, so modded tomes work without joining the tag.
+     */
+    public static boolean isEnchantmentContainer(ItemStack stack) {
+        return stack.is(PenchantItemTags.ENCHANTMENT_CONTAINERS)
+                || EnchantmentHelper.getComponentType(stack) == DataComponents.STORED_ENCHANTMENTS;
+    }
+
+    /**
      * Whether the item could ever take this enchantment, ignoring what the stack currently carries.
      *
      * <p>Asked against a pristine stack: mods veto {@code supportsEnchantment} based on the
@@ -104,7 +114,7 @@ public class PenchantmentHelper {
     public static boolean canEnchantItem(ItemStack stack, Holder<Enchantment> enchantment) {
         var result = CanEnchantCallback.ITEM.invoke(stack, enchantment);
         if (result != TriState.DEFAULT) return result.toBoolean(false);
-        return stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK)
+        return isEnchantmentContainer(stack)
                 || stack.getItem().getDefaultInstance().supportsEnchantment(enchantment);
     }
 
@@ -121,7 +131,7 @@ public class PenchantmentHelper {
         var result = CanEnchantCallback.STACK.invoke(stack, enchantment);
         if (result != TriState.DEFAULT) return result.toBoolean(false);
         return canEnchantItem(stack, enchantment)
-                && stack.supportsEnchantment(enchantment)
+                && (isEnchantmentContainer(stack) || stack.supportsEnchantment(enchantment))
                 && isCompatibleWithExisting(stack, enchantment, registries);
     }
 
@@ -165,7 +175,7 @@ public class PenchantmentHelper {
     }
 
     public static ItemStack updateEnchantments(ItemStack stack, Consumer<ItemEnchantments.Mutable> updater) {
-        var type = stack.is(Items.BOOK) ? DataComponents.STORED_ENCHANTMENTS : EnchantmentHelper.getComponentType(stack);
+        var type = isEnchantmentContainer(stack) ? DataComponents.STORED_ENCHANTMENTS : EnchantmentHelper.getComponentType(stack);
         var enchantments = stack.getOrDefault(type, ItemEnchantments.EMPTY);
         var mutable = new ItemEnchantments.Mutable(enchantments);
         updater.accept(mutable);
