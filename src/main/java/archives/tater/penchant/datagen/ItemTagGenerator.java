@@ -47,5 +47,12 @@ public class ItemTagGenerator extends PenchantTagsProvider<Item> {
 
         builder(PenchantItemTags.LEVEL_UP_BY_USE)
                 .addOptional(createKey("enderscape", "mirror"));
+
+        builder(PenchantItemTags.ENCHANTMENT_CONTAINERS)
+                .add(createKey("minecraft", "book"))
+                .add(createKey("minecraft", "enchanted_book"));
+
+        builder(PenchantItemTags.ENCHANTMENT_FUEL)
+                .add(createKey("minecraft", "lapis_lazuli"));
     }
 }
