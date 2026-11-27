@@ -6,9 +6,11 @@ import archives.tater.penchant.api.EnchantmentCompatibleCallback;
 import archives.tater.penchant.api.TriState;
 import archives.tater.penchant.compat.MaxProtectionCompat;
 import archives.tater.penchant.registry.PenchantFlag;
+import archives.tater.penchant.registry.PenchantItemTags;
 
 import net.minecraft.core.BlockPos;
 import net.minecraft.network.chat.Component;
+import net.minecraft.world.item.EnchantedBookItem;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.Items;
 import net.minecraft.world.item.enchantment.Enchantment;
@@ -78,8 +80,17 @@ public final class PenchantmentHelper {
         return EnchantmentMaxLevelAccess.get(enchantment);
     }
 
+    /**
+     * Books, enchanted books, and anything else tagged as a container. Also any stack that already
+     * stores enchantments the way an enchanted book does.
+     */
+    public static boolean isEnchantmentContainer(ItemStack stack) {
+        return stack.is(PenchantItemTags.ENCHANTMENT_CONTAINERS)
+                || stack.getTag() != null && stack.getTag().contains(EnchantedBookItem.TAG_STORED_ENCHANTMENTS, 9);
+    }
+
     public static boolean canEnchantItem(ItemStack stack, Enchantment enchantment) {
-        if (stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK)) return enchantment.isAllowedOnBooks();
+        if (isEnchantmentContainer(stack)) return enchantment.isAllowedOnBooks();
         return enchantment.canEnchant(stack.getItem().getDefaultInstance());
     }
 
@@ -94,7 +105,7 @@ public final class PenchantmentHelper {
     public static boolean canEnchant(ItemStack stack, Enchantment enchantment) {
         if (hasEnchantment(stack, enchantment)) return false;
         if (!canEnchantItem(stack, enchantment)) return false;
-        if (!stack.is(Items.BOOK) && !stack.is(Items.ENCHANTED_BOOK) && !enchantment.canEnchant(stack)) return false;
+        if (!isEnchantmentContainer(stack) && !enchantment.canEnchant(stack)) return false;
         for (Enchantment other : getEnchantments(stack).keySet()) {
             if (!areCompatible(enchantment, other, stack)) return false;
         }

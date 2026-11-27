@@ -4,6 +4,7 @@ import archives.tater.penchant.network.PenchantNetworking;
 import archives.tater.penchant.network.SelectEnchantmentPacket;
 import archives.tater.penchant.registry.PenchantEnchantmentTags;
 import archives.tater.penchant.registry.PenchantFlag;
+import archives.tater.penchant.registry.PenchantItemTags;
 import archives.tater.penchant.registry.PenchantMenus;
 import archives.tater.penchant.util.PenchantmentHelper;
 
@@ -195,7 +196,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
         return player.getAbilities().instabuild || availableEnchantments.contains(enchantment);
     }
 
-    /** Ingredient is lapis or empty _ matches NeoForge 1.21. */
+    /** Ingredient is fuel (lapis by default) or empty. */
     public boolean isEnchanting() {
         ItemStack ingredient = getIngredientStack();
         return isEnchantingIngredient(ingredient) || ingredient.isEmpty();
@@ -213,11 +214,11 @@ public class PenchantmentMenu extends AbstractContainerMenu {
     }
 
     public static boolean isEnchantingIngredient(ItemStack stack) {
-        return stack.is(Items.LAPIS_LAZULI);
+        return stack.is(PenchantItemTags.ENCHANTMENT_FUEL);
     }
 
     public static boolean isDisenchantingIngredient(ItemStack stack) {
-        return stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK);
+        return PenchantmentHelper.isEnchantmentContainer(stack);
     }
 
     private void refreshTableState(boolean sendPacket) {
@@ -401,7 +402,7 @@ public class PenchantmentMenu extends AbstractContainerMenu {
             displayedEnchantments = PenchantmentHelper.getEnchantments(stack).keySet().stream()
                     .sorted(Comparator.comparing(e -> String.valueOf(BuiltInRegistries.ENCHANTMENT.getKey(e))))
                     .toList();
-        } else if (isEnchanting() && (stack.isEnchantable() || stack.is(Items.BOOK) || stack.is(Items.ENCHANTED_BOOK) || !PenchantmentHelper.getEnchantments(stack).isEmpty())) {
+        } else if (isEnchanting() && (stack.isEnchantable() || PenchantmentHelper.isEnchantmentContainer(stack) || !PenchantmentHelper.getEnchantments(stack).isEmpty())) {
             boolean creative = player.getAbilities().instabuild;
             List<Enchantment> list = new ArrayList<>();
             for (Enchantment enchantment : BuiltInRegistries.ENCHANTMENT) {

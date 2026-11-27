@@ -5,8 +5,8 @@ Unofficial **Forge 1.20.1** port of [Penchant](https://modrinth.com/mod/penchant
 | | |
 |---|---|
 | **Mod ID** | `penchant` |
-| **Port version** | **1.8-fix1** |
-| **Mod version** | 1.20.1-1.8-fix1 |
+| **Port version** | **1.9** |
+| **Mod version** | 1.20.1-1.9 |
 | **Minecraft** | 1.20.1 |
 | **Forge** | 47.4.0 |
 | **Java** | 17 |

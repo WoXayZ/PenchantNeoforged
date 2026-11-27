@@ -14,4 +14,8 @@ public final class PenchantItemTags {
     public static final TagKey<Item> LEVEL_UP_BY_KILLING = TagKey.create(Registries.ITEM, Penchant.id("level_up_by_killing"));
     public static final TagKey<Item> DEFAULT_PROGRESS_COST_FACTOR_ONE = TagKey.create(Registries.ITEM, Penchant.id("default_progress_cost_factor_one"));
     public static final TagKey<Item> LEVEL_UP_BY_USE = TagKey.create(Registries.ITEM, Penchant.id("level_up_by_use"));
+    /** Items that store enchantments the way a book does, and can be disenchanted. */
+    public static final TagKey<Item> ENCHANTMENT_CONTAINERS = TagKey.create(Registries.ITEM, Penchant.id("enchantment_containers"));
+    /** Items accepted in the table's ingredient slot when enchanting. Lapis by default. */
+    public static final TagKey<Item> ENCHANTMENT_FUEL = TagKey.create(Registries.ITEM, Penchant.id("enchantment_fuel"));
 }
